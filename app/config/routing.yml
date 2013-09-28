@@ -1,0 +1,4 @@
+digs_core:
+    resource: "@DigsCoreBundle/Resources/config/routing.yml"
+    prefix:   /
+

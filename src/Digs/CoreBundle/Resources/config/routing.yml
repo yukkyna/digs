@@ -1,0 +1,3 @@
+digs_core_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: DigsCoreBundle:Default:index }
