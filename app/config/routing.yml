@@ -1,3 +1,7 @@
+digs_entry:
+    resource: "@DigsEntryBundle/Resources/config/routing.yml"
+    prefix:   /
+
 digs_core:
     resource: "@DigsCoreBundle/Resources/config/routing.yml"
     prefix:   /

@@ -1,0 +1,7 @@
+parameters:
+#    digs_entry.example.class: Digs\EntryBundle\Example
+
+services:
+#    digs_entry.example:
+#        class: %digs_entry.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
