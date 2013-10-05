@@ -1,0 +1,33 @@
+Digs\CoreBundle\Entity\Member:
+    type: entity
+    table: null
+    repositoryClass: Digs\CoreBundle\Entity\MemberRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        email:
+            type: string
+            length: 255
+        password:
+            type: string
+            length: 255
+        salt:
+            type: string
+            length: 255
+        firstName:
+            type: string
+            length: 255
+            column: first_name
+        lastName:
+            type: string
+            length: 255
+            column: last_name
+    manyToMany:
+      roles:
+        targetEntity: Role
+        inversedBy: members
+        
+    lifecycleCallbacks: {  }

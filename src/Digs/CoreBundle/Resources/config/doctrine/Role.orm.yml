@@ -1,0 +1,22 @@
+Digs\CoreBundle\Entity\Role:
+    type: entity
+    table: null
+    repositoryClass: Digs\CoreBundle\Entity\RoleRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        name:
+            type: string
+            length: 255
+        role:
+            type: string
+            length: 255
+    manyToMany:
+      members:
+        targetEntity: Member
+        mappedBy: roles
+        
+    lifecycleCallbacks: {  }
