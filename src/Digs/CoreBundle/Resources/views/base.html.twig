@@ -3,13 +3,17 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
+{#
 		<link rel="stylesheet" href="{{ asset('bundles/digscore/css/normalize.css') }}" type="text/css" media="all" />
+#}
+		<link rel="stylesheet" href="{{ asset('bundles/digscore/css/bootstrap.min.css') }}" type="text/css" media="all" />
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
         {% block body %}{% endblock %}
 		 <script type="text/javascript" src="{{ asset('bundles/digscore/js/jquery-2.0.3.min.js') }}"></script>
+		 <script type="text/javascript" src="{{ asset('bundles/digscore/js/bootstrap.min.js') }}"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
