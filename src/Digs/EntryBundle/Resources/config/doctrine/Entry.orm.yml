@@ -21,4 +21,8 @@ Digs\EntryBundle\Entity\Entry:
             column: updated_at
         status:
             type: integer
+    manyToOne:
+      member:
+        targetEntity: Digs\CoreBundle\Entity\Member
+    
     lifecycleCallbacks: {  }

@@ -164,4 +164,32 @@ class Entry
     {
         return $this->status;
     }
+    /**
+     * @var \Digs\CoreBundle\Entity\Member
+     */
+    private $member;
+
+
+    /**
+     * Set member
+     *
+     * @param \Digs\CoreBundle\Entity\Member $member
+     * @return Entry
+     */
+    public function setMember(\Digs\CoreBundle\Entity\Member $member = null)
+    {
+        $this->member = $member;
+    
+        return $this;
+    }
+
+    /**
+     * Get member
+     *
+     * @return \Digs\CoreBundle\Entity\Member 
+     */
+    public function getMember()
+    {
+        return $this->member;
+    }
 }
