@@ -244,4 +244,60 @@ class Member implements AdvancedUserInterface, \Serializable
     {
         $this->roles->removeElement($roles);
     }
+    /**
+     * @var boolean
+     */
+    private $active;
+
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     * @return Member
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+    
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean 
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+    /**
+     * @var \Digs\CoreBundle\Entity\Profile
+     */
+    private $profile;
+
+
+    /**
+     * Set profile
+     *
+     * @param \Digs\CoreBundle\Entity\Profile $profile
+     * @return Member
+     */
+    public function setProfile(\Digs\CoreBundle\Entity\Profile $profile = null)
+    {
+        $this->profile = $profile;
+    
+        return $this;
+    }
+
+    /**
+     * Get profile
+     *
+     * @return \Digs\CoreBundle\Entity\Profile 
+     */
+    public function getProfile()
+    {
+        return $this->profile;
+    }
 }

@@ -1,0 +1,28 @@
+Digs\CoreBundle\Entity\Profile:
+    type: entity
+    table: null
+    repositoryClass: Digs\CoreBundle\Entity\ProfileRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        nickname:
+            type: string
+            length: '32'
+        message:
+            type: string
+            length: 255
+        entryLead:
+            type: string
+            length: '32'
+            column: entry_lead
+            nullable: true
+        entryNum:
+            type: integer
+            column: entry_num
+        updatedAt:
+            type: datetime
+            column: updated_at
+    lifecycleCallbacks: {  }

@@ -25,9 +25,14 @@ Digs\CoreBundle\Entity\Member:
             type: string
             length: 255
             column: last_name
+        active:
+            type: boolean
     manyToMany:
       roles:
         targetEntity: Role
         inversedBy: members
+    oneToOne:
+        profile:
+            targetEntity: Profile
         
     lifecycleCallbacks: {  }

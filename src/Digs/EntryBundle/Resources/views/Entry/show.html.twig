@@ -1,0 +1,30 @@
+{% extends "DigsCoreBundle::base.html.twig" %}
+
+{% block body -%}
+<div class="row">
+    <div class="col-md-3">
+        <p>{{ entity.member.profile.nickname }}</p>
+    </div>
+    <div class="col-md-9">
+        {% if entity.member.profile.entryLead %}
+        <p class="lead">{{ entity.member.profile.entryLead }}</p>
+        {% endif %}
+        <h2>{{ entity.title }} <small>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</small></h2>
+        <div>{{ entity.message|raw }}</div>
+    </div>
+</div>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('entry') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('entry_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

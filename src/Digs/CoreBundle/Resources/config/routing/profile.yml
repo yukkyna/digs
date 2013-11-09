@@ -1,0 +1,30 @@
+profile:
+    pattern:  /
+    defaults: { _controller: "DigsCoreBundle:Profile:index" }
+
+profile_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "DigsCoreBundle:Profile:show" }
+
+profile_new:
+    pattern:  /new
+    defaults: { _controller: "DigsCoreBundle:Profile:new" }
+
+profile_create:
+    pattern:  /create
+    defaults: { _controller: "DigsCoreBundle:Profile:create" }
+    requirements: { _method: post }
+
+profile_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "DigsCoreBundle:Profile:edit" }
+
+profile_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "DigsCoreBundle:Profile:update" }
+    requirements: { _method: post|put }
+
+profile_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "DigsCoreBundle:Profile:delete" }
+    requirements: { _method: post|delete }

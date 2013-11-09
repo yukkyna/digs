@@ -12,4 +12,33 @@ use Doctrine\ORM\EntityRepository;
  */
 class EntryRepository extends EntityRepository
 {
+	public function findOpenedDscQuery($num)
+	{
+        return $this
+            ->createQueryBuilder('u')
+//			->select('u, r')
+//			->leftJoin('u.roles', 'r')
+            ->where('u.status = 1')
+//            ->setParameter('email', $username)
+			->orderBy('u.id', 'DESC')
+            ->getQuery();
+	}
+	public function findOpenedDsc($num)
+	{
+        return $this->findOpenedDscQuery($num)->getResult();
+	}
+
+	public function findByIdOpenedJoinMember($id)
+	{
+        return $this
+            ->createQueryBuilder('u')
+			->select('u, m, p')
+			->leftJoin('u.member', 'm')
+			->leftJoin('m.profile', 'p')
+            ->where('u.status = 1')
+			->andWhere('u.id=:id')
+            ->setParameter('id', $id)
+            ->getQuery()
+			->getSingleResult();
+	}
 }

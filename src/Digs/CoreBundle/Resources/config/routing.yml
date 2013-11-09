@@ -1,3 +1,7 @@
 digs_core_homepage:
     pattern:  /hello/{name}
     defaults: { _controller: DigsCoreBundle:Default:index }
+
+DigsCoreBundle_profile:
+    resource: "@DigsCoreBundle/Resources/config/routing/profile.yml"
+    prefix:   /profile

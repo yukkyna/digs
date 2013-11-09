@@ -2,6 +2,11 @@ parameters:
 #    digs_entry.example.class: Digs\EntryBundle\Example
 
 services:
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension }
+
 #    digs_entry.example:
 #        class: %digs_entry.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
