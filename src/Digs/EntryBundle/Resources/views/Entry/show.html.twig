@@ -1,27 +1,29 @@
 {% extends "DigsCoreBundle::base.html.twig" %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('bundles/digsentry/css/entry.css') }}" type="text/css" media="all" />
+{% endblock %}
 
 {% block body -%}
 <div class="row">
     <div class="col-md-3">
         <div class="thumbnail">
-            <img src="{{ static_server }}{{ entity.member.id }}/profile.png" alt="profile">
+            <img src="{{ path('profile_image_show', { 'id': entity.member.id}) }}" alt="profile">
             <div class="caption">
                 <h3>{{ entity.member.profile.nickname }}</h3>
                 <p>{{ entity.member.profile.message }}</p>
             </div>
         </div>
-        <p></p>
     </div>
     <div class="col-md-9">
-        {% if entity.member.profile.entryLead %}
+{% if entity.member.profile.entryLead %}
         <p class="lead">{{ entity.member.profile.entryLead }}</p>
-        {% endif %}
+{% endif %}
         <h2>{{ entity.title }} <small>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</small></h2>
-        <div>{{ entity.message|raw }}</div>
+        <div id="entry-inner">{{ entity.message|raw }}</div>
     </div>
 </div>
 
-        <ul class="record_actions">
+<ul class="record_actions">
     <li>
         <a href="{{ path('entry') }}">
             Back to the list

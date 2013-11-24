@@ -1,3 +1,7 @@
+digs_photo:
+    resource: "@DigsPhotoBundle/Resources/config/routing.yml"
+    prefix:   /
+
 digs_entry:
     resource: "@DigsEntryBundle/Resources/config/routing.yml"
     prefix:   /

@@ -19,6 +19,7 @@ class AppKernel extends Kernel
 			new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
 			new Digs\CoreBundle\DigsCoreBundle(),
             new Digs\EntryBundle\DigsEntryBundle(),
+            new Digs\PhotoBundle\DigsPhotoBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

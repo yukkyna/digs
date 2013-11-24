@@ -23,6 +23,6 @@ Digs\CoreBundle\Entity\Profile:
             type: integer
             column: entry_num
         updatedAt:
-            type: datetime
+            type: utcdatetime
             column: updated_at
     lifecycleCallbacks: {  }

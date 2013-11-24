@@ -25,6 +25,8 @@ framework:
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
+#    globals:
+#        static_server: %static_server%
 
 # Assetic Configuration
 assetic:
@@ -49,6 +51,8 @@ doctrine:
         user:     %database_user%
         password: %database_password%
         charset:  UTF8
+        types:
+            utcdatetime: Digs\CoreBundle\Doctrine\Types\UTCDateTimeType
         # if using pdo_sqlite as your database driver, add the path in parameters.yml
         # e.g. database_path: %kernel.root_dir%/data/data.db3
         # path:     %database_path%

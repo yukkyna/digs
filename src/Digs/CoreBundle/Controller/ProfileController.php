@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Digs\CoreBundle\Entity\Profile;
 use Digs\CoreBundle\Form\ProfileType;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Profile controller.
@@ -219,5 +220,38 @@ class ProfileController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+
+	public function showImageAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('DigsCoreBundle:Member')->find($id);
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Photo entity.');
+        }
+
+		$response = new Response();
+//		$response->setLastModified($entity->getCreatedAt()->);
+//		if ($response->isNotModified($request))
+//		{
+//			return $response;
+//		}
+
+		$response->headers->add(array(
+			'Content-Type'   => 'image/png',
+//			'Content-Length' => filesize($path),
+			'X-Sendfile'     => $this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR
+			. $entity->getId() . DIRECTORY_SEPARATOR . 'profile.png',
+		));
+		$response->setStatusCode(200);
+//		$response =  new Response($image, 200);
+		$response->setLastModified($entity->getProfile()->getUpdatedAt());
+        return $response;
+//		
+//		
+//        return $this->render('DigsPhotoBundle:Photo:show.html.twig', array(
+//            'entity'      => $entity,
+//			));
     }
 }

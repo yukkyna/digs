@@ -1,0 +1,34 @@
+photo:
+    pattern:  /
+    defaults: { _controller: "DigsPhotoBundle:Photo:index" }
+
+photo_show:
+    pattern:  /{prefix}/{id}
+    defaults: { _controller: "DigsPhotoBundle:Photo:show" }
+
+photo_thumbnail_show:
+    pattern:  /thumbnail/{prefix}/{id}
+    defaults: { _controller: "DigsPhotoBundle:Photo:showThumbnail" }
+
+photo_new:
+    pattern:  /new
+    defaults: { _controller: "DigsPhotoBundle:Photo:new" }
+
+photo_create:
+    pattern:  /create
+    defaults: { _controller: "DigsPhotoBundle:Photo:create" }
+    requirements: { _method: post }
+
+photo_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "DigsPhotoBundle:Photo:edit" }
+
+photo_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "DigsPhotoBundle:Photo:update" }
+    requirements: { _method: post|put }
+
+photo_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "DigsPhotoBundle:Photo:delete" }
+    requirements: { _method: post|delete }

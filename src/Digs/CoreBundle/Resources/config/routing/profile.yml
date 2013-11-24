@@ -6,6 +6,10 @@ profile_show:
     pattern:  /{id}/show
     defaults: { _controller: "DigsCoreBundle:Profile:show" }
 
+profile_image_show:
+    pattern:  /{id}/profile.png
+    defaults: { _controller: "DigsCoreBundle:Profile:showImage" }
+
 profile_new:
     pattern:  /new
     defaults: { _controller: "DigsCoreBundle:Profile:new" }

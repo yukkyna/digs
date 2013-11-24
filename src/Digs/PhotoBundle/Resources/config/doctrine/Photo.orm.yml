@@ -1,7 +1,7 @@
-Digs\EntryBundle\Entity\Entry:
+Digs\PhotoBundle\Entity\Photo:
     type: entity
     table: null
-    repositoryClass: Digs\EntryBundle\Entity\EntryRepository
+    repositoryClass: Digs\PhotoBundle\Entity\PhotoRepository
     fields:
         id:
             type: integer
@@ -11,18 +11,18 @@ Digs\EntryBundle\Entity\Entry:
         title:
             type: string
             length: 255
-        message:
+        file:
+            type: string
+            length: 255
+        extraData:
             type: text
+            column: extra_data
         createdAt:
             type: utcdatetime
             column: created_at
-        updatedAt:
-            type: utcdatetime
-            column: updated_at
         status:
             type: integer
     manyToOne:
       member:
         targetEntity: Digs\CoreBundle\Entity\Member
-    
     lifecycleCallbacks: {  }

@@ -1,0 +1,3 @@
+DigsPhotoBundle_photo:
+    resource: "@DigsPhotoBundle/Resources/config/routing/photo.yml"
+    prefix:   /photo
