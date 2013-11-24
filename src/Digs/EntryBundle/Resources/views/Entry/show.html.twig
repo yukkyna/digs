@@ -15,11 +15,37 @@
         </div>
     </div>
     <div class="col-md-9">
+        <div class="row">
 {% if entity.member.profile.entryLead %}
-        <p class="lead">{{ entity.member.profile.entryLead }}</p>
+            <p class="lead">{{ entity.member.profile.entryLead }}</p>
 {% endif %}
-        <h2>{{ entity.title }} <small>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</small></h2>
-        <div id="entry-inner">{{ entity.message|raw }}</div>
+            <div id="entry-inner" class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-heading">{{ entity.title }} <small>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</small></h2>
+                </div>
+                <div class="panel-body">{{ entity.message|raw }}</div>
+            </div>
+            <div id="comment-wrapper" class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>コメント</h3>
+                </div>
+                <ul class="list-group">
+{% for comment in entity.comments %}
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-1">
+                                <img class="img-responsive" src="{{ path('profile_image_show', { 'id': comment.member.id}) }}" />
+                            </div>
+                            <div class="col-md-11">
+                                <div class="row">{{ comment.member.profile.nickname }} <small>{{ comment.createdAt|date('Y-m-d H:i:s') }}</small></div>
+                                <div class="row">{{ comment.message }}</div>
+                            </div>
+                        </div>
+                    </li>
+{% endfor %}
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
 

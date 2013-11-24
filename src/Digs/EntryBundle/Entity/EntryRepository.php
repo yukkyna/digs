@@ -32,9 +32,12 @@ class EntryRepository extends EntityRepository
 	{
         return $this
             ->createQueryBuilder('u')
-			->select('u, m, p')
+			->select('u, m, p, c, k, l')
 			->leftJoin('u.member', 'm')
 			->leftJoin('m.profile', 'p')
+			->leftJoin('u.comments', 'c')
+			->leftJoin('c.member', 'k')
+			->leftJoin('k.profile', 'l')
             ->where('u.status = 1')
 			->andWhere('u.id=:id')
             ->setParameter('id', $id)

@@ -1,32 +1,25 @@
-Digs\EntryBundle\Entity\Entry:
+Digs\EntryBundle\Entity\Comment:
     type: entity
-    table: null
-    repositoryClass: Digs\EntryBundle\Entity\EntryRepository
+    table: entrycomment
+    repositoryClass: Digs\EntryBundle\Entity\CommentRepository
     fields:
         id:
             type: integer
             id: true
             generator:
                 strategy: AUTO
-        title:
-            type: string
-            length: 255
         message:
             type: text
         createdAt:
             type: utcdatetime
             column: created_at
-        updatedAt:
-            type: utcdatetime
-            column: updated_at
         status:
             type: integer
     manyToOne:
       member:
         targetEntity: Digs\CoreBundle\Entity\Member
-    oneToMany:
-      comments:
-        targetEntity: Comment
-        mappedBy: entry
-    
+      entry:
+        targetEntity: Digs\EntryBundle\Entity\Entry
+        inversedBy: comments
+        
     lifecycleCallbacks: {  }
