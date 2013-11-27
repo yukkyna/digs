@@ -1,5 +1,5 @@
 digs_core_homepage:
-    pattern:  /hello/{name}
+    pattern:  /
     defaults: { _controller: DigsCoreBundle:Default:index }
 
 DigsCoreBundle_profile:

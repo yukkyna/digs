@@ -1,7 +1,12 @@
 parameters:
-#    digs_core.example.class: Digs\CoreBundle\Example
+    digs_core.navigation_manager.class: Digs\CoreBundle\Services\NavigationMenuManager
+    digs_core.navigation_manager.twig.extension.class: Digs\CoreBundle\Extension\Twig\NavigationMenuManagerTwigExtension
 
 services:
-#    digs_core.example:
-#        class: %digs_core.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    digs_core.navigation_manager:
+        class: %digs_core.navigation_manager.class%
+    digs_core.navigation_manager.twig.extension:
+        class: %digs_core.navigation_manager.twig.extension.class%
+        arguments: [@digs_core.navigation_manager]
+        tags:
+            - { name: twig.extension }

@@ -6,8 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
-    public function indexAction($name)
+    public function indexAction()
     {
-        return $this->render('DigsCoreBundle:Default:index.html.twig', array('name' => $name));
+//		var_dump($this->get('digs_core.navigation_manager'));die;
+        return $this->render('DigsCoreBundle:Default:index.html.twig', array(
+			
+		));
     }
 }
