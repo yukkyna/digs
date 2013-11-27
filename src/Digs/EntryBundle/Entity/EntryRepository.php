@@ -40,6 +40,7 @@ class EntryRepository extends EntityRepository
 			->leftJoin('k.profile', 'l')
             ->where('u.status = 1')
 			->andWhere('u.id=:id')
+			->orderBy('c.createdAt', 'DESC')
             ->setParameter('id', $id)
             ->getQuery()
 			->getSingleResult();
