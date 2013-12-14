@@ -1,8 +1,41 @@
 {% extends "DigsCoreBundle::base.html.twig" %}
 
+{% block javascripts %}
+<script type="text/javascript" src="{{ asset('bundles/digscore/js/tinymce/tinymce.min.js') }}"></script>
+<script type="text/javascript">
+tinymce.init({
+    selector: "textarea",
+    plugins: [
+        "advlist autolink lists link image charmap print preview anchor",
+        "searchreplace visualblocks code fullscreen",
+        "insertdatetime media table contextmenu paste"
+    ],
+    content_css: "{{ asset('bundles/digscore/css/bootstrap.min.css') }},{{ asset('bundles/digsentry/css/entry.css') }}",
+    menubar : false,
+    statusbar : false,
+    toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+});
+</script>
+{% endblock %}
+
 {% block body -%}
-<h1>Entry edit</h1>
+<div class="row">
+<h2>エントリの編集</h2>
+{{ form_start(edit_form) }}
+    <div class="form-group">
+{{ form_label(edit_form.title, 'タイトル') }}
+{{ form_errors(edit_form.title) }}
+{{ form_widget(edit_form.title, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+{{ form_label(edit_form.message, 'メッセージ') }}
+{{ form_errors(edit_form.message) }}
+{{ form_widget(edit_form.message, {'attr': {'class': 'form-control', 'rows': 10}}) }}
+    </div>
+{{ form_end(edit_form) }}
+
     {{ form(edit_form) }}
+</div>
 <ul class="record_actions">
     <li>
         <a href="{{ path('entry') }}">

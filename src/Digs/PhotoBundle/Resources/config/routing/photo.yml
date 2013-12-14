@@ -3,11 +3,11 @@ photo:
     defaults: { _controller: "DigsPhotoBundle:Photo:index" }
 
 photo_show:
-    pattern:  /{prefix}/{id}
+    pattern:  /{prefix}/{id}.jpg
     defaults: { _controller: "DigsPhotoBundle:Photo:show" }
 
 photo_thumbnail_show:
-    pattern:  /thumbnail/{prefix}/{id}
+    pattern:  /thumbnail/{prefix}/{id}.jpg
     defaults: { _controller: "DigsPhotoBundle:Photo:showThumbnail" }
 
 photo_new:

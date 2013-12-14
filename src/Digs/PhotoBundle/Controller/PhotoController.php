@@ -113,7 +113,7 @@ class PhotoController extends Controller
 			'Content-Type'   => 'image/jpeg',
 //			'Content-Length' => filesize($path),
 			'X-Sendfile'     => $this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR
-			. $entity->getMember()->getId() . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR . $entity->getFile(),
+			. $entity->getMember()->getId() . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR . $entity->getFile() . '.jpg',
 		));
 		$response->setStatusCode(200);
 //		$response =  new Response($image, 200);
@@ -147,7 +147,7 @@ class PhotoController extends Controller
 			'Content-Type'   => 'image/jpeg',
 //			'Content-Length' => filesize($path),
 			'X-Sendfile'     => $this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR
-			. $entity->getMember()->getId() . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR . 't_' .$entity->getFile(),
+			. $entity->getMember()->getId() . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR . 't_' .$entity->getFile() . '.jpg',
 		));
 		$response->setStatusCode(200);
 //		$response =  new Response($image, 200);

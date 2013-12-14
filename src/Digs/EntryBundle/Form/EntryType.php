@@ -17,7 +17,7 @@ class EntryType extends AbstractType
         $builder
             ->add('title')
             ->add('message')
-            ->add('status')
+            ->add('status', 'hidden')
         ;
     }
     

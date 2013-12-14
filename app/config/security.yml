@@ -1,6 +1,6 @@
 security:
     encoders:
-      Digs\CoreBundle\Entiry\Member:
+      Digs\CoreBundle\Entity\Member:
         algorithm: sha512
         encode_as_base64: false
         iterations: 3
@@ -22,17 +22,26 @@ security:
             pattern:  ^/login$
             security: false
 
+        restore:
+          pattern: ^/restore/
+          security: false
+
         secured_area:
             pattern:    ^/
-#            form_login:
-#                check_path: _security_check
-#                login_path: _login
+            form_login:
+                login_path: login
+                check_path: login_check
 #            logout:
 #                path:   _logout
 #                target: _demo
-            anonymous: true
+#            anonymous: true
             #http_basic:
             #    realm: "Secured Demo Area"
+            remember_me:
+                key:      %secret%
+                lifetime: 2592000
+                path:     /
+                domain:   ~
     access_control:
+#        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
