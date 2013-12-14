@@ -12,6 +12,12 @@ services:
             - [{title: エントリ, path: entry},{title: エントリ2, path: entry}]
         tags:
             - { name: digs.navigation.item }
+    digs_entry.toppanel.item:
+        class: Digs\CoreBundle\Services\TopPanelItem
+        arguments:
+            - [{controller: DigsEntryBundle:Entry:topPanel, parameters: {max: 6}}]
+        tags:
+            - { name: digs.toppanel.item }
 #    digs_entry.example:
 #        class: %digs_entry.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]

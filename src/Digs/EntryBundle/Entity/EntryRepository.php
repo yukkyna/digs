@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class EntryRepository extends EntityRepository
 {
-	public function findOpenedDscQuery($num)
+	public function findOpenedDscQueryBuilder()
 	{
         return $this
             ->createQueryBuilder('u')
@@ -21,11 +21,11 @@ class EntryRepository extends EntityRepository
             ->where('u.status = 1')
 //            ->setParameter('email', $username)
 			->orderBy('u.id', 'DESC')
-            ->getQuery();
+            ;
 	}
 	public function findOpenedDsc($num)
 	{
-        return $this->findOpenedDscQuery($num)->getResult();
+        return $this->findOpenedDscQueryBuilder()->setMaxResults($num)->getQuery()->getResult();
 	}
 
 	public function findByIdOpenedJoinMember($id)

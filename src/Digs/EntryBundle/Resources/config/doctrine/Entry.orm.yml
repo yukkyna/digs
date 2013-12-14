@@ -13,6 +13,8 @@ Digs\EntryBundle\Entity\Entry:
             length: 255
         message:
             type: text
+        escaped_message:
+            type: text
         createdAt:
             type: utcdatetime
             column: created_at

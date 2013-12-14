@@ -1,19 +1,7 @@
 {% extends "DigsCoreBundle::base.html.twig" %}
 
 {% block body %}
-<div class="row">
-    {% if entities %}
-        {% for entity in entities %}
-    <div class="col-md-4" style="min-height: 200px;">
-        <h2><a href="{{ path('entry_show', { 'id': entity.id }) }}" title="{{ entity.title }}">{{ entity.title|truncate(10) }}</a></h2>
-        <p>{{ entity.message|truncate(100) }}</p>
-        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-    </div>
-        {% endfor %}
-    {% else %}
-        <p>エントリーはありません</p>
-    {% endif %}
-</div>
+{{ include('DigsEntryBundle:Entry:toppanel.html.twig', { 'entities': entities }) }}
 <div class="row">
 {{ knp_pagination_render(entities) }}
 </div>

@@ -24,7 +24,7 @@ class EntryController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entities = $this->get('knp_paginator')->paginate(
-			$em->getRepository('DigsEntryBundle:Entry')->findOpenedDscQuery(null),
+			$em->getRepository('DigsEntryBundle:Entry')->findOpenedDscQueryBuilder()->getQuery(),
 			$request->query->get('page', 1),
 			18
 			);
@@ -33,7 +33,18 @@ class EntryController extends Controller
             'entities' => $entities,
         ));
     }
-    /**
+
+    public function topPanelAction($max = 10)
+    {
+		$entities = $this->getDoctrine()->getManager()
+			->getRepository('DigsEntryBundle:Entry')->findOpenedDsc($max);
+
+		return $this->render('DigsEntryBundle:Entry:toppanel.html.twig', array(
+            'entities' => $entities,
+        ));
+    }
+
+	/**
      * Creates a new Entry entity.
      *
      */

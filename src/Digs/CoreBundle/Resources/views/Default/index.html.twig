@@ -1,5 +1,8 @@
 {% extends "DigsCoreBundle::base.html.twig" %}
 
 {% block body %}
-Hello 
+{% for item in toppanel.items %}
+
+{{ render(controller(item.controller, item.parameters)) }}
+{% endfor %}
 {% endblock %}

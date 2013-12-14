@@ -237,4 +237,32 @@ class Entry
     {
         return $this->comments;
     }
+    /**
+     * @var string
+     */
+    private $escaped_message;
+
+
+    /**
+     * Set escaped_message
+     *
+     * @param string $escapedMessage
+     * @return Entry
+     */
+    public function setEscapedMessage($escapedMessage)
+    {
+        $this->escaped_message = $escapedMessage;
+    
+        return $this;
+    }
+
+    /**
+     * Get escaped_message
+     *
+     * @return string 
+     */
+    public function getEscapedMessage()
+    {
+        return $this->escaped_message;
+    }
 }

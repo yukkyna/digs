@@ -1,0 +1,15 @@
+
+<div class="row">
+{% if entities %}
+    {% for entity in entities %}
+    <div class="col-md-4" style="min-height: 200px; overflow: hidden">
+        <h2><a href="{{ path('entry_show', { 'id': entity.id }) }}" title="{{ entity.title }}">{{ entity.title|truncate(10) }}</a>
+            <small>{{ entity.updatedAt|date('Y-m-d H:i:s')  }}</small>
+        </h2>
+        <p>{{ entity.escapedMessage|truncate(100) }}</p>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>エントリーはありません</p>
+{% endif %}
+</div>
