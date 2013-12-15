@@ -11,6 +11,7 @@ Digs\CoreBundle\Entity\Member:
         email:
             type: string
             length: 255
+            unique: true
         password:
             type: string
             length: 255
@@ -34,5 +35,9 @@ Digs\CoreBundle\Entity\Member:
     oneToOne:
         profile:
             targetEntity: Profile
+#
+#    uniqueConstraints:
+#        unique_email_idx:
+#            columns: [email]
         
     lifecycleCallbacks: {  }

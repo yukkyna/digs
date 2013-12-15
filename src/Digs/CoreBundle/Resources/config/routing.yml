@@ -11,3 +11,7 @@ digs_core_homepage:
 DigsCoreBundle_profile:
     resource: "@DigsCoreBundle/Resources/config/routing/profile.yml"
     prefix:   /profile
+
+DigsCoreBundle_restore:
+    resource: "@DigsCoreBundle/Resources/config/routing/restore.yml"
+    prefix:   /restore

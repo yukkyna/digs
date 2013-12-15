@@ -1,0 +1,23 @@
+Digs\CoreBundle\Entity\Restore:
+    type: entity
+    table: null
+    repositoryClass: Digs\CoreBundle\Entity\RestoreRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        ticket:
+            type: string
+            length: 255
+        password:
+            type: string
+            length: 255
+        createdAt:
+            type: datetime
+            column: created_at
+    oneToOne:
+      member:
+        targetEntity: Digs\CoreBundle\Entity\Member
+    lifecycleCallbacks: {  }
