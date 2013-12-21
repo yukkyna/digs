@@ -184,13 +184,19 @@ class Member implements AdvancedUserInterface, \Serializable
 	
 	public function serialize() {
 		return serialize(array(
-            $this->id,
+			$this->id,
+			$this->email,
+			$this->salt,
+			$this->password,
         ));
 	}
 
 	public function unserialize($serialized) {
 		list (
-            $this->id,
+			$this->id,
+			$this->email,
+			$this->salt,
+			$this->password
         ) = unserialize($serialized);
 	}
 

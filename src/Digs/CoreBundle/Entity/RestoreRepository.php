@@ -12,4 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class RestoreRepository extends EntityRepository
 {
+	function findByTicketAndActiveMember($ticket)
+	{
+        return $this
+            ->createQueryBuilder('r')
+			->select('r, m')
+			->leftJoin('r.member', 'm')
+            ->where('r.ticket = :ticket')
+            ->andWhere('m.active = true')
+            ->setParameter('ticket', $ticket)
+            ->getQuery()
+			->getSingleResult();
+	}
 }

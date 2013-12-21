@@ -2,9 +2,18 @@ restore_send:
     pattern:  /send
     defaults: { _controller: "DigsCoreBundle:Restore:send" }
 
+restore_success:
+    pattern:  /success
+    defaults: { _controller: "DigsCoreBundle:Restore:success" }
+
 restore_confirm:
     pattern:  /{id}/confirm
     defaults: { _controller: "DigsCoreBundle:Restore:confirm" }
+
+restore_restore:
+    pattern:  /{id}/restore
+    defaults: { _controller: "DigsCoreBundle:Restore:restore" }
+    requirements: { _method: post }
 
 restore_new:
     pattern:  /new

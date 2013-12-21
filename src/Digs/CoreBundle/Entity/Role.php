@@ -2,12 +2,14 @@
 
 namespace Digs\CoreBundle\Entity;
 
+use Symfony\Component\Security\Core\Role\RoleInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Role
  */
-class Role
+class Role implements RoleInterface
 {
     /**
      * @var integer

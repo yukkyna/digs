@@ -25,6 +25,9 @@ framework:
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
+    form:
+        resources:
+            - 'DigsCoreBundle:Form:form_bootstrap_layout.html.twig'
 #    globals:
 #        static_server: %static_server%
 

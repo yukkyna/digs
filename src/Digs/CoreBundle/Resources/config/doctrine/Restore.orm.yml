@@ -17,7 +17,7 @@ Digs\CoreBundle\Entity\Restore:
         createdAt:
             type: datetime
             column: created_at
-    oneToOne:
+    manyToOne:
       member:
         targetEntity: Digs\CoreBundle\Entity\Member
     lifecycleCallbacks: {  }
