@@ -27,4 +27,18 @@ class PhotoRepository extends EntityRepository
             ->getQuery()
 			->getSingleResult();
 	}
+	
+	public function findAllByMemberOrderByDescQuery($memberId)
+	{
+        return $this
+            ->createQueryBuilder('u')
+			->select('u, m')
+			->leftJoin('u.member', 'm')
+//			->leftJoin('m.profile', 'p')
+            ->where('u.status = 1')
+			->andWhere('m.id=:memberId')
+            ->setParameter('memberId', $memberId)
+			->orderBy('u.createdAt', 'DESC')
+            ->getQuery();
+	}
 }

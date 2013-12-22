@@ -17,6 +17,15 @@ use Doctrine\ORM\NoResultException;
  */
 class MemberRepository extends EntityRepository implements UserProviderInterface
 {
+	public function findAllActive()
+	{
+        return $this
+            ->createQueryBuilder('u')
+            ->where('u.active=true')
+            ->getQuery()
+			->getResult();
+	}
+	
     public function loadUserByUsername($username)
     {
         $q = $this

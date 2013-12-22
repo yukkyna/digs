@@ -20,14 +20,20 @@ class PhotoController extends Controller
      * Lists all Photo entities.
      *
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+		
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('DigsPhotoBundle:Photo')->findAll();
+        $entities = $this->get('knp_paginator')->paginate(
+			$em->getRepository('DigsPhotoBundle:Photo')->findAllByMemberOrderByDescQuery($this->getUser()->getId()),
+			$request->query->get('page', 1),
+			16
+			);
 
         return $this->render('DigsPhotoBundle:Photo:index.html.twig', array(
             'entities' => $entities,
+			'prefix' => $this->getUser()->getId(),
         ));
     }
     /**

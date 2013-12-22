@@ -13,3 +13,8 @@ parameters:
 
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    upload_dir: ~
+    mailer_transport_dev: smtp
+    mailer_user_dev: ~
+    mailer_password_dev: ~

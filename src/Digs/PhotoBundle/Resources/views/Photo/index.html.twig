@@ -1,35 +1,26 @@
-{% extends '::base.html.twig' %}
+{% extends "DigsCoreBundle::base.html.twig" %}
 
 {% block body -%}
-    <h1>Photo list</h1>
-
-    <table class="records_list">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>File</th>
-                <th>Extradata</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td>{{ entity.title }}</td>
-                <td>{{ entity.file }}</td>
-                <td>{{ entity.extraData }}</td>
-                <td>{{ entity.status }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('photo_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
-    {% endblock %}
+{% set index = 0 %}
+{% for entity in entities %}
+{% if index % 4 == 0 %}
+<div class="row">
+{% endif %}
+    <div class="col-md-3">
+        <a href="#" class="thumbnail">
+            <div class="caption">{{ entity.title }}</div>
+            <img src="{{ path('photo_thumbnail_show', {'prefix': prefix, 'id': entity.file }) }}" />
+        </a>
+    </div>
+{% set index = index + 1 %}
+{% if index % 4 == 0 %}
+</div>
+{% endif %}
+{% endfor %}
+{% if index % 4 != 0 %}
+</div>
+{% endif %}
+<div class="row">
+{{ knp_pagination_render(entities) }}
+</div>
+{% endblock %}
