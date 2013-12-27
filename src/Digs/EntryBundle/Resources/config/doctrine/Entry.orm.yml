@@ -28,7 +28,7 @@ Digs\EntryBundle\Entity\Entry:
         targetEntity: Digs\CoreBundle\Entity\Member
     oneToMany:
       comments:
-        targetEntity: Comment
+        targetEntity: EntryComment
         mappedBy: entry
     
     lifecycleCallbacks: {  }

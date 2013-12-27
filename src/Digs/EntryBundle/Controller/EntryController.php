@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Digs\EntryBundle\Entity\Entry;
 use Digs\EntryBundle\Form\EntryType;
+use Digs\EntryBundle\Entity\EntryComment;
+use Digs\EntryBundle\Form\EntryCommentType;
 
 /**
  * Entry controller.
@@ -115,11 +117,19 @@ class EntryController extends Controller
             throw $this->createNotFoundException('Unable to find Entry entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+		$comment = new \Digs\EntryBundle\Entity\EntryComment();
+		$comment->setEntry($entity);
+        $commentForm = $this->createForm(new EntryCommentType(), $comment, array(
+            'action' => $this->generateUrl('entry_comment_create', array('id' => $entity->getId())),
+            'method' => 'POST',
+        ));
+//
+//        $form->add('submit', 'submit', array('label' => 'Update'));
 
         return $this->render('DigsEntryBundle:Entry:show.html.twig', array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        ));
+			'comment_form' => $commentForm->createView()
+			));
     }
 
     /**
@@ -185,7 +195,7 @@ class EntryController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('entry_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('entry_show', array('id' => $id)));
         }
 
         return $this->render('DigsEntryBundle:Entry:edit.html.twig', array(

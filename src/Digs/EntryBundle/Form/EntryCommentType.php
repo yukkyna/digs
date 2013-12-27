@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class EntryType extends AbstractType
+class EntryCommentType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -15,9 +15,11 @@ class EntryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('message', 'textarea', array('required'=>false))
-            ->add('status', 'hidden')
+            ->add('message')
+//            ->add('createdAt')
+//            ->add('status')
+//            ->add('member')
+//            ->add('entry')
         ;
     }
     
@@ -27,7 +29,7 @@ class EntryType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Digs\EntryBundle\Entity\Entry'
+            'data_class' => 'Digs\EntryBundle\Entity\EntryComment'
         ));
     }
 
@@ -36,6 +38,6 @@ class EntryType extends AbstractType
      */
     public function getName()
     {
-        return 'digs_entrybundle_entry';
+        return 'digs_entrybundle_entrycomment';
     }
 }

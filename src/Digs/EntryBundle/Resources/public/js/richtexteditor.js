@@ -1,0 +1,73 @@
+var RichTextEditor =
+{
+    init: function(contentCssPath, selectPhotoPath) {
+        tinymce.PluginManager.add('example', function(editor, url) {
+            editor.addButton('example', {
+                icon: 'image',
+                tooltip: 'Insert/edit image',
+                onclick: function() {
+                    editor.windowManager.open({
+                        title: '写真の選択',
+                        url: selectPhotoPath,
+                        height: 400,
+                        width: 800,
+                        buttons: [{
+                                text: 'Close',
+                                onclick: 'close'
+                            }]
+                    });
+                },
+                stateSelector: 'img:not([data-mce-object],[data-mce-placeholder])'
+            });
+        });
+        
+        tinymce.init({
+            selector: "textarea",
+            plugins: [
+                "advlist autolink lists link image charmap print preview anchor",
+                "searchreplace visualblocks code fullscreen",
+                "insertdatetime media table contextmenu paste example"
+            ],
+            content_css: contentCssPath,
+            menubar : false,
+            //    statusbar : false,
+            toolbar: "undo redo | styleselect | bold italic underline strikethrough removeformat | table visualaid blockquote | alignleft aligncenter alignright | bullist numlist | link image | example"
+        });
+    },
+
+    selectPhoto: function(elm)
+    {
+        alert(elm);
+        tinymce.activeEditor.windowManager.close();
+        var editor = tinymce.activeEditor;
+        var dom = editor.dom;
+        var imgElm = editor.selection.getNode();
+        if (imgElm.nodeName == 'IMG' && !imgElm.getAttribute('data-mce-object') && !imgElm.getAttribute('data-mce-placeholder')) {
+        } else {
+            imgElm = null;
+        }
+        var data = {
+            src: elm.children('img').attr('src'),
+            alt: elm.children('img').attr('alt')
+        };
+
+        editor.undoManager.transact(function() {
+            if (!imgElm) {
+                data.id = '__mcenew';
+                editor.selection.setContent(dom.createHTML('img', data));
+                imgElm = dom.get('__mcenew');
+                dom.setAttrib(imgElm, 'id', null);
+            } else {
+                dom.setAttribs(imgElm, data);
+            }
+//                waitLoad(imgElm);
+            editor.selection.select(imgElm);
+            editor.nodeChanged();
+            editor.execCommand('mceInsertLink', false, {
+                href: elm.attr('href'),
+                target: elm.attr('target'),
+                class: "thumbnail"
+            });
+        });
+    }
+};

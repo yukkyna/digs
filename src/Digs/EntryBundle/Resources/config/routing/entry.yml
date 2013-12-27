@@ -28,3 +28,8 @@ entry_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "DigsEntryBundle:Entry:delete" }
     requirements: { _method: post|delete }
+
+entry_comment_create:
+    pattern:  /{id}/comment/create
+    defaults: { _controller: "DigsEntryBundle:Entry:createComment" }
+    requirements: { _method: post }

@@ -208,10 +208,10 @@ class Entry
     /**
      * Add comments
      *
-     * @param \Digs\EntryBundle\Entity\Comment $comments
+     * @param \Digs\EntryBundle\Entity\EntryComment $comments
      * @return Entry
      */
-    public function addComment(\Digs\EntryBundle\Entity\Comment $comments)
+    public function addComment(\Digs\EntryBundle\Entity\EntryComment $comments)
     {
         $this->comments[] = $comments;
     
@@ -221,9 +221,9 @@ class Entry
     /**
      * Remove comments
      *
-     * @param \Digs\EntryBundle\Entity\Comment $comments
+     * @param \Digs\EntryBundle\Entity\EntryComment $comments
      */
-    public function removeComment(\Digs\EntryBundle\Entity\Comment $comments)
+    public function removeComment(\Digs\EntryBundle\Entity\EntryComment $comments)
     {
         $this->comments->removeElement($comments);
     }

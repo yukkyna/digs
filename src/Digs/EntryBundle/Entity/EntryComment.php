@@ -5,9 +5,9 @@ namespace Digs\EntryBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Comment
+ * EntryComment
  */
-class Comment
+class EntryComment
 {
     /**
      * @var integer
@@ -29,6 +29,16 @@ class Comment
      */
     private $status;
 
+    /**
+     * @var \Digs\CoreBundle\Entity\Member
+     */
+    private $member;
+
+    /**
+     * @var \Digs\EntryBundle\Entity\Entry
+     */
+    private $entry;
+
 
     /**
      * Get id
@@ -44,7 +54,7 @@ class Comment
      * Set message
      *
      * @param string $message
-     * @return Comment
+     * @return EntryComment
      */
     public function setMessage($message)
     {
@@ -67,7 +77,7 @@ class Comment
      * Set createdAt
      *
      * @param utcdatetime $createdAt
-     * @return Comment
+     * @return EntryComment
      */
     public function setCreatedAt($createdAt)
     {
@@ -90,7 +100,7 @@ class Comment
      * Set status
      *
      * @param integer $status
-     * @return Comment
+     * @return EntryComment
      */
     public function setStatus($status)
     {
@@ -108,45 +118,12 @@ class Comment
     {
         return $this->status;
     }
-    /**
-     * @var \Digs\EntryBundle\Entity\Entry
-     */
-    private $entry;
-
-
-    /**
-     * Set entry
-     *
-     * @param \Digs\EntryBundle\Entity\Entry $entry
-     * @return Comment
-     */
-    public function setEntry(\Digs\EntryBundle\Entity\Entry $entry = null)
-    {
-        $this->entry = $entry;
-    
-        return $this;
-    }
-
-    /**
-     * Get entry
-     *
-     * @return \Digs\EntryBundle\Entity\Entry 
-     */
-    public function getEntry()
-    {
-        return $this->entry;
-    }
-    /**
-     * @var \Digs\CoreBundle\Entity\Member
-     */
-    private $member;
-
 
     /**
      * Set member
      *
      * @param \Digs\CoreBundle\Entity\Member $member
-     * @return Comment
+     * @return EntryComment
      */
     public function setMember(\Digs\CoreBundle\Entity\Member $member = null)
     {
@@ -163,5 +140,28 @@ class Comment
     public function getMember()
     {
         return $this->member;
+    }
+
+    /**
+     * Set entry
+     *
+     * @param \Digs\EntryBundle\Entity\Entry $entry
+     * @return EntryComment
+     */
+    public function setEntry(\Digs\EntryBundle\Entity\Entry $entry = null)
+    {
+        $this->entry = $entry;
+    
+        return $this;
+    }
+
+    /**
+     * Get entry
+     *
+     * @return \Digs\EntryBundle\Entity\Entry 
+     */
+    public function getEntry()
+    {
+        return $this->entry;
     }
 }

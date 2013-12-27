@@ -1,7 +1,7 @@
-Digs\EntryBundle\Entity\Comment:
+Digs\EntryBundle\Entity\EntryComment:
     type: entity
-    table: entrycomment
-    repositoryClass: Digs\EntryBundle\Entity\CommentRepository
+    table: null
+    repositoryClass: Digs\EntryBundle\Entity\EntryCommentRepository
     fields:
         id:
             type: integer

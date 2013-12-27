@@ -4,6 +4,21 @@
 <link rel="stylesheet" href="{{ asset('bundles/digsentry/css/entry.css') }}" type="text/css" media="all" />
 {% endblock %}
 
+{% block javascripts %}
+<script type="text/javascript" src="{{ asset('bundles/digscore/js/tinymce/tinymce.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/digsentry/js/richtexteditor.js') }}"></script>
+<script type="text/javascript">
+    var EntryShowPage = {
+        init: function() {
+        }
+    };
+    $(document).ready(function(){
+        RichTextEditor.init("{{ asset('bundles/digscore/bootstrap/css/bootstrap.min.css') }},{{ asset('bundles/digsentry/css/entry.css') }}", "{{ path('photo_select') }}");
+        EntryShowPage.init();
+    });
+</script>
+{% endblock %}
+
 {% block body -%}
 <div class="row">
     <div class="col-md-3">
@@ -28,9 +43,19 @@
             </div>
             <div id="comment-wrapper" class="panel panel-default">
                 <div class="panel-heading">
-                    <h3>コメント</h3>
+                    <h3 class="panel-title">コメント <span class="badge">{{ entity.comments|length }}</span></h3>
                 </div>
                 <ul class="list-group">
+                    <li class="list-group-item">
+{{ form_start(comment_form) }}
+{{ form_errors(comment_form) }}
+                        <div class="form-group">
+{{ form_errors(comment_form.message) }}
+{{ form_widget(comment_form.message, {'attr': {'class': 'form-control', 'rows': 3}}) }}
+                        </div>
+    <button type="submit" class="btn btn-primary">コメント</button>
+{{ form_end(comment_form) }}
+                    </li>
 {% for comment in entity.comments %}
                     <li class="list-group-item">
                         <div class="row">
@@ -38,8 +63,8 @@
                                 <img class="img-responsive" src="{{ path('profile_image_show', { 'id': comment.member.id}) }}" />
                             </div>
                             <div class="col-md-11">
-                                <div class="row">{{ comment.member.profile.nickname }} <small>{{ comment.createdAt|date('Y-m-d H:i:s') }}</small></div>
-                                <div class="row">{{ comment.message }}</div>
+                                <div>{{ comment.member.profile.nickname }} <small>{{ comment.createdAt|date('Y-m-d H:i:s') }}</small></div>
+                                <div>{{ comment.message }}</div>
                             </div>
                         </div>
                     </li>
@@ -61,6 +86,5 @@
             Edit
         </a>
     </li>
-    <li>{{ form(delete_form) }}</li>
 </ul>
 {% endblock %}
