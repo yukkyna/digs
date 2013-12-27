@@ -1,0 +1,36 @@
+{% extends "DigsCoreBundle::plane.html.twig" %}
+{% block javascripts %}
+<script type="text/javascript" src="{{ asset('bundles/digscore/js/tinymce/tinymce.min.js') }}"></script>
+<script type="text/javascript">
+$('.thumbnail').click(function(e) {
+    e.preventDefault();
+    window.parent.EntryEditPage.selectPhoto($(this));
+});
+</script>
+{% endblock %}
+
+{% block body -%}
+{% set index = 0 %}
+{% for entity in entities %}
+{% if index % 3 == 0 %}
+<div class="row" style="margin-bottom: 15px;">
+{% endif %}
+    <div class="col-sm-4">
+        <div class="caption">{{ entity.title }}</div>
+        <small>{{ entity.createdAt|date('Y-m-d H:i:s') }}</small>
+        <a href="{{ path('photo_show', {'prefix': prefix, 'id': entity.file}) }}" class="thumbnail">
+            <img src="{{ path('photo_thumbnail_show', {'prefix': prefix, 'id': entity.file }) }}" />
+        </a>
+    </div>
+{% set index = index + 1 %}
+{% if index % 3 == 0 %}
+</div>
+{% endif %}
+{% endfor %}
+{% if index % 3 != 0 %}
+</div>
+{% endif %}
+<div class="row">
+{{ knp_pagination_render(entities) }}
+</div>
+{% endblock %}

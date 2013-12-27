@@ -36,7 +36,24 @@ class PhotoController extends Controller
 			'prefix' => $this->getUser()->getId(),
         ));
     }
-    /**
+	
+    public function selectAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $this->get('knp_paginator')->paginate(
+			$em->getRepository('DigsPhotoBundle:Photo')->findAllByMemberOrderByDescQuery($this->getUser()->getId()),
+			$request->query->get('page', 1),
+			12
+			);
+
+        return $this->render('DigsPhotoBundle:Photo:select.html.twig', array(
+            'entities' => $entities,
+			'prefix' => $this->getUser()->getId(),
+        ));
+    }
+
+	/**
      * Creates a new Photo entity.
      *
      */

@@ -159,8 +159,8 @@ class EntryController extends Controller
             'action' => $this->generateUrl('entry_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
-
-        $form->add('submit', 'submit', array('label' => 'Update'));
+//
+//        $form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
     }
@@ -210,8 +210,8 @@ class EntryController extends Controller
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Entry entity.');
             }
-
-            $em->remove($entity);
+			$entity->setStatus(0);
+            $em->persist($entity);
             $em->flush();
         }
 
@@ -230,7 +230,6 @@ class EntryController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('entry_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
     }

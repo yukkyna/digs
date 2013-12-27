@@ -3,24 +3,97 @@
 {% block javascripts %}
 <script type="text/javascript" src="{{ asset('bundles/digscore/js/tinymce/tinymce.min.js') }}"></script>
 <script type="text/javascript">
-tinymce.init({
-    selector: "textarea",
-    plugins: [
-        "advlist autolink lists link image charmap print preview anchor",
-        "searchreplace visualblocks code fullscreen",
-        "insertdatetime media table contextmenu paste"
-    ],
-    content_css: "{{ asset('bundles/digscore/css/bootstrap.min.css') }},{{ asset('bundles/digsentry/css/entry.css') }}",
-    menubar : false,
-    statusbar : false,
-    toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-});
+    var EntryEditPage = {
+        init: function() {
+            
+            $('#submit-delete').click(function(e) {
+                
+                if (confirm('削除します。よろしいですか。'))
+                {
+                    $('#delete-form').submit();
+                }
+            });
+
+            tinymce.PluginManager.add('example', function(editor, url) {
+                editor.addButton('example', {
+                    text: 'My button',
+                    icon: false,
+                    onclick: function() {
+                        editor.windowManager.open({
+                            title: '写真の選択',
+                            url: '{{ path('photo_select') }}',
+                            height: 400,
+                            width: 800,
+                            buttons: [{
+                                    text: 'Close',
+                                    onclick: 'close'
+                                }]
+                        });
+                    },
+                    stateSelector: 'img:not([data-mce-object],[data-mce-placeholder])'
+                });
+            });
+
+            tinymce.init({
+                selector: "textarea",
+                plugins: [
+                    "advlist autolink lists link image charmap print preview anchor",
+                    "searchreplace visualblocks code fullscreen",
+                    "insertdatetime media table contextmenu paste example"
+                ],
+                content_css: "{{ asset('bundles/digscore/css/bootstrap.min.css') }},{{ asset('bundles/digsentry/css/entry.css') }}",
+                menubar : false,
+            //    statusbar : false,
+                toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | example"
+            });
+        },
+        
+        selectPhoto: function(elm)
+        {
+            alert(elm);
+            tinymce.activeEditor.windowManager.close();
+            var editor = tinymce.activeEditor;
+            var dom = editor.dom;
+            var imgElm = editor.selection.getNode();
+            if (imgElm.nodeName == 'IMG' && !imgElm.getAttribute('data-mce-object') && !imgElm.getAttribute('data-mce-placeholder')) {
+            } else {
+                imgElm = null;
+            }
+            var data = {
+                src: elm.children('img').attr('src'),
+                alt: elm.children('img').attr('alt')
+            };
+            
+            editor.undoManager.transact(function() {
+                if (!imgElm) {
+                    data.id = '__mcenew';
+                    editor.selection.setContent(dom.createHTML('img', data));
+                    imgElm = dom.get('__mcenew');
+                    dom.setAttrib(imgElm, 'id', null);
+                } else {
+                    dom.setAttribs(imgElm, data);
+                }
+//                waitLoad(imgElm);
+                editor.selection.select(imgElm);
+		editor.nodeChanged();
+                editor.execCommand('mceInsertLink', false, {
+                    href: elm.attr('href'),
+                    target: elm.attr('target'),
+                    class: "thumbnail"
+                });
+            });
+        }
+    };
+    $(document).ready(EntryEditPage.init);
+    
 </script>
 {% endblock %}
 
 {% block body -%}
 <div class="row">
-<h2>エントリの編集</h2>
+    <h2>エントリの編集</h2>
+</div>
+<div class="row">
 {{ form_start(edit_form) }}
     <div class="form-group">
 {{ form_label(edit_form.title, 'タイトル') }}
@@ -30,18 +103,14 @@ tinymce.init({
     <div class="form-group">
 {{ form_label(edit_form.message, 'メッセージ') }}
 {{ form_errors(edit_form.message) }}
-{{ form_widget(edit_form.message, {'attr': {'class': 'form-control', 'rows': 10}}) }}
+{{ form_widget(edit_form.message, {'attr': {'class': 'form-control', 'rows': 50}}) }}
     </div>
-{{ form_end(edit_form) }}
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">保存</button> <button id="submit-delete" type="button" class="pull-right btn btn-danger">削除</button>
+    </div>
 
-    {{ form(edit_form) }}
+{{ form_end(edit_form) }}
 </div>
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('entry') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+{{ form_start(delete_form, {'attr': {'id': 'delete-form'}}) }}
+{{ form_end(delete_form) }}
 {% endblock %}

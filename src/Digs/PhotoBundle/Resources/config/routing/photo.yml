@@ -10,6 +10,10 @@ photo_thumbnail_show:
     pattern:  /thumbnail/{prefix}/{id}.jpg
     defaults: { _controller: "DigsPhotoBundle:Photo:showThumbnail" }
 
+photo_select:
+    pattern:  /select
+    defaults: { _controller: "DigsPhotoBundle:Photo:select" }
+
 photo_new:
     pattern:  /new
     defaults: { _controller: "DigsPhotoBundle:Photo:new" }
