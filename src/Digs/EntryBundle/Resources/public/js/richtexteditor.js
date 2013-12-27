@@ -1,8 +1,8 @@
 var RichTextEditor =
 {
     init: function(contentCssPath, selectPhotoPath) {
-        tinymce.PluginManager.add('example', function(editor, url) {
-            editor.addButton('example', {
+        tinymce.PluginManager.add('digsimage', function(editor, url) {
+            editor.addButton('digsimage', {
                 icon: 'image',
                 tooltip: 'Insert/edit image',
                 onclick: function() {
@@ -20,18 +20,29 @@ var RichTextEditor =
                 stateSelector: 'img:not([data-mce-object],[data-mce-placeholder])'
             });
         });
+
+        tinymce.PluginManager.add('digscode', function(editor, url) {
+            editor.addButton('digscode', {
+                icon: 'code',
+                tooltip: 'code',
+                onclick: function() {
+                    editor.execCommand('mceToggleFormat', false, 'pre');
+                }
+            });
+        });
         
         tinymce.init({
             selector: "textarea",
             plugins: [
                 "advlist autolink lists link image charmap print preview anchor",
                 "searchreplace visualblocks code fullscreen",
-                "insertdatetime media table contextmenu paste example"
+                "insertdatetime media table contextmenu paste digsimage digscode"
             ],
             content_css: contentCssPath,
             menubar : false,
             //    statusbar : false,
-            toolbar: "undo redo | styleselect | bold italic underline strikethrough removeformat | table visualaid blockquote | alignleft aligncenter alignright | bullist numlist | link image | example"
+//            toolbar: "undo redo | styleselect | bold italic underline strikethrough removeformat | table blockquote digscode | alignleft aligncenter alignright | bullist numlist | link image | digsimage"
+            toolbar: "undo redo | styleselect | bold italic underline strikethrough | table blockquote digscode | alignleft aligncenter alignright | bullist numlist | link image | digsimage"
         });
     },
 
