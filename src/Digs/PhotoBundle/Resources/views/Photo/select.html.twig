@@ -1,6 +1,5 @@
 {% extends "DigsCoreBundle::plane.html.twig" %}
 {% block javascripts %}
-<script type="text/javascript" src="{{ asset('bundles/digscore/js/tinymce/tinymce.min.js') }}"></script>
 <script type="text/javascript">
 $('.thumbnail').click(function(e) {
     e.preventDefault();
@@ -10,11 +9,20 @@ $('.thumbnail').click(function(e) {
 {% endblock %}
 
 {% block body -%}
-{% set index = 0 %}
-{% for entity in entities %}
-{% if index % 3 == 0 %}
+<div class="row" style="margin-bottom: 32px;">
+    <form class="form-inline pull-right">
+        <div class="form-group">
+            <label for="exampleInputFile">新しい写真をアップロードする</label>
+            <input type="file" id="exampleInputFile">
+        </div>
+        <button type="submit" class="btn btn-default">アップロード</button>
+    </form>
+</div>
+    {% set index = 0 %}
+    {% for entity in entities %}
+        {% if index % 3 == 0 %}
 <div class="row" style="margin-bottom: 15px;">
-{% endif %}
+        {% endif %}
     <div class="col-sm-4">
         <div class="caption">{{ entity.title }}</div>
         <small>{{ entity.createdAt|date('Y-m-d H:i:s') }}</small>
@@ -22,14 +30,14 @@ $('.thumbnail').click(function(e) {
             <img src="{{ path('photo_thumbnail_show', {'prefix': prefix, 'id': entity.file }) }}" />
         </a>
     </div>
-{% set index = index + 1 %}
-{% if index % 3 == 0 %}
+        {% set index = index + 1 %}
+        {% if index % 3 == 0 %}
 </div>
-{% endif %}
-{% endfor %}
-{% if index % 3 != 0 %}
+        {% endif %}
+    {% endfor %}
+    {% if index % 3 != 0 %}
 </div>
-{% endif %}
+    {% endif %}
 <div class="row">
 {{ knp_pagination_render(entities) }}
 </div>

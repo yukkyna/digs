@@ -2,13 +2,13 @@ entry:
     pattern:  /
     defaults: { _controller: "DigsEntryBundle:Entry:index" }
 
-entry_show:
-    pattern:  /{id}/show
-    defaults: { _controller: "DigsEntryBundle:Entry:show" }
-
 entry_new:
     pattern:  /new
     defaults: { _controller: "DigsEntryBundle:Entry:new" }
+
+entry_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "DigsEntryBundle:Entry:show" }
 
 entry_edit:
     pattern:  /{id}/edit
