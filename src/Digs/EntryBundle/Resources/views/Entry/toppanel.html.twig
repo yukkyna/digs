@@ -1,15 +1,32 @@
 
-<div class="row">
 {% if entities %}
+    {% set index = 0 %}
     {% for entity in entities %}
-    <div class="col-md-4" style="min-height: 200px; overflow: hidden">
-        <h2><a href="{{ path('entry_show', { 'id': entity.id }) }}" title="{{ entity.title }}">{{ entity.title|truncate(10) }}</a>
-            <small>{{ entity.updatedAt|date('Y-m-d H:i:s')  }}</small>
-        </h2>
+        {% if index % 3 == 0 %}
+<div class="row" style="margin-bottom: 15px;">
+        {% endif %}
+    <div class="col-md-4">
+        <h2><a href="{{ path('entry_show', { 'id': entity.id }) }}" title="{{ entity.title }}">{{ entity.title|truncate(10) }}</a></h2>
         <p>{{ entity.escapedMessage|truncate(100) }}</p>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="pull-right">
+                    <img src="{{ path('profile_image_show', { 'id': entity.member.id}) }}" alt="profile" style="width:32px"/>
+                    {{ entity.member.profile.nickname }} <small>{{ entity.updatedAt|date('Y-m-d H:i:s')  }}</small>
+                </div>
+            </div>
+        </div>
     </div>
-    {% endfor %}
-{% else %}
-    <p>エントリーはありません</p>
-{% endif %}
+        {% set index = index + 1 %}
+        {% if index % 3 == 0 %}
 </div>
+        {% endif %}
+    {% endfor %}
+    {% if index % 3 != 0 %}
+</div>
+    {% endif %}
+{% else %}
+<div class="row">
+    <p>エントリーはありません</p>
+</div>
+{% endif %}
