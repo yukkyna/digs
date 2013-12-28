@@ -13,6 +13,7 @@
 }
 
 #entry-inner .thumbnail,
+#comment-wrapper .thumbnail,
 #tinymce .thumbnail
 {
     display: inline-block;
