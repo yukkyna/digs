@@ -46,27 +46,31 @@ class EntryController extends Controller
         ));
     }
 
-	/**
-     * Creates a new Entry entity.
+    /**
+     * Displays a form to create a new Entry entity.
      *
      */
-    public function createAction(Request $request)
+    public function newAction(Request $request)
     {
         $entity = new Entry();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
+        $form   = $this->createCreateForm($entity);
+		
+		if ($request->isMethod('POST'))
+		{
+			$form->handleRequest($request);
+			if ($form->isValid()) {
+				$entity->setMember($this->getUser());
+				$entity->setStatus(1);
+				$em = $this->getDoctrine()->getManager();
+				$em->persist($entity);
+				$em->flush();
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('entry_show', array('id' => $entity->getId())));
-        }
-
-        return $this->render('DigsEntryBundle:Entry:new.html.twig', array(
+				return $this->redirect($this->generateUrl('entry_show', array('id' => $entity->getId())));
+			}
+		}
+        return $this->render('DigsEntryBundle:Entry:edit.html.twig', array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'edit_form'   => $form->createView(),
         ));
     }
 
@@ -80,28 +84,11 @@ class EntryController extends Controller
     private function createCreateForm(Entry $entity)
     {
         $form = $this->createForm(new EntryType(), $entity, array(
-            'action' => $this->generateUrl('entry_create'),
+            'action' => $this->generateUrl('entry_new'),
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
         return $form;
-    }
-
-    /**
-     * Displays a form to create a new Entry entity.
-     *
-     */
-    public function newAction()
-    {
-        $entity = new Entry();
-        $form   = $this->createCreateForm($entity);
-
-        return $this->render('DigsEntryBundle:Entry:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
     }
 
     /**
@@ -146,7 +133,7 @@ class EntryController extends Controller
      * Displays a form to edit an existing Entry entity.
      *
      */
-    public function editAction($id)
+    public function editAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -158,6 +145,16 @@ class EntryController extends Controller
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
+		if ($request->isMethod('PUT'))
+		{
+			$editForm->handleRequest($request);
+
+			if ($editForm->isValid()) {
+				$em->flush();
+
+				return $this->redirect($this->generateUrl('entry_show', array('id' => $id)));
+			}
+		}
 
         return $this->render('DigsEntryBundle:Entry:edit.html.twig', array(
             'entity'      => $entity,
@@ -176,43 +173,13 @@ class EntryController extends Controller
     private function createEditForm(Entry $entity)
     {
         $form = $this->createForm(new EntryType(), $entity, array(
-            'action' => $this->generateUrl('entry_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('entry_edit', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 //
 //        $form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
-    }
-    /**
-     * Edits an existing Entry entity.
-     *
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('DigsEntryBundle:Entry')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Entry entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isValid()) {
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('entry_show', array('id' => $id)));
-        }
-
-        return $this->render('DigsEntryBundle:Entry:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
     }
     /**
      * Deletes a Entry entity.

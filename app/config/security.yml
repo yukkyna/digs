@@ -31,7 +31,7 @@ security:
             form_login:
                 login_path: login
                 check_path: login_check
-#            logout:
+            logout: ~
 #                path:   _logout
 #                target: _demo
 #            anonymous: true

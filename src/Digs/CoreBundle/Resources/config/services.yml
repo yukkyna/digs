@@ -1,10 +1,19 @@
 parameters:
+    digs_core.mymenu_manager.class: Digs\CoreBundle\Services\MyMenuManager
+    digs_core.mymenu_manager.twig.extension.class: Digs\CoreBundle\Extension\Twig\MyMenuManagerTwigExtension
     digs_core.navigation_manager.class: Digs\CoreBundle\Services\NavigationMenuManager
     digs_core.navigation_manager.twig.extension.class: Digs\CoreBundle\Extension\Twig\NavigationMenuManagerTwigExtension
     digs_core.toppanel_manager.class: Digs\CoreBundle\Services\TopPanelManager
     digs_core.toppanel_manager.twig.extension.class: Digs\CoreBundle\Extension\Twig\TopPanelManagerTwigExtension
 
 services:
+    digs_core.mymenu_manager:
+        class: %digs_core.mymenu_manager.class%
+    digs_core.mymenu_manager.twig.extension:
+        class: %digs_core.mymenu_manager.twig.extension.class%
+        arguments: [@digs_core.mymenu_manager]
+        tags:
+            - { name: twig.extension }
     digs_core.navigation_manager:
         class: %digs_core.navigation_manager.class%
     digs_core.navigation_manager.twig.extension:

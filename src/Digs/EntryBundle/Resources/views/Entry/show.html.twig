@@ -37,7 +37,7 @@
 {% endif %}
             <div id="entry-inner" class="panel panel-default">
                 <div class="panel-heading">
-                    <h2 class="panel-heading">{{ entity.title }} <small>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</small></h2>
+                    <h2 class="panel-title">{{ entity.title }} <small>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</small></h2>
                 </div>
                 <div class="panel-body">{{ entity.message|raw }}</div>
             </div>

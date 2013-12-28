@@ -29,21 +29,6 @@
 {% for item in navigation.items %}
                         <li><a href="{{ path(item.path) }}">{{ item.title }}</a></li>
 {% endfor %}
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <span class="glyphicon glyphicon-star"></span>
-                                <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
-                                <li class="divider"></li>
-                                <li class="dropdown-header">Nav header</li>
-                                <li><a href="#">Separated link</a></li>
-                                <li><a href="#">One more separated link</a></li>
-                            </ul>
-                        </li>
                     </ul>
                     <form class="navbar-form navbar-left" role="search">
                         <div class="form-group">
@@ -54,7 +39,20 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="../navbar/">Default</a></li>
                         <li class="active"><a href="./">Static top</a></li>
-                        <li><a href="../navbar-fixed-top/">Fixed top</a></li>
+                        <li><a href="../navbar-fixed-top/"></a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                {{ app.user.profile.nickname }}
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+{% for item in mymenu.items %}
+                                <li><a href="{{ path(item.path) }}">{{ item.title }}</a></li>
+{% endfor %}
+                                <li class="divider"></li>
+                                <li><a href="{{ path('logout') }}">ログアウト</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div><!--/.nav-collapse -->
 {% endif %}

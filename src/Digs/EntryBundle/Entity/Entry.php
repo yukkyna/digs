@@ -265,4 +265,23 @@ class Entry
     {
         return $this->escaped_message;
     }
+
+	public function setCreatedAtValue()
+	{
+		$this->setCreatedAt(new \DateTime());
+	}
+	
+	public function setEscapedMessageValue()
+	{
+		$config = \HTMLPurifier_Config::createDefault();
+		$config->set('HTML.AllowedElements', array());
+		$purifier = new \HTMLPurifier($config);
+		$msg = $purifier->purify($this->getMessage());
+		$this->setEscapedMessage($msg);
+	}
+	
+	public function setUpdatedAtValue()
+	{
+		$this->setUpdatedAt(new \DateTime());
+	}
 }

@@ -38,6 +38,7 @@ var RichTextEditor =
                 "searchreplace visualblocks code fullscreen",
                 "insertdatetime media table contextmenu paste digsimage digscode"
             ],
+            relative_urls: false,
             content_css: contentCssPath,
             menubar : false,
             //    statusbar : false,

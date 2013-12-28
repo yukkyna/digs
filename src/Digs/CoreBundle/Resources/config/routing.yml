@@ -3,6 +3,8 @@ login:
     defaults:  { _controller: DigsCoreBundle:Default:login }
 login_check:
     path:   /login_check
+logout:
+    path:   /logout
 
 digs_core_homepage:
     pattern:  /

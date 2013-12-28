@@ -31,4 +31,6 @@ Digs\EntryBundle\Entity\Entry:
         targetEntity: EntryComment
         mappedBy: entry
     
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks:
+        prePersist: [setCreatedAtValue, setEscapedMessageValue, setUpdatedAtValue]
+        preUpdate:  [setEscapedMessageValue, setUpdatedAtValue]
