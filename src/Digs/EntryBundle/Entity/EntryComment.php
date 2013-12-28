@@ -164,4 +164,9 @@ class EntryComment
     {
         return $this->entry;
     }
+
+	public function setCreatedAtValue()
+	{
+		$this->createdAt = new \DateTime();
+	}
 }

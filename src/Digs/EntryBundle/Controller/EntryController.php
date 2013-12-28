@@ -108,7 +108,7 @@ class EntryController extends Controller
      * Finds and displays a Entry entity.
      *
      */
-    public function showAction($id)
+    public function showAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -117,14 +117,24 @@ class EntryController extends Controller
             throw $this->createNotFoundException('Unable to find Entry entity.');
         }
 
-		$comment = new \Digs\EntryBundle\Entity\EntryComment();
+		$comment = new EntryComment();
 		$comment->setEntry($entity);
+		$comment->setMember($this->getUser());
+		$comment->setStatus(1);
         $commentForm = $this->createForm(new EntryCommentType(), $comment, array(
-            'action' => $this->generateUrl('entry_comment_create', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('entry_show', array('id' => $entity->getId())),
             'method' => 'POST',
         ));
-//
-//        $form->add('submit', 'submit', array('label' => 'Update'));
+		if ($request->isMethod('POST'))
+		{
+	        $commentForm->handleRequest($request);
+			if ($commentForm->isValid()) {
+				$em = $this->getDoctrine()->getManager();
+				$em->persist($comment);
+				$em->flush();
+			}
+            return $this->redirect($this->generateUrl('entry_show', array('id' => $entity->getId())));
+		}
 
         return $this->render('DigsEntryBundle:Entry:show.html.twig', array(
             'entity'      => $entity,

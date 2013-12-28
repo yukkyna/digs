@@ -15,7 +15,9 @@ class EntryCommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('message')
+            ->add('message', 'textarea', array(
+				'required' => false
+			))
 //            ->add('createdAt')
 //            ->add('status')
 //            ->add('member')

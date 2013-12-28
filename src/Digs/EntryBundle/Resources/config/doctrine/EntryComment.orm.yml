@@ -22,4 +22,5 @@ Digs\EntryBundle\Entity\EntryComment:
         targetEntity: Digs\EntryBundle\Entity\Entry
         inversedBy: comments
         
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks:
+        prePersist: [setCreatedAtValue]
