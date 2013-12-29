@@ -1,0 +1,24 @@
+{% extends "DigsCoreBundle::plane.html.twig" %}
+{% block javascripts %}
+<script type="text/javascript">
+    var UploadedPhotoPage = {
+        init: function()
+        {
+            if ($('.alert-danger').length)
+            {
+                window.parent.SelectPhotoPage.showUploadError($('.alert-danger'));
+            }
+            else
+            {
+                window.parent.SelectPhotoPage.reload();
+            }
+        }
+    };
+    $(document).ready(UploadedPhotoPage.init);
+</script>
+{% endblock %}
+
+{% block body -%}
+{{ form_errors(upload_form) }}
+{{ form_errors(upload_form.file) }}
+{% endblock %}

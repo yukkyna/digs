@@ -36,7 +36,7 @@ class PhotoController extends Controller
 			'prefix' => $this->getUser()->getId(),
         ));
     }
-	
+
     public function selectAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -46,10 +46,12 @@ class PhotoController extends Controller
 			$request->query->get('page', 1),
 			12
 			);
+		$uploadForm = $this->createCreateForm();
 
         return $this->render('DigsPhotoBundle:Photo:select.html.twig', array(
             'entities' => $entities,
 			'prefix' => $this->getUser()->getId(),
+			'upload_form' => $uploadForm->createView()
         ));
     }
 
@@ -59,45 +61,63 @@ class PhotoController extends Controller
      */
     public function newAction(Request $request)
     {
-        $entity = new Photo();
-        $form   = $this->createCreateForm($entity);
+//		$uploadForm = $this->createUploadForm();
+//		if ($request->isMethod('POST'))
+//		{
+//			$uploadForm->handleRequest($request);
+//
+//			if ($uploadForm->isValid()) {
+//				$em->flush();
+//			}
+//		}
 
-		if ($request->isMethod('POST'))
+		$form   = $this->createCreateForm();
+		try
 		{
-			$form->handleRequest($request);
+			$entity = new Photo();
 
-			if ($form->isValid()) {
-				$em = $this->getDoctrine()->getManager();
-				$em->persist($entity);
-				$em->flush();
+			if ($request->isMethod('POST'))
+			{
+				$form->handleRequest($request);
+				if ($form->isValid()) {
+					$file = $form['file']->getData();
+					$file->move('D:\Program\digs', 'abc');
 
-				return $this->redirect($this->generateUrl('photo_show', array('id' => $entity->getId())));
+	//				$em = $this->getDoctrine()->getManager();
+	//				$em->persist($entity);
+	//				$em->flush();
+	//
+	//				return $this->redirect($this->generateUrl('photo_show', array('id' => $entity->getId())));
+				}
 			}
 		}
+		catch (\Symfony\Component\HttpFoundation\File\Exception\FileException $e)
+		{
+			$form->addError(new \Symfony\Component\Form\FormError('ファイルサイズが大きすぎます。'));
+		}
+		return $this->render('DigsPhotoBundle:Photo:uploaded.html.twig', array(
+			'upload_form' => $form->createView()
+		));
 		
-        return $this->render('DigsPhotoBundle:Photo:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
+//		
+//        return $this->render('DigsPhotoBundle:Photo:new.html.twig', array(
+//            'entity' => $entity,
+//            'form'   => $form->createView(),
+//        ));
     }
 
     /**
     * Creates a form to create a Photo entity.
     *
-    * @param Photo $entity The entity
-    *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createCreateForm(Photo $entity)
+    private function createCreateForm()
     {
-        $form = $this->createForm(new PhotoType(), $entity, array(
-            'action' => $this->generateUrl('photo_new'),
-            'method' => 'POST',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
-        return $form;
+		return $this->createFormBuilder()
+			->setAction($this->generateUrl('photo_new'))
+			->setMethod('POST')
+            ->add('file', 'file')
+            ->getForm();
     }
 
 	/**

@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "b1fbb76b3a4adf5e0dcc68b177c92a39",
+    "hash": "c8937773c36e85ac6a86e6768f782195",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -771,16 +771,16 @@
         },
         {
             "name": "knplabs/knp-components",
-            "version": "1.2.3",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/knp-components.git",
-                "reference": "d18fa34bd7c22a725b71fd655232c9ef2ac0e29b"
+                "reference": "ae454fb43473127a7bdc0a777f962f64f94e2795"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/knp-components/zipball/d18fa34bd7c22a725b71fd655232c9ef2ac0e29b",
-                "reference": "d18fa34bd7c22a725b71fd655232c9ef2ac0e29b",
+                "url": "https://api.github.com/repos/KnpLabs/knp-components/zipball/ae454fb43473127a7bdc0a777f962f64f94e2795",
+                "reference": "ae454fb43473127a7bdc0a777f962f64f94e2795",
                 "shasum": ""
             },
             "require": {
@@ -828,7 +828,7 @@
                 "pager",
                 "paginator"
             ],
-            "time": "2013-03-14 07:31:46"
+            "time": "2013-12-23 13:48:48"
         },
         {
             "name": "knplabs/knp-paginator-bundle",
@@ -1707,6 +1707,7 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
+        "knplabs/knp-components": 20,
         "knplabs/knp-paginator-bundle": 20,
         "ezyang/htmlpurifier": 20
     },

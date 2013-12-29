@@ -49,7 +49,6 @@ var RichTextEditor =
 
     selectPhoto: function(elm)
     {
-        alert(elm);
         tinymce.activeEditor.windowManager.close();
         var editor = tinymce.activeEditor;
         var dom = editor.dom;

@@ -19,6 +19,7 @@
         "sensio/framework-extra-bundle": "~3.0",
         "sensio/generator-bundle": "~2.3",
         "incenteev/composer-parameter-handler": "~2.0",
+        "knplabs/knp-components": "dev-master",
         "knplabs/knp-paginator-bundle": "dev-master",
         "ezyang/htmlpurifier": "dev-master"
     },

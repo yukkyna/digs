@@ -17,20 +17,16 @@ photo_select:
 photo_new:
     pattern:  /new
     defaults: { _controller: "DigsPhotoBundle:Photo:new" }
-
-photo_create:
-    pattern:  /create
-    defaults: { _controller: "DigsPhotoBundle:Photo:create" }
     requirements: { _method: post }
 
-photo_edit:
-    pattern:  /{id}/edit
-    defaults: { _controller: "DigsPhotoBundle:Photo:edit" }
-
-photo_update:
-    pattern:  /{id}/update
-    defaults: { _controller: "DigsPhotoBundle:Photo:update" }
-    requirements: { _method: post|put }
+#photo_edit:
+#    pattern:  /{id}/edit
+#    defaults: { _controller: "DigsPhotoBundle:Photo:edit" }
+#
+#photo_update:
+#    pattern:  /{id}/update
+#    defaults: { _controller: "DigsPhotoBundle:Photo:update" }
+#    requirements: { _method: post|put }
 
 photo_delete:
     pattern:  /{id}/delete

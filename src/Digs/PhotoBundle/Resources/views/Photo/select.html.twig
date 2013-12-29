@@ -1,22 +1,39 @@
 {% extends "DigsCoreBundle::plane.html.twig" %}
 {% block javascripts %}
 <script type="text/javascript">
-$('.thumbnail').click(function(e) {
-    e.preventDefault();
-    window.parent.RichTextEditor.selectPhoto($(this));
-});
+    var SelectPhotoPage = {
+        init: function()
+        {
+            $('.thumbnail').click(function(e) {
+                e.preventDefault();
+                window.parent.RichTextEditor.selectPhoto($(this));
+            });
+        },
+        showUploadError: function(err)
+        {
+            $('#upload-error').append(err);
+        },
+        reload: function()
+        {
+            window.location = "{{ path('photo_select') }}";
+        }
+    };
+    $(document).ready(SelectPhotoPage.init);
 </script>
 {% endblock %}
 
 {% block body -%}
-<div class="row" style="margin-bottom: 32px;">
-    <form class="form-inline pull-right">
-        <div class="form-group">
-            <label for="exampleInputFile">新しい写真をアップロードする</label>
-            <input type="file" id="exampleInputFile">
-        </div>
-        <button type="submit" class="btn btn-default">アップロード</button>
-    </form>
+
+<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+    <div id="upload-error"></div>
+{{ form_start(upload_form, {'attr': {'target': 'uploader'}}) }}
+    <div class="input-group">
+        <label class="input-group-addon">新しい写真をアップロードする</label>
+        {{ form_widget(upload_form.file, {'attr': {'class': 'form-control'}}) }}
+        <span class="input-group-btn"><button type="submit" class="btn btn-primary">アップロード</button></span>
+    </div>
+{{ form_end(upload_form) }}
+<iframe name="uploader" src="" style="width: 0; height: 0; border:0; overflow: hidden; display: none;"></iframe>
 </div>
     {% set index = 0 %}
     {% for entity in entities %}

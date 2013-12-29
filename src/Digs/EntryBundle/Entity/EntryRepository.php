@@ -15,12 +15,13 @@ class EntryRepository extends EntityRepository
 	public function findOpenedDscQueryBuilder()
 	{
         return $this
-            ->createQueryBuilder('u')
-//			->select('u, r')
-//			->leftJoin('u.roles', 'r')
-            ->where('u.status = 1')
+            ->createQueryBuilder('e')
+			->select('e, m, p')
+			->leftJoin('e.member', 'm')
+			->leftJoin('m.profile', 'p')
+            ->where('e.status = 1')
 //            ->setParameter('email', $username)
-			->orderBy('u.id', 'DESC')
+			->orderBy('e.id', 'DESC')
             ;
 	}
 	public function findOpenedDsc($num)

@@ -30,9 +30,11 @@ class MemberRepository extends EntityRepository implements UserProviderInterface
     {
         $q = $this
             ->createQueryBuilder('u')
-			->select('u, r')
+			->select('u, r, p')
 			->leftJoin('u.roles', 'r')
+			->leftJoin('u.profile', 'p')
             ->where('u.email = :email')
+			->andWhere('u.active=true')
             ->setParameter('email', $username)
             ->getQuery();
 
