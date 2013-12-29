@@ -9,6 +9,15 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Photo
 {
+	public function __construct()
+    {
+		$this->status = 1;
+    }
+	public function setCreatedAtValue()
+	{
+		$this->setCreatedAt(new \DateTime());
+	}
+
     /**
      * @var integer
      */
@@ -35,11 +44,6 @@ class Photo
     private $file;
 
     /**
-     * @var string
-     */
-    private $extraData;
-
-    /**
      * @var utcdatetime
      */
     private $createdAt;
@@ -64,7 +68,7 @@ class Photo
     public function setTitle($title)
     {
         $this->title = $title;
-    
+
         return $this;
     }
 
@@ -87,7 +91,7 @@ class Photo
     public function setFile($file)
     {
         $this->file = $file;
-    
+
         return $this;
     }
 
@@ -102,29 +106,6 @@ class Photo
     }
 
     /**
-     * Set extraData
-     *
-     * @param string $extraData
-     * @return Photo
-     */
-    public function setExtraData($extraData)
-    {
-        $this->extraData = $extraData;
-    
-        return $this;
-    }
-
-    /**
-     * Get extraData
-     *
-     * @return string 
-     */
-    public function getExtraData()
-    {
-        return $this->extraData;
-    }
-
-    /**
      * Set createdAt
      *
      * @param utcdatetime $createdAt
@@ -133,7 +114,7 @@ class Photo
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
@@ -156,7 +137,7 @@ class Photo
     public function setStatus($status)
     {
         $this->status = $status;
-    
+
         return $this;
     }
 
@@ -179,7 +160,7 @@ class Photo
     public function setMember(\Digs\CoreBundle\Entity\Member $member = null)
     {
         $this->member = $member;
-    
+
         return $this;
     }
 

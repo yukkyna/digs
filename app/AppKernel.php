@@ -20,6 +20,7 @@ class AppKernel extends Kernel
 			new Digs\CoreBundle\DigsCoreBundle(),
             new Digs\EntryBundle\DigsEntryBundle(),
             new Digs\PhotoBundle\DigsPhotoBundle(),
+            new Digs\ImageConverterBundle\DigsImageConverterBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

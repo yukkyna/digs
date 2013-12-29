@@ -1,0 +1,7 @@
+imports:
+    - { resource: service_parameters.yml}
+
+services:
+    digs_image_converter.manager:
+        class: Digs\ImageConverterBundle\Services\ImageMagickManager
+        arguments: [%image_converter.converter%]

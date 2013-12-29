@@ -14,9 +14,6 @@ Digs\PhotoBundle\Entity\Photo:
         file:
             type: string
             length: 255
-        extraData:
-            type: text
-            column: extra_data
         createdAt:
             type: utcdatetime
             column: created_at
@@ -25,4 +22,5 @@ Digs\PhotoBundle\Entity\Photo:
     manyToOne:
       member:
         targetEntity: Digs\CoreBundle\Entity\Member
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks:
+        prePersist: [setCreatedAtValue]

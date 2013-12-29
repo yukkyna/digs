@@ -1,3 +1,7 @@
+digs_image_converter:
+    resource: "@DigsImageConverterBundle/Resources/config/routing.yml"
+    prefix:   /
+
 digs_photo:
     resource: "@DigsPhotoBundle/Resources/config/routing.yml"
     prefix:   /

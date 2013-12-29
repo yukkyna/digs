@@ -8,6 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Digs\PhotoBundle\Entity\Photo;
 use Digs\PhotoBundle\Form\PhotoType;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\Form\FormError;
 
 /**
  * Photo controller.
@@ -74,27 +76,53 @@ class PhotoController extends Controller
 		$form   = $this->createCreateForm();
 		try
 		{
-			$entity = new Photo();
-
 			if ($request->isMethod('POST'))
 			{
 				$form->handleRequest($request);
 				if ($form->isValid()) {
-					$file = $form['file']->getData();
-					$file->move('D:\Program\digs', 'abc');
+					
+					$dir = $this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR . $this->getUser()->getId() . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR;
+					
+					// FIXME リトライしてもファイル名が重複し続けた場合
+					$newname = '';
+					for ($i = 0; $i < 32; $i ++)
+					{
+						$newname = md5(uniqid(null, true));
+						if (!file_exists($dir . $newname))
+						{
+							break;
+						}
+					}
 
-	//				$em = $this->getDoctrine()->getManager();
-	//				$em->persist($entity);
-	//				$em->flush();
-	//
-	//				return $this->redirect($this->generateUrl('photo_show', array('id' => $entity->getId())));
+					$file = $form['file']->getData();
+					$file->move($dir, $newname . '.original');
+					
+					$im = $this->get('digs_image_converter.manager');
+					$ret = $im->convert('-quality 100 ' . $dir . $newname . '.original ' . $dir . $newname . '.jpg');
+					
+					if ($ret == 0)
+					{
+						$im->convert('-quality 60 -resize 300x300 ' . $dir . $newname . '.original ' . $dir . 't_' . $newname . '.jpg');
+						$entity = new Photo();
+						$entity->setTitle($file->getClientOriginalName());
+						$entity->setFile($newname);
+						$entity->setStatus(1);
+						$entity->setMember($this->getUser());
+						$em = $this->getDoctrine()->getManager();
+						$em->persist($entity);
+						$em->flush();
+					}
+					else {
+						$form->addError(new FormError('対応していない画像です。'));
+					}
 				}
 			}
 		}
-		catch (\Symfony\Component\HttpFoundation\File\Exception\FileException $e)
+		catch (FileException $e)
 		{
-			$form->addError(new \Symfony\Component\Form\FormError('ファイルサイズが大きすぎます。'));
+			$form->addError(new FormError('ファイルサイズが大きすぎます。'));
 		}
+
 		return $this->render('DigsPhotoBundle:Photo:uploaded.html.twig', array(
 			'upload_form' => $form->createView()
 		));

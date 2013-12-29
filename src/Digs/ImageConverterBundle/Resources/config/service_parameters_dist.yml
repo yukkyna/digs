@@ -1,0 +1,2 @@
+parameters:
+    image_converter.converter: /path/to/imagemagick/convert
