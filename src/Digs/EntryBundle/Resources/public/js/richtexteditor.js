@@ -1,6 +1,6 @@
 var RichTextEditor =
 {
-    init: function(contentCssPath, selectPhotoPath) {
+    init: function(contentCssPath, selectPhotoPath, selectFilePath) {
         tinymce.PluginManager.add('digsimage', function(editor, url) {
             editor.addButton('digsimage', {
                 icon: 'image',
@@ -21,6 +21,26 @@ var RichTextEditor =
             });
         });
 
+        tinymce.PluginManager.add('digsfile', function(editor, url) {
+            editor.addButton('digsfile', {
+                icon: 'image',
+                tooltip: 'Insert/edit file',
+                onclick: function() {
+                    editor.windowManager.open({
+                        title: 'ファイルの選択',
+                        url: selectPhotoPath,
+                        height: 400,
+                        width: 800,
+                        buttons: [{
+                                text: 'Close',
+                                onclick: 'close'
+                            }]
+                    });
+                },
+                stateSelector: 'a.digsfile'
+            });
+        });
+
         tinymce.PluginManager.add('digscode', function(editor, url) {
             editor.addButton('digscode', {
                 icon: 'code',
@@ -36,14 +56,14 @@ var RichTextEditor =
             plugins: [
                 "advlist autolink lists link image charmap print preview anchor",
                 "searchreplace visualblocks code fullscreen",
-                "insertdatetime media table contextmenu paste digsimage digscode"
+                "insertdatetime media table contextmenu paste digsimage digscode digsfile"
             ],
             relative_urls: false,
             content_css: contentCssPath,
             menubar : false,
             //    statusbar : false,
 //            toolbar: "undo redo | styleselect | bold italic underline strikethrough removeformat | table blockquote digscode | alignleft aligncenter alignright | bullist numlist | link image | digsimage"
-            toolbar: "undo redo | styleselect | bold italic underline strikethrough | table blockquote digscode | alignleft aligncenter alignright | bullist numlist | link image | digsimage"
+            toolbar: "undo redo | styleselect | bold italic underline strikethrough | table blockquote digscode | alignleft aligncenter alignright | bullist numlist | link digsimage digsfile"
         });
     },
 

@@ -12,7 +12,7 @@ class ImageMagickManager
 	public function convert($cmd)
 	{
 		$ret = array();
-		exec('"' . $this->im . '" ' . $cmd . ' 2>$1', $ret);
+		exec('"' . $this->im . '" ' . $cmd . ' 2>&1', $ret);
 		return count($ret);
 	}
 }

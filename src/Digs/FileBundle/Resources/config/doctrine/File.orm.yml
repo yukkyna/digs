@@ -1,0 +1,29 @@
+Digs\FileBundle\Entity\File:
+    type: entity
+    table: null
+    repositoryClass: Digs\FileBundle\Entity\FileRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+        file:
+            type: string
+            length: 255
+        textData:
+            type: text
+            column: text_data
+        status:
+            type: integer
+        createdAt:
+            type: utcdatetime
+            column: created_at
+    manyToOne:
+      member:
+        targetEntity: Digs\CoreBundle\Entity\Member
+    lifecycleCallbacks: {  }
