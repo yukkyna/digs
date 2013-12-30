@@ -12,4 +12,32 @@ use Doctrine\ORM\EntityRepository;
  */
 class FileRepository extends EntityRepository
 {
+	public function findMemberFile($memberId, $file)
+	{
+        return $this
+            ->createQueryBuilder('u')
+			->select('u, m')
+			->leftJoin('u.member', 'm')
+//			->leftJoin('m.profile', 'p')
+            ->where('u.status = 1')
+			->andWhere('u.file=:file')
+			->andWhere('m.id=:memberId')
+            ->setParameter('memberId', $memberId)
+            ->setParameter('file', $file)
+            ->getQuery()
+			->getSingleResult();
+	}
+
+	public function findAllByMemberQuery($memberId)
+	{
+        return $this
+            ->createQueryBuilder('u')
+			->select('u, m')
+			->leftJoin('u.member', 'm')
+            ->where('u.status = 1')
+			->andWhere('m.id=:memberId')
+            ->setParameter('memberId', $memberId)
+			->orderBy('u.createdAt', 'DESC')
+            ->getQuery();
+	}
 }

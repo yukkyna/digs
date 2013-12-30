@@ -2,12 +2,12 @@
 
 {% block javascripts %}
 <script type="text/javascript">
-    var SelectPhotoPage = {
+    var SelectFilePage = {
         init: function()
         {
-            $('.thumbnail').click(function(e) {
+            $('.digsfile').click(function(e) {
                 e.preventDefault();
-                window.parent.RichTextEditor.selectPhoto($(this));
+                window.parent.RichTextEditor.selectFile($(this));
             });
         },
         showUploadError: function(err)
@@ -16,46 +16,37 @@
         },
         reload: function()
         {
-            window.location = "{{ path('photo_select') }}";
+            window.location = "{{ path('file') }}";
         }
     };
-    $(document).ready(SelectPhotoPage.init);
+    $(document).ready(SelectFilePage.init);
 </script>
 {% endblock %}
 
 {% block body -%}
-
 <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
     <div id="upload-error"></div>
 {{ form_start(upload_form, {'attr': {'target': 'uploader'}}) }}
     <div class="input-group">
-        <label class="input-group-addon">新しい写真をアップロードする</label>
+        <label class="input-group-addon">新しいファイルをアップロードする</label>
         {{ form_widget(upload_form.file, {'attr': {'class': 'form-control'}}) }}
         <span class="input-group-btn"><button type="submit" class="btn btn-primary">アップロード</button></span>
     </div>
 {{ form_end(upload_form) }}
     <iframe name="uploader" src="" style="width: 0; height: 0; border:0; overflow: hidden; display: none;"></iframe>
 </div>
-    {% set index = 0 %}
-    {% for entity in entities %}
-        {% if index % 3 == 0 %}
-<div class="row" style="margin-bottom: 15px;">
-        {% endif %}
-    <div class="col-sm-4">
-        <div class="caption">{{ entity.title }}</div>
-        <small>{{ entity.createdAt|date('Y-m-d H:i:s') }}</small>
-        <a href="{{ path('photo_show', {'prefix': prefix, 'id': entity.file}) }}" class="thumbnail">
-            <img src="{{ path('photo_thumbnail_show', {'prefix': prefix, 'id': entity.file }) }}" />
-        </a>
-    </div>
-        {% set index = index + 1 %}
-        {% if index % 3 == 0 %}
-</div>
-        {% endif %}
-    {% endfor %}
-    {% if index % 3 != 0 %}
-</div>
-    {% endif %}
+
+<table class="table">
+    <tbody>
+{% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('file_show', { 'prefix': app.user.id, 'file': entity.file, 'title': entity.title }) }}" class="digsfile">{{ entity.title }}</a></td>
+            <td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>
+        </tr>
+{% endfor %}
+    </tbody>
+</table>
+
 <div class="row">
 {{ knp_pagination_render(entities) }}
 </div>

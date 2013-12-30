@@ -1,3 +1,3 @@
-digs_file_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: DigsFileBundle:Default:index }
+DigsFileBundle_file:
+    resource: "@DigsFileBundle/Resources/config/routing/file.yml"
+    prefix:   /file
