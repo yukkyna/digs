@@ -9,7 +9,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class File
 {
-    /**
+	public function __construct()
+    {
+		$this->status = 1;
+    }
+	public function setCreatedAtValue()
+	{
+		$this->setCreatedAt(new \DateTime());
+	}
+
+	/**
      * @var integer
      */
     private $id;

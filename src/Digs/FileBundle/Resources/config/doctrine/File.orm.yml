@@ -26,4 +26,5 @@ Digs\FileBundle\Entity\File:
     manyToOne:
       member:
         targetEntity: Digs\CoreBundle\Entity\Member
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks:
+        prePersist: [setCreatedAtValue]

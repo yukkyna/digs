@@ -38,30 +38,6 @@ class FileController extends Controller
         ));
     }
 
-	/**
-     * Creates a new File entity.
-     *
-     */
-    public function createAction(Request $request)
-    {
-        $entity = new File();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('file_show', array('id' => $entity->getId())));
-        }
-
-        return $this->render('DigsFileBundle:File:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
-    }
-
     /**
     * Creates a form to create a File entity.
     *
@@ -89,18 +65,55 @@ class FileController extends Controller
      * Displays a form to create a new File entity.
      *
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
-        $entity = new File();
-        $form   = $this->createCreateForm($entity);
+		$form = $this->createCreateForm();
+		try
+		{
+			if ($request->isMethod('POST'))
+			{
+				$form->handleRequest($request);
+				if ($form->isValid()) {
+					
+					$dir = $this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR . $this->getUser()->getId() . DIRECTORY_SEPARATOR . 'file' . DIRECTORY_SEPARATOR;
+					
+					// FIXME リトライしてもファイル名が重複し続けた場合
+					$newname = '';
+					for ($i = 0; $i < 32; $i ++)
+					{
+						$newname = md5(uniqid(null, true));
+						if (!file_exists($dir . $newname))
+						{
+							break;
+						}
+					}
+
+					$file = $form['file']->getData();
+					$file->move($dir, $newname);
+					
+					$entity = new File();
+					$entity->setTitle($file->getClientOriginalName());
+					$entity->setFile($newname);
+					$entity->setMember($this->getUser());
+					$entity->setTextData("");
+
+					$em = $this->getDoctrine()->getManager();
+					$em->persist($entity);
+					$em->flush();
+				}
+			}
+		}
+		catch (FileException $e)
+		{
+			$form->addError(new FormError('ファイルサイズが大きすぎます。'));
+		}
 
         return $this->render('DigsFileBundle:File:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+            'upload_form'   => $form->createView(),
         ));
     }
 
-    /**
+	/**
      * Finds and displays a File entity.
      *
      */

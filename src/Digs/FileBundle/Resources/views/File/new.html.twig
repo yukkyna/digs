@@ -1,15 +1,24 @@
-{% extends '::base.html.twig' %}
+{% extends "DigsCoreBundle::plane.html.twig" %}
+{% block javascripts %}
+<script type="text/javascript">
+    var UploadedFilePage = {
+        init: function()
+        {
+            if ($('.alert-danger').length)
+            {
+                window.parent.SelectPhotoPage.showUploadError($('.alert-danger'));
+            }
+            else
+            {
+                window.parent.SelectFilePage.reload();
+            }
+        }
+    };
+    $(document).ready(UploadedFilePage.init);
+</script>
+{% endblock %}
 
 {% block body -%}
-    <h1>File creation</h1>
-
-    {{ form(form) }}
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('file') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+{{ form_errors(upload_form) }}
+{{ form_errors(upload_form.file) }}
 {% endblock %}

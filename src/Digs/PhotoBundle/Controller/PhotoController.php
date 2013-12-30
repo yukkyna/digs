@@ -73,7 +73,7 @@ class PhotoController extends Controller
 //			}
 //		}
 
-		$form   = $this->createCreateForm();
+		$form = $this->createCreateForm();
 		try
 		{
 			if ($request->isMethod('POST'))
