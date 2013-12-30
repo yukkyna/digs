@@ -25,3 +25,9 @@ services:
             - [{controller: DigsEntryBundle:Entry:topPanel, parameters: {max: 6}}]
         tags:
             - { name: digs.toppanel.item }
+    digs_entry.profilepanel.item:
+        class: Digs\CoreBundle\Services\ProfilePanelItem
+        arguments:
+            - [{controller: DigsEntryBundle:Entry:profilePanel, parameters: {max: 5}}]
+        tags:
+            - { name: digs.profilepanel.item }

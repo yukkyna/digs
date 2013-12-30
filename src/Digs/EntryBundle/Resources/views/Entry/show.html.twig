@@ -24,7 +24,7 @@
 <div class="row">
     <div class="col-md-3">
         <div class="thumbnail">
-            <img src="{{ path('profile_image_show', { 'id': entity.member.id}) }}" alt="profile">
+            <img src="{{ path('profile_image_show', { 'id': entity.member.profile.id}) }}" alt="profile">
             <div class="caption">
                 <h3>{{ entity.member.profile.nickname }}</h3>
                 <p>{{ entity.member.profile.message }}</p>
@@ -59,13 +59,13 @@
                     </li>
 {% for comment in entity.comments %}
                     <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-md-1">
-                                <img class="img-responsive" src="{{ path('profile_image_show', { 'id': comment.member.id}) }}" />
-                            </div>
-                            <div class="col-md-11">
-                                <div>{{ comment.member.profile.nickname }} <small>{{ comment.createdAt|date('Y-m-d H:i:s') }}</small></div>
-                                <div>{{ comment.message|raw }}</div>
+                        <div class="media">
+                            <a class="pull-left" href="#">
+                                <img class="media-object" style="width: 48px" src="{{ path('profile_image_show', { 'id': comment.member.profile.id}) }}" />
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading">{{ comment.member.profile.nickname }}</h4>
+                                <p>{{ comment.message|raw }} <small>{{ comment.createdAt|date('Y-m-d H:i:s') }}</small></p>
                             </div>
                         </div>
                     </li>

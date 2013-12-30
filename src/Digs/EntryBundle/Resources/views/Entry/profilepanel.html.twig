@@ -1,0 +1,20 @@
+
+{% if entities %}
+    {% for entity in entities %}
+<div class="row" style="margin-bottom: 15px;">
+    <div id="entry-inner" class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title"><a href="{{ path('entry_show', { 'id': entity.id }) }}">{{ entity.title }} <small>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</small></a></h2>
+        </div>
+        <div class="panel-body">
+            <p>{{ entity.escapedMessage|truncate(200) }}</p>
+            <p style="margin:0"><a class="btn btn-default" href="{{ path('entry_show', { 'id': entity.id }) }}">もっと読む</a></p>
+        </div>
+    </div>
+</div>
+    {% endfor %}
+{% else %}
+<div class="row">
+    <p>エントリーはありません</p>
+</div>
+{% endif %}

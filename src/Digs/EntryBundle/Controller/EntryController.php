@@ -46,7 +46,17 @@ class EntryController extends Controller
         ));
     }
 
-    /**
+    public function profilePanelAction($profile, $max = 10)
+    {
+		$entities = $this->getDoctrine()->getManager()
+			->getRepository('DigsEntryBundle:Entry')->findOpenedByProfileDsc($profile, $max);
+
+		return $this->render('DigsEntryBundle:Entry:profilepanel.html.twig', array(
+            'entities' => $entities,
+        ));
+    }
+
+	/**
      * Displays a form to create a new Entry entity.
      *
      */

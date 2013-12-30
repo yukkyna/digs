@@ -1,48 +1,20 @@
-{% extends '::base.html.twig' %}
+{% extends "DigsCoreBundle::base.html.twig" %}
 
 {% block body -%}
-    <h1>Profile</h1>
-
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Nickname</th>
-                <td>{{ entity.nickname }}</td>
-            </tr>
-            <tr>
-                <th>Message</th>
-                <td>{{ entity.message }}</td>
-            </tr>
-            <tr>
-                <th>Entrylead</th>
-                <td>{{ entity.entryLead }}</td>
-            </tr>
-            <tr>
-                <th>Entrynum</th>
-                <td>{{ entity.entryNum }}</td>
-            </tr>
-            <tr>
-                <th>Updatedat</th>
-                <td>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('profile') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('profile_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+<div class="row">
+    <div class="col-md-3">
+        <div class="thumbnail">
+            <img src="{{ path('profile_image_show', { 'id': entity.id}) }}" alt="profile">
+            <div class="caption">
+                <h3>{{ entity.nickname }}</h3>
+                <p>{{ entity.message }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+    {% for item in profilepanel.items %}
+        {{ render(controller(item.controller, item.parameters|merge({ 'profile': entity }))) }}
+    {% endfor %}
+    </div>
+</div>
 {% endblock %}

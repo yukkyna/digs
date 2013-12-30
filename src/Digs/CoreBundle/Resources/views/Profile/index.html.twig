@@ -8,13 +8,13 @@
         {% endif %}
     <div class="col-md-4">
         <div class="media">
-            <a class="pull-left" href="{{ path('entry') }}">
+            <a class="pull-left" href="{{ path('profile_show', { 'id': entity.id }) }}">
                 <img class="media-object" style="width: 64px;" src="{{ path('profile_image_show', { 'id': entity.id }) }}" alt="{{ entity.nickname }}">
             </a>
             <div class="media-body">
                 <h4 class="media-heading">
                     {# FIXME プロフィールからエントリを呼ばないように #}
-                    <a href="{{ path('entry') }}">{{ entity.nickname }}</a>
+                    <a href="{{ path('profile_show', { 'id': entity.id }) }}">{{ entity.nickname }}</a>
                 </h4>
                 <p>{{ entity.message }}</p>
                 <small>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</small>

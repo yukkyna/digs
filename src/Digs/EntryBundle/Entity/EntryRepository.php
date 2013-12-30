@@ -30,6 +30,13 @@ class EntryRepository extends EntityRepository
         return $this->findOpenedDscQueryBuilder()->setMaxResults($num)->getQuery()->getResult();
 	}
 
+	public function findOpenedByProfileDsc($profile, $num)
+	{
+        return $this->findOpenedDscQueryBuilder()
+			->andWhere('m.id=:memberId')->setParameter('memberId', $profile->getMember()->getId())
+			->setMaxResults($num)->getQuery()->getResult();
+	}
+
 	public function findByIdOpenedJoinMember($id)
 	{
         return $this
