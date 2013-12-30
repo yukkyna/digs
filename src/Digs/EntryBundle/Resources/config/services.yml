@@ -9,7 +9,8 @@ services:
     digs_entry.mymenu.item:
         class: Digs\CoreBundle\Services\MyMenuItem
         arguments:
-            - [{title: エントリの作成, path: entry_new},{title: エントリ2, path: entry}]
+#            - [{title: エントリの作成, path: entry_new}, {title: エントリ2, path: entry, role: ROLE_ADMIN}]
+            - [{title: エントリの作成, path: entry_new}]
         tags:
             - { name: digs.mymenu.item }
     digs_entry.navigation.item:

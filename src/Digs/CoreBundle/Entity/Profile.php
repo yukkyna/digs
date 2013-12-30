@@ -13,7 +13,6 @@ class Profile
      * @var integer
      */
     private $id;
-
     /**
      * @var string
      */
@@ -35,10 +34,28 @@ class Profile
     private $entryNum;
 
     /**
-     * @var \DateTime
+     * @var utcdatetime
      */
     private $updatedAt;
 
+    /**
+     * @var \Digs\CoreBundle\Entity\Member
+     */
+    private $member;
+
+
+    /**
+     * Set id
+     *
+     * @param integer $id
+     * @return Profile
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 
     /**
      * Get id
@@ -59,7 +76,7 @@ class Profile
     public function setNickname($nickname)
     {
         $this->nickname = $nickname;
-    
+
         return $this;
     }
 
@@ -82,7 +99,7 @@ class Profile
     public function setMessage($message)
     {
         $this->message = $message;
-    
+
         return $this;
     }
 
@@ -105,7 +122,7 @@ class Profile
     public function setEntryLead($entryLead)
     {
         $this->entryLead = $entryLead;
-    
+
         return $this;
     }
 
@@ -128,7 +145,7 @@ class Profile
     public function setEntryNum($entryNum)
     {
         $this->entryNum = $entryNum;
-    
+
         return $this;
     }
 
@@ -145,23 +162,46 @@ class Profile
     /**
      * Set updatedAt
      *
-     * @param \DateTime $updatedAt
+     * @param utcdatetime $updatedAt
      * @return Profile
      */
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return utcdatetime 
      */
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Set member
+     *
+     * @param \Digs\CoreBundle\Entity\Member $member
+     * @return Profile
+     */
+    public function setMember(\Digs\CoreBundle\Entity\Member $member = null)
+    {
+        $this->member = $member;
+
+        return $this;
+    }
+
+    /**
+     * Get member
+     *
+     * @return \Digs\CoreBundle\Entity\Member 
+     */
+    public function getMember()
+    {
+        return $this->member;
     }
 }

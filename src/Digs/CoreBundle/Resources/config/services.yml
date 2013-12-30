@@ -28,3 +28,17 @@ services:
         arguments: [@digs_core.toppanel_manager]
         tags:
             - { name: twig.extension }
+# items
+    digs_core.mymenu.item:
+        class: Digs\CoreBundle\Services\MyMenuItem
+        arguments:
+            - [{title: プロフィールの変更, path: profile_edit}]
+        tags:
+            - { name: digs.mymenu.item }
+    digs_core.navigation.item:
+        class: Digs\CoreBundle\Services\NavigationMenuItem
+        arguments:
+            - [{title: プロフィール, path: profile}]
+        tags:
+            - { name: digs.navigation.item }
+

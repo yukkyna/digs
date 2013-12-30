@@ -25,4 +25,7 @@ Digs\CoreBundle\Entity\Profile:
         updatedAt:
             type: utcdatetime
             column: updated_at
+    oneToOne:
+        member:
+            targetEntity: Member
     lifecycleCallbacks: {  }

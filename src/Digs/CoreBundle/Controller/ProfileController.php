@@ -20,34 +20,42 @@ class ProfileController extends Controller
      * Lists all Profile entities.
      *
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('DigsCoreBundle:Profile')->findAll();
+		$entities = $this->get('knp_paginator')->paginate(
+			$em->getRepository('DigsCoreBundle:Profile')->findAllActiveQueryBuilder()->getQuery(),
+			$request->query->get('page', 1),
+			18
+			);
 
         return $this->render('DigsCoreBundle:Profile:index.html.twig', array(
             'entities' => $entities,
         ));
     }
-    /**
-     * Creates a new Profile entity.
+
+	/**
+     * Displays a form to create a new Profile entity.
      *
      */
-    public function createAction(Request $request)
+    public function newAction(Request $request)
     {
         $entity = new Profile();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
+        $form   = $this->createCreateForm($entity);
+		
+		if ($request->isMethod('POST'))
+		{
+			$form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+			if ($form->isValid()) {
+				$em = $this->getDoctrine()->getManager();
+				$em->persist($entity);
+				$em->flush();
 
-            return $this->redirect($this->generateUrl('profile_show', array('id' => $entity->getId())));
-        }
-
+				return $this->redirect($this->generateUrl('profile_show', array('id' => $entity->getId())));
+			}
+		}
         return $this->render('DigsCoreBundle:Profile:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
@@ -64,28 +72,13 @@ class ProfileController extends Controller
     private function createCreateForm(Profile $entity)
     {
         $form = $this->createForm(new ProfileType(), $entity, array(
-            'action' => $this->generateUrl('profile_create'),
+            'action' => $this->generateUrl('profile_new'),
             'method' => 'POST',
         ));
 
         $form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
-    }
-
-    /**
-     * Displays a form to create a new Profile entity.
-     *
-     */
-    public function newAction()
-    {
-        $entity = new Profile();
-        $form   = $this->createCreateForm($entity);
-
-        return $this->render('DigsCoreBundle:Profile:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
     }
 
     /**
@@ -102,21 +95,20 @@ class ProfileController extends Controller
             throw $this->createNotFoundException('Unable to find Profile entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-
         return $this->render('DigsCoreBundle:Profile:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        ));
+            'entity'      => $entity
+			));
     }
 
     /**
      * Displays a form to edit an existing Profile entity.
      *
      */
-    public function editAction($id)
+    public function editAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
+		$id = $this->getUser()->getId();
+			
         $entity = $em->getRepository('DigsCoreBundle:Profile')->find($id);
 
         if (!$entity) {
@@ -124,16 +116,25 @@ class ProfileController extends Controller
         }
 
         $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
+
+		if ($request)
+		{
+			$editForm->handleRequest($request);
+
+			if ($editForm->isValid()) {
+				$em->flush();
+
+				return $this->redirect($this->generateUrl('profile_edit'));
+			}
+		}
 
         return $this->render('DigsCoreBundle:Profile:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
-    /**
+	/**
     * Creates a form to edit a Profile entity.
     *
     * @param Profile $entity The entity
@@ -143,7 +144,7 @@ class ProfileController extends Controller
     private function createEditForm(Profile $entity)
     {
         $form = $this->createForm(new ProfileType(), $entity, array(
-            'action' => $this->generateUrl('profile_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('profile_edit'),
             'method' => 'PUT',
         ));
 
@@ -151,82 +152,12 @@ class ProfileController extends Controller
 
         return $form;
     }
-    /**
-     * Edits an existing Profile entity.
-     *
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('DigsCoreBundle:Profile')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Profile entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isValid()) {
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('profile_edit', array('id' => $id)));
-        }
-
-        return $this->render('DigsCoreBundle:Profile:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-    /**
-     * Deletes a Profile entity.
-     *
-     */
-    public function deleteAction(Request $request, $id)
-    {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('DigsCoreBundle:Profile')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Profile entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('profile'));
-    }
-
-    /**
-     * Creates a form to delete a Profile entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('profile_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
-    }
 
 	public function showImageAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('DigsCoreBundle:Member')->find($id);
+        $entity = $em->getRepository('DigsCoreBundle:Profile')->find($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Photo entity.');
         }
@@ -242,11 +173,11 @@ class ProfileController extends Controller
 			'Content-Type'   => 'image/png',
 //			'Content-Length' => filesize($path),
 			'X-Sendfile'     => $this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR
-			. $entity->getId() . DIRECTORY_SEPARATOR . 'profile.png',
+			. $entity->getMember()->getId() . DIRECTORY_SEPARATOR . 'profile.png',
 		));
 		$response->setStatusCode(200);
 //		$response =  new Response($image, 200);
-		$response->setLastModified($entity->getProfile()->getUpdatedAt());
+		$response->setLastModified($entity->getUpdatedAt());
         return $response;
 //		
 //		

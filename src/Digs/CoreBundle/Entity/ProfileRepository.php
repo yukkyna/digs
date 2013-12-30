@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProfileRepository extends EntityRepository
 {
+	public function findAllActiveQueryBuilder()
+	{
+        return $this
+            ->createQueryBuilder('p')
+			->select('p, m')
+			->leftJoin('p.member', 'm')
+            ->where('m.active=true')
+			->orderBy('p.updatedAt', 'DESC')
+            ;
+	}
 }
