@@ -13,14 +13,12 @@
             </a>
             <div class="media-body">
                 <h4 class="media-heading">
-                    {# FIXME プロフィールからエントリを呼ばないように #}
                     <a href="{{ path('profile_show', { 'id': entity.id }) }}">{{ entity.nickname }}</a>
                 </h4>
-                <p>{{ entity.message }}</p>
+                <p>{{ entity.message|truncate(100) }}</p>
                 <small>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</small>
             </div>
         </div>
-        <td><a href="{{ path('profile_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
     </div>
         {% set index = index + 1 %}
         {% if index % 3 == 0 %}

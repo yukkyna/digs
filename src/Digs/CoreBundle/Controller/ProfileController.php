@@ -4,6 +4,8 @@ namespace Digs\CoreBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Validator\Constraints\Length;
 
 use Digs\CoreBundle\Entity\Profile;
 use Digs\CoreBundle\Form\ProfileType;
@@ -117,7 +119,7 @@ class ProfileController extends Controller
 
         $editForm = $this->createEditForm($entity);
 
-		if ($request)
+		if ($request->isMethod('PUT'))
 		{
 			$editForm->handleRequest($request);
 
@@ -135,14 +137,13 @@ class ProfileController extends Controller
 				{
 					$entity->setUpdatedAt(new \DateTime());
 					$em->flush();
+					return $this->redirect($this->generateUrl('profile_show', array(
+						'id' => $id
+						)));
 				}
 				else {
-					$form->addError(new FormError('対応していない画像です。'));
+					$editForm['profileImage']->addError(new FormError('対応していない画像です。'));
 				}
-
-				return $this->redirect($this->generateUrl('profile_show', array(
-					'id' => $id
-					)));
 			}
 		}
 
@@ -201,4 +202,61 @@ class ProfileController extends Controller
 //            'entity'      => $entity,
 //			));
     }
+	
+	public function editPasswordAction(Request $request)
+	{
+        $em = $this->getDoctrine()->getManager();
+//		$id = $this->getUser()->getProfile()->getId();
+//        $entity = $em->getRepository('DigsCoreBundle:Profile')->find($id);
+//
+//        if (!$entity) {
+//            throw $this->createNotFoundException('Unable to find Profile entity.');
+//        }
+
+        $editForm = $this->createFormBuilder()
+			->setAction($this->generateUrl('profile_password_edit'))
+			->setMethod('PUT')
+            ->add('currentPassword', 'password')
+            ->add('newPassword', 'repeated', array(
+				'type' => 'password',
+				'invalid_message' => '新しいパスワードが一致しません。',
+				'constraints' => array(
+					new Length(array(
+						'min' => 6
+						))
+				)
+			))
+            ->getForm();
+
+		if ($request->isMethod('PUT'))
+		{
+			$editForm->handleRequest($request);
+
+			if ($editForm->isValid()) {
+				$encoder = $this->get('security.encoder_factory')->getEncoder($this->getUser());
+				$encCurPass = $encoder->encodePassword($editForm['currentPassword']->getData(), $this->getUser()->getSalt());
+				if ($this->getUser()->getPassword() === $encCurPass)
+				{
+					$newPass = $encoder->encodePassword($editForm['newPassword']->getData(), $this->getUser()->getSalt());
+					
+					$em = $this->getDoctrine()->getManager();
+					$entity = $em->getRepository('DigsCoreBundle:Member')->find($this->getUser()->getId());
+					$entity->setPassword($newPass);
+					$em->persist($entity);
+					$em->flush();
+					return $this->redirect($this->generateUrl('profile_show', array(
+						'id' => $this->getUser()->getProfile()->getId()
+						)));
+				}
+				else
+				{
+					$editForm->addError(new FormError('パスワードが違います。'));
+				}
+			}
+		}
+
+        return $this->render('DigsCoreBundle:Profile:editPassword.html.twig', array(
+            'edit_form'   => $editForm->createView(),
+        ));
+	}
 }
