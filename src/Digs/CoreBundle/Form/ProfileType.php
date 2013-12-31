@@ -16,10 +16,11 @@ class ProfileType extends AbstractType
     {
         $builder
             ->add('nickname')
-            ->add('message')
+            ->add('message', 'textarea')
             ->add('entryLead')
-            ->add('entryNum')
-            ->add('updatedAt')
+			->add('profileImage', 'file', array('mapped' => false, 'required' => false))
+//            ->add('entryNum')
+//            ->add('updatedAt')
         ;
     }
     

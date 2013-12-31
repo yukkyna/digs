@@ -96,7 +96,7 @@ class ProfileController extends Controller
         }
 
         return $this->render('DigsCoreBundle:Profile:show.html.twig', array(
-            'entity'      => $entity
+            'profile' => $entity
 			));
     }
 
@@ -107,7 +107,7 @@ class ProfileController extends Controller
     public function editAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-		$id = $this->getUser()->getId();
+		$id = $this->getUser()->getProfile()->getId();
 			
         $entity = $em->getRepository('DigsCoreBundle:Profile')->find($id);
 
@@ -122,9 +122,27 @@ class ProfileController extends Controller
 			$editForm->handleRequest($request);
 
 			if ($editForm->isValid()) {
-				$em->flush();
+				$ret = 0;
+				$file = $editForm['profileImage']->getData();
+				if ($file)
+				{
+					$dir = $this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR . $this->getUser()->getId() . DIRECTORY_SEPARATOR;
+					$file->move($dir, 'profile.original');
+					$im = $this->get('digs_image_converter.manager');
+					$ret = $im->convert('-quality 80 -resize 180x180 ' . $dir . 'profile.original ' . $dir . 'profile.png');
+				}
+				if ($ret == 0)
+				{
+					$entity->setUpdatedAt(new \DateTime());
+					$em->flush();
+				}
+				else {
+					$form->addError(new FormError('対応していない画像です。'));
+				}
 
-				return $this->redirect($this->generateUrl('profile_edit'));
+				return $this->redirect($this->generateUrl('profile_show', array(
+					'id' => $id
+					)));
 			}
 		}
 
@@ -147,8 +165,6 @@ class ProfileController extends Controller
             'action' => $this->generateUrl('profile_edit'),
             'method' => 'PUT',
         ));
-
-        $form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
     }

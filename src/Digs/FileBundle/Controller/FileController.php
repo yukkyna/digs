@@ -132,7 +132,6 @@ class FileController extends Controller
 //		{
 //			return $response;
 //		}
-		
 		$response->headers->add(array(
 			'Content-Type'   => 'application/octet-stream',
 //			'Content-Length' => filesize($path),

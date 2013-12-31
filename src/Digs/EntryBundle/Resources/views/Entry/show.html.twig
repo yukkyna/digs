@@ -1,4 +1,6 @@
-{% extends "DigsCoreBundle::base.html.twig" %}
+{% extends "DigsCoreBundle:Profile:show.html.twig" %}
+
+{% set profile=entity.member.profile %}
 
 {% block stylesheets %}
 <link rel="stylesheet" href="{{ asset('bundles/digsentry/css/entry.css') }}" type="text/css" media="all" />
@@ -20,21 +22,10 @@
 </script>
 {% endblock %}
 
-{% block body -%}
-<div class="row">
-    <div class="col-md-3">
-        <div class="thumbnail">
-            <img src="{{ path('profile_image_show', { 'id': entity.member.profile.id}) }}" alt="profile">
-            <div class="caption">
-                <h3>{{ entity.member.profile.nickname }}</h3>
-                <p>{{ entity.member.profile.message }}</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-9">
+{% block profile_body -%}
         <div class="row">
-{% if entity.member.profile.entryLead %}
-            <p class="lead">{{ entity.member.profile.entryLead }}</p>
+{% if profile.entryLead %}
+            <p class="lead">{{ profile.entryLead }}</p>
 {% endif %}
             <div id="entry-inner" class="panel panel-default">
                 <div class="panel-heading">
@@ -73,8 +64,6 @@
                 </ul>
             </div>
         </div>
-    </div>
-</div>
 
 <ul class="record_actions">
     <li>
