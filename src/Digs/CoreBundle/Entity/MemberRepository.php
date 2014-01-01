@@ -26,7 +26,18 @@ class MemberRepository extends EntityRepository implements UserProviderInterface
 			->getResult();
 	}
 	
-    public function loadUserByUsername($username)
+	public function exist($email)
+	{
+        return $this
+            ->createQueryBuilder('u')
+			->select('COUNT(u.id)')
+            ->where('u.email=:email')
+            ->setParameter('email', $email)
+            ->getQuery()
+			->getSingleScalarResult() > 0;
+	}
+
+	public function loadUserByUsername($username)
     {
         $q = $this
             ->createQueryBuilder('u')

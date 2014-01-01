@@ -32,10 +32,13 @@ Digs\CoreBundle\Entity\Member:
       roles:
         targetEntity: Role
         inversedBy: members
+      groups:
+        targetEntity: MemberGroup
+        inversedBy: members
     oneToOne:
         profile:
             targetEntity: Profile
-#
+
 #    uniqueConstraints:
 #        unique_email_idx:
 #            columns: [email]

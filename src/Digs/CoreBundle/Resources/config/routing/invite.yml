@@ -1,0 +1,12 @@
+invite_new:
+    pattern:  /new
+    defaults: { _controller: "DigsCoreBundle:Invite:new" }
+
+invite_invited:
+    pattern:  /invited
+    defaults: { _controller: "DigsCoreBundle:Invite:invited" }
+
+invite_regist:
+    pattern:  /regist
+    defaults: { _controller: "DigsCoreBundle:Invite:invited" }
+

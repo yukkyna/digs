@@ -37,6 +37,13 @@ services:
         arguments: [@digs_core.toppanel_manager]
         tags:
             - { name: twig.extension }
+            
+    digs_core.admin.action_listener:
+        class: Digs\CoreBundle\EventListener\AdminListener
+        arguments: [@security.context]
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+            
 # items
     digs_core.mymenu.item:
         class: Digs\CoreBundle\Services\MyMenuItem

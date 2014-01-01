@@ -1,0 +1,27 @@
+Digs\CoreBundle\Entity\Invite:
+    type: entity
+    table: null
+    repositoryClass: Digs\CoreBundle\Entity\InviteRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        ticket:
+            type: string
+            length: 255
+        email:
+            type: string
+            length: 255
+        password:
+            type: string
+            length: 255
+        category_ids:
+            type: string
+            length: 255
+        createdAt:
+            type: utcdatetime
+            column: created_at
+    lifecycleCallbacks: {  }

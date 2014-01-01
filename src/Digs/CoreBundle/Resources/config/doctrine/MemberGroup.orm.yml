@@ -1,0 +1,19 @@
+Digs\CoreBundle\Entity\MemberGroup:
+    type: entity
+    table: null
+    repositoryClass: Digs\CoreBundle\Entity\MemberGroupRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+    manyToMany:
+      members:
+        targetEntity: Member
+        mappedBy: groups
+    lifecycleCallbacks: {  }

@@ -306,4 +306,42 @@ class Member implements AdvancedUserInterface, \Serializable
     {
         return $this->profile;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $groups;
+
+
+    /**
+     * Add groups
+     *
+     * @param \Digs\CoreBundle\Entity\MemberGroup $groups
+     * @return Member
+     */
+    public function addGroup(\Digs\CoreBundle\Entity\MemberGroup $groups)
+    {
+        $this->groups[] = $groups;
+
+        return $this;
+    }
+
+    /**
+     * Remove groups
+     *
+     * @param \Digs\CoreBundle\Entity\MemberGroup $groups
+     */
+    public function removeGroup(\Digs\CoreBundle\Entity\MemberGroup $groups)
+    {
+        $this->groups->removeElement($groups);
+    }
+
+    /**
+     * Get groups
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGroups()
+    {
+        return $this->groups;
+    }
 }
