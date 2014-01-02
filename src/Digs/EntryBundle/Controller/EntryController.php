@@ -148,10 +148,13 @@ class EntryController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('DigsEntryBundle:Entry')->find($id);
-
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Entry entity.');
         }
+		if ($entity->getMember()->getId() !== $this->getUser()->getId())
+		{
+            throw $this->createNotFoundException('Unable to edit Entry.');
+		}
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);

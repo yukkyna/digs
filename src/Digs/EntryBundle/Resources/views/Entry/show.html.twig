@@ -29,7 +29,11 @@
 {% endif %}
             <div id="entry-inner" class="panel panel-default">
                 <div class="panel-heading">
-                    <h2 class="panel-title">{{ entity.title }} <small>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</small></h2>
+                    <h2 class="panel-title">{{ entity.title }} <small>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</small>
+{% if app.user.id == entity.member.id %}
+ <a class="btn btn-default btn-sm" href="{{ path('entry_edit', { 'id': entity.id }) }}">編集</a>
+{% endif %}
+</h2>
                 </div>
                 <div class="panel-body">{{ entity.message|raw }}</div>
             </div>
@@ -64,17 +68,4 @@
                 </ul>
             </div>
         </div>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('entry') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('entry_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-</ul>
 {% endblock %}
