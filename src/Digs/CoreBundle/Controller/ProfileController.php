@@ -85,7 +85,7 @@ class ProfileController extends Controller
 					$dir = $this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR . $this->getUser()->getId() . DIRECTORY_SEPARATOR;
 					$file->move($dir, 'profile.original');
 					$im = $this->get('digs_image_converter.manager');
-					$ret = $im->convert('-quality 80 -resize 180x180 ' . $dir . 'profile.original ' . $dir . 'profile.png');
+					$ret = $im->convert('-quality 80 -resize 180x180 -gravity center -background #ff000000 -extent 180x180 ' . $dir . 'profile.original ' . $dir . 'profile.png');
 				}
 				if ($ret == 0)
 				{

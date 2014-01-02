@@ -1,0 +1,7 @@
+parameters:
+#    digs_information.example.class: Digs\InformationBundle\Example
+
+services:
+#    digs_information.example:
+#        class: %digs_information.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

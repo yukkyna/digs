@@ -1,6 +1,6 @@
 var RichTextEditor =
 {
-    init: function(contentCssPath, selectPhotoPath, selectFilePath) {
+    init: function(contentCssPath, selectPhotoPath, selectFilePath, styleSelect) {
         tinymce.PluginManager.add('digsimage', function(editor, url) {
             editor.addButton('digsimage', {
                 icon: 'image',
@@ -50,6 +50,13 @@ var RichTextEditor =
                 }
             });
         });
+
+        var toolbar = "undo redo | ";
+        if (styleSelect)
+        {
+            toolbar += "styleselect | ";
+        }
+        toolbar += "bold italic underline strikethrough | table blockquote digscode | alignleft aligncenter alignright | bullist numlist | link digsimage digsfile";
         
         tinymce.init({
             selector: "textarea",
@@ -61,9 +68,14 @@ var RichTextEditor =
             relative_urls: false,
             content_css: contentCssPath,
             menubar : false,
+            style_formats : [
+                {title : 'Header 1', block : 'h2'},
+                {title : 'Header 2', block : 'h3'},
+                {title : 'Header 3', block : 'h4'}
+            ],
             //    statusbar : false,
 //            toolbar: "undo redo | styleselect | bold italic underline strikethrough removeformat | table blockquote digscode | alignleft aligncenter alignright | bullist numlist | link image | digsimage"
-            toolbar: "undo redo | styleselect | bold italic underline strikethrough | table blockquote digscode | alignleft aligncenter alignright | bullist numlist | link digsimage digsfile"
+            toolbar: toolbar
         });
     },
 
