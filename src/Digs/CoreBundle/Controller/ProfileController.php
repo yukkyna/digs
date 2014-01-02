@@ -37,52 +37,6 @@ class ProfileController extends Controller
         ));
     }
 
-	/**
-     * Displays a form to create a new Profile entity.
-     *
-     */
-    public function newAction(Request $request)
-    {
-        $entity = new Profile();
-        $form   = $this->createCreateForm($entity);
-		
-		if ($request->isMethod('POST'))
-		{
-			$form->handleRequest($request);
-
-			if ($form->isValid()) {
-				$em = $this->getDoctrine()->getManager();
-				$em->persist($entity);
-				$em->flush();
-
-				return $this->redirect($this->generateUrl('profile_show', array('id' => $entity->getId())));
-			}
-		}
-        return $this->render('DigsCoreBundle:Profile:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
-    }
-
-    /**
-    * Creates a form to create a Profile entity.
-    *
-    * @param Profile $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createCreateForm(Profile $entity)
-    {
-        $form = $this->createForm(new ProfileType(), $entity, array(
-            'action' => $this->generateUrl('profile_new'),
-            'method' => 'POST',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
-        return $form;
-    }
-
     /**
      * Finds and displays a Profile entity.
      *

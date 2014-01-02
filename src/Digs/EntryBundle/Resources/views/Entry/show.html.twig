@@ -55,11 +55,13 @@
 {% for comment in entity.comments %}
                     <li class="list-group-item">
                         <div class="media">
-                            <a class="pull-left" href="#">
+                            <a class="pull-left" href="{{ path('profile_show', { 'id': comment.member.profile.id }) }}">
                                 <img class="media-object" style="width: 48px" src="{{ path('profile_image_show', { 'id': comment.member.profile.id}) }}" />
                             </a>
                             <div class="media-body">
-                                <h4 class="media-heading">{{ comment.member.profile.nickname }} <small>{{ comment.createdAt|date('Y-m-d H:i:s') }}</small></h4>
+                                <h4 class="media-heading">
+                                    <a href="{{ path('profile_show', { 'id': comment.member.profile.id }) }}">{{ comment.member.profile.nickname }}</a>
+                                    <small>{{ comment.createdAt|date('Y-m-d H:i:s') }}</small></h4>
                                 <p>{{ comment.message|raw }}</p>
                             </div>
                         </div>

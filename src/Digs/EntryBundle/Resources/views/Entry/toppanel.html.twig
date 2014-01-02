@@ -11,8 +11,11 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="pull-right">
-                    <img src="{{ path('profile_image_show', { 'id': entity.member.profile.id}) }}" alt="profile" style="width:32px"/>
-                    {{ entity.member.profile.nickname }} <small>{{ entity.updatedAt|date('Y-m-d H:i:s')  }}</small>
+                    <a href="{{ path('profile_show', { 'id': entity.member.profile.id }) }}">
+                        <img src="{{ path('profile_image_show', { 'id': entity.member.profile.id}) }}" alt="profile" style="width:32px"/>
+                    </a>
+                    <a href="{{ path('profile_show', { 'id': entity.member.profile.id }) }}">{{ entity.member.profile.nickname }}</a>
+                    <small>{{ entity.updatedAt|date('Y-m-d H:i:s')  }}</small>
                 </div>
             </div>
         </div>

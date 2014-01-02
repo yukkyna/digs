@@ -6,7 +6,7 @@
         <div class="thumbnail">
             <img src="{{ path('profile_image_show', { 'id': profile.id, 'v': profile.updatedAt|date('U') }) }}" alt="profile">
             <div class="caption text-center">
-                <h3 style="margin-top: 0">{{ profile.nickname }}</h3>
+                <h3 style="margin-top: 0"><a href="{{ path('profile_show', { 'id': profile.id }) }}">{{ profile.nickname }}</a></h3>
                 <p>{{ profile.message }}</p>
             </div>
         </div>
