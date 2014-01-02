@@ -1,3 +1,0 @@
-digs_image_converter_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: DigsImageConverterBundle:Default:index }

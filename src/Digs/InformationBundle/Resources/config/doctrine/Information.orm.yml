@@ -1,13 +1,14 @@
-Digs\EntryBundle\Entity\Entry:
+Digs\InformationBundle\Entity\Information:
     type: entity
     table: null
-    repositoryClass: Digs\EntryBundle\Entity\EntryRepository
-    fields:
+    repositoryClass: Digs\InformationBundle\Entity\InformationRepository
+    id:
         id:
             type: integer
             id: true
             generator:
                 strategy: AUTO
+    fields:
         title:
             type: string
             length: 255
@@ -24,14 +25,7 @@ Digs\EntryBundle\Entity\Entry:
             column: updated_at
         status:
             type: integer
-    manyToOne:
-      member:
-        targetEntity: Digs\CoreBundle\Entity\Member
-    oneToMany:
-      comments:
-        targetEntity: EntryComment
-        mappedBy: entry
-    
+
     lifecycleCallbacks:
         prePersist: [setCreatedAtValue, setEscapedMessageValue, setUpdatedAtValue]
         preUpdate:  [setEscapedMessageValue, setUpdatedAtValue]

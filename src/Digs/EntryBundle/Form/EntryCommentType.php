@@ -5,6 +5,7 @@ namespace Digs\EntryBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class EntryCommentType extends AbstractType
 {
@@ -16,7 +17,10 @@ class EntryCommentType extends AbstractType
     {
         $builder
             ->add('message', 'textarea', array(
-				'required' => false
+				'required' => false,
+				'constraints' => array(
+					new NotBlank()
+				)
 			))
 //            ->add('createdAt')
 //            ->add('status')

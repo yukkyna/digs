@@ -1,3 +1,4 @@
-digs_information_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: DigsInformationBundle:Default:index }
+DigsInformationBundle_information:
+    resource: "@DigsInformationBundle/Resources/config/routing/information.yml"
+    prefix:   /information
+    

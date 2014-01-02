@@ -1,13 +1,12 @@
 <?php
 
-namespace Digs\EntryBundle\Form;
+namespace Digs\InformationBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
-class EntryType extends AbstractType
+class InformationType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -17,13 +16,10 @@ class EntryType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('message', 'textarea', array(
-				'required'=>false,
-				'constraints' => array(
-					new NotBlank()
-				)
-				))
-            ->add('status', 'hidden')
+            ->add('message')
+            ->add('createdAt')
+            ->add('updatedAt')
+            ->add('status')
         ;
     }
     
@@ -33,7 +29,7 @@ class EntryType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Digs\EntryBundle\Entity\Entry'
+            'data_class' => 'Digs\InformationBundle\Entity\Information'
         ));
     }
 
@@ -42,6 +38,6 @@ class EntryType extends AbstractType
      */
     public function getName()
     {
-        return 'digs_entrybundle_entry';
+        return 'digs_informationbundle_information';
     }
 }

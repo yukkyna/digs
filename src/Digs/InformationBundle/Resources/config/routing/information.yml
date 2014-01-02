@@ -1,0 +1,20 @@
+information:
+    pattern:  /
+    defaults: { _controller: "DigsInformationBundle:Information:index" }
+
+information_new:
+    pattern:  /new
+    defaults: { _controller: "DigsInformationBundle:Information:new" }
+
+information_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "DigsInformationBundle:Information:show" }
+
+information_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "DigsInformationBundle:Information:edit" }
+
+information_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "DigsInformationBundle:Information:delete" }
+    requirements: { _method: post|delete }

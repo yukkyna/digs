@@ -1,13 +1,13 @@
 <?php
 
-namespace Digs\EntryBundle\Entity;
+namespace Digs\InformationBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Entry
+ * Information
  */
-class Entry
+class Information
 {
 	public function setCreatedAtValue()
 	{
@@ -44,19 +44,14 @@ class Entry
     private $message;
 
     /**
-     * @var \DateTime
+     * @var utcdatetime
      */
     private $createdAt;
 
     /**
-     * @var \DateTime
+     * @var utcdatetime
      */
     private $updatedAt;
-
-    /**
-     * @var integer
-     */
-    private $status;
 
 
     /**
@@ -73,12 +68,12 @@ class Entry
      * Set title
      *
      * @param string $title
-     * @return Entry
+     * @return Information
      */
     public function setTitle($title)
     {
         $this->title = $title;
-    
+
         return $this;
     }
 
@@ -96,12 +91,12 @@ class Entry
      * Set message
      *
      * @param string $message
-     * @return Entry
+     * @return Information
      */
     public function setMessage($message)
     {
         $this->message = $message;
-    
+
         return $this;
     }
 
@@ -118,20 +113,20 @@ class Entry
     /**
      * Set createdAt
      *
-     * @param \DateTime $createdAt
-     * @return Entry
+     * @param utcdatetime $createdAt
+     * @return Information
      */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return utcdatetime 
      */
     public function getCreatedAt()
     {
@@ -141,36 +136,41 @@ class Entry
     /**
      * Set updatedAt
      *
-     * @param \DateTime $updatedAt
-     * @return Entry
+     * @param utcdatetime $updatedAt
+     * @return Information
      */
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return utcdatetime 
      */
     public function getUpdatedAt()
     {
         return $this->updatedAt;
     }
+    /**
+     * @var integer
+     */
+    private $status;
+
 
     /**
      * Set status
      *
      * @param integer $status
-     * @return Entry
+     * @return Information
      */
     public function setStatus($status)
     {
         $this->status = $status;
-    
+
         return $this;
     }
 
@@ -184,104 +184,31 @@ class Entry
         return $this->status;
     }
     /**
-     * @var \Digs\CoreBundle\Entity\Member
-     */
-    private $member;
-
-
-    /**
-     * Set member
-     *
-     * @param \Digs\CoreBundle\Entity\Member $member
-     * @return Entry
-     */
-    public function setMember(\Digs\CoreBundle\Entity\Member $member = null)
-    {
-        $this->member = $member;
-    
-        return $this;
-    }
-
-    /**
-     * Get member
-     *
-     * @return \Digs\CoreBundle\Entity\Member 
-     */
-    public function getMember()
-    {
-        return $this->member;
-    }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $comments;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
-    /**
-     * Add comments
-     *
-     * @param \Digs\EntryBundle\Entity\EntryComment $comments
-     * @return Entry
-     */
-    public function addComment(\Digs\EntryBundle\Entity\EntryComment $comments)
-    {
-        $this->comments[] = $comments;
-    
-        return $this;
-    }
-
-    /**
-     * Remove comments
-     *
-     * @param \Digs\EntryBundle\Entity\EntryComment $comments
-     */
-    public function removeComment(\Digs\EntryBundle\Entity\EntryComment $comments)
-    {
-        $this->comments->removeElement($comments);
-    }
-
-    /**
-     * Get comments
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getComments()
-    {
-        return $this->comments;
-    }
-    /**
      * @var string
      */
-    private $escaped_message;
+    private $escapedMessage;
 
 
     /**
-     * Set escaped_message
+     * Set escapedMessage
      *
      * @param string $escapedMessage
-     * @return Entry
+     * @return Information
      */
     public function setEscapedMessage($escapedMessage)
     {
-        $this->escaped_message = $escapedMessage;
-    
+        $this->escapedMessage = $escapedMessage;
+
         return $this;
     }
 
     /**
-     * Get escaped_message
+     * Get escapedMessage
      *
      * @return string 
      */
     public function getEscapedMessage()
     {
-        return $this->escaped_message;
+        return $this->escapedMessage;
     }
 }
