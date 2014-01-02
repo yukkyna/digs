@@ -20,5 +20,9 @@ DigsCoreBundle_restore:
     
 DigsCoreBundle_invite:
     resource: "@DigsCoreBundle/Resources/config/routing/invite.yml"
-    prefix:   /invite    
+    prefix:   /invite
+
+DigsCoreBundle_regist:
+    resource: "@DigsCoreBundle/Resources/config/routing/regist.yml"
+    prefix:   /regist
     

@@ -1,0 +1,6 @@
+regist_success:
+    pattern:  /success
+    defaults: { _controller: "DigsCoreBundle:Regist:success" }
+regist:
+    pattern:  /{id}
+    defaults: { _controller: "DigsCoreBundle:Regist:index" }

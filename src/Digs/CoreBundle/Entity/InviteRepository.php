@@ -12,4 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class InviteRepository extends EntityRepository
 {
+	public function findByActiveTicket($ticket)
+	{
+        return $this
+            ->createQueryBuilder('u')
+            ->where('u.ticket=:ticket')
+			->andWhere('u.createdAt >= :date')
+			->setParameter('ticket', $ticket)
+			->setParameter('date', new \DateTime('-48 hour'))
+			->orderBy('u.createdAt', 'DESC')
+            ->getQuery()
+			->getSingleResult();
+	}
 }

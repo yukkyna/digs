@@ -26,6 +26,10 @@ security:
           pattern: ^/restore/
           security: false
 
+        regist:
+          pattern: ^/regist/
+          security: false
+
         secured_area:
             pattern:    ^/
             form_login:

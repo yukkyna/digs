@@ -12,4 +12,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class MemberGroupRepository extends EntityRepository
 {
+	public function findAllInIds($ids)
+	{
+        return $this->createQueryBuilder('u')
+            ->where('u.id IN(:ids)')
+			->setParameter('ids', $ids)
+            ->getQuery()
+			->getResult();
+	}
 }

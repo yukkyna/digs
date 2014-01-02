@@ -1,0 +1,10 @@
+{% extends "DigsCoreBundle::base.html.twig" %}
+
+{% block body -%}
+<div class="row">
+    <div class="alert alert-success">招待メールを送信しました。</div>
+</div>
+<div class="row">
+    <a href="{{ path('invite_new') }}" class="btn btn-default">続けて招待する</div>
+</div>
+{% endblock %}

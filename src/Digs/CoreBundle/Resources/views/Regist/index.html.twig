@@ -1,0 +1,51 @@
+{% extends "DigsCoreBundle::base.html.twig" %}
+
+{% block body -%}
+<div class="row">
+    <h1>ユーザー登録</h1>
+    <div class="col-md-6">
+{{ form_errors(form) }}
+{{ form_start(form) }}
+    <div class="form-group">
+{{ form_label(form.email, 'メールアドレス (必須)') }}
+{{ form_errors(form.email) }}
+{{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+{{ form_label(form.password, '登録ID (必須)') }}
+{{ form_errors(form.password) }}
+{{ form_widget(form.password, {'attr': {'class': 'form-control'}}) }}
+<p class="help-block">送られてきたIDを入力してください</p>
+    </div>
+    <div class="form-group">
+{{ form_label(form.newPassword.first, 'パスワード (必須)') }}
+{{ form_errors(form.newPassword.first) }}
+{{ form_widget(form.newPassword.first, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+{{ form_label(form.newPassword.second, 'パスワードの確認') }}
+{{ form_widget(form.newPassword.second, {'attr': {'class': 'form-control'}}) }}
+<p class="help-block">パスワードをもう一度入力してください</p>
+    </div>
+    <div class="form-group">
+        <label>氏名 (必須)</label>
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_label(form.last_name, '氏') }}
+                {{ form_errors(form.last_name) }}
+                {{ form_widget(form.last_name, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_label(form.first_name, '名') }}
+                {{ form_errors(form.first_name) }}
+                {{ form_widget(form.first_name, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+<p class="help-block">氏名は登録後に変更できません</p>
+    </div>
+{{ include('DigsCoreBundle:Profile:edit_form.html.twig', { 'edit_form': form.profile, 'mode': 'create' }) }}
+    <button type="submit" class="btn btn-primary">送信</button>
+{{ form_end(form) }}
+</div>
+</div>
+{% endblock %}

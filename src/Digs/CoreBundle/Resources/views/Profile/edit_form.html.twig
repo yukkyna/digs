@@ -1,0 +1,29 @@
+<div class="form-group">
+{{ form_label(edit_form.nickname, 'ニックネーム (必須)') }}
+{{ form_errors(edit_form.nickname) }}
+{{ form_widget(edit_form.nickname, {'attr': {'class': 'form-control'}}) }}
+</div>
+{% if mode == 'edit' %}
+<div class="form-group">
+{{ form_label(edit_form.profileImage, 'プロフィール画像') }}
+{{ form_errors(edit_form.profileImage) }}
+    <div class="input-group">
+        <span class="input-group-addon">
+            <img src="{{ path('profile_image_show', { 'id': app.user.profile.id }) }}" style="width: 128px;">
+        </span>
+{{ form_widget(edit_form.profileImage, {'attr': {'class': 'form-control'}}) }}
+    </div>
+</div>
+{% endif %}
+<div class="form-group">
+{{ form_label(edit_form.message, '自己紹介 (必須)') }}
+{{ form_errors(edit_form.message) }}
+{{ form_widget(edit_form.message, {'attr': {'class': 'form-control', 'rows': 3}}) }}
+</div>
+{% if mode == 'edit' %}
+<div class="form-group">
+{{ form_label(edit_form.entryLead, 'エントリページタイトル') }}
+{{ form_errors(edit_form.entryLead) }}
+{{ form_widget(edit_form.entryLead, {'attr': {'class': 'form-control'}}) }}
+</div>
+{% endif %}

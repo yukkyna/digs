@@ -36,9 +36,15 @@ class InviteController extends Controller implements AdminController
 					if (!$em->getRepository('DigsCoreBundle:Member')->exist($entity->getEmail()))
 					{
 						$groupIds = "";
+						$b = false;
 						foreach ($groups as $g)
 						{
-							$groupIds .= $g->getId() . ',';
+							if ($b)
+							{
+								$groupIds .= ',';								
+							}
+							$groupIds .= $g->getId();
+							$b = true;
 						}
 
 						$ticket   = md5(uniqid(null, true));
