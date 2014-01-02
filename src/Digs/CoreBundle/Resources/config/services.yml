@@ -7,6 +7,8 @@ parameters:
     digs_core.profilepanel_manager.twig.extension.class: Digs\CoreBundle\Extension\Twig\ProfilePanelManagerTwigExtension
     digs_core.toppanel_manager.class: Digs\CoreBundle\Services\TopPanelManager
     digs_core.toppanel_manager.twig.extension.class: Digs\CoreBundle\Extension\Twig\TopPanelManagerTwigExtension
+    digs_core.alert_manager.class: Digs\CoreBundle\Services\AlertManager
+    digs_core.alert_manager.twig.extension.class: Digs\CoreBundle\Extension\Twig\AlertManagerTwigExtension
 
 services:
     digs_core.mymenu_manager:
@@ -35,6 +37,13 @@ services:
     digs_core.toppanel_manager.twig.extension:
         class: %digs_core.toppanel_manager.twig.extension.class%
         arguments: [@digs_core.toppanel_manager]
+        tags:
+            - { name: twig.extension }
+    digs_core.alert_manager:
+        class: %digs_core.alert_manager.class%
+    digs_core.alert_manager.twig.extension:
+        class: %digs_core.alert_manager.twig.extension.class%
+        arguments: [@digs_core.alert_manager]
         tags:
             - { name: twig.extension }
             

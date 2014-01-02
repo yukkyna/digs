@@ -2,14 +2,14 @@
 
 namespace Digs\CoreBundle\DependencyInjection\Compiler;
 
-class TopPanelCompilerPass extends CompilerPassBase
+class AlertCompilerPass extends CompilerPassBase
 {
 	public function getManagerName()
 	{
-		return 'digs_core.toppanel_manager';
+		return 'digs_core.alert_manager';
 	}
 	public function getItemTagName()
 	{
-		return 'digs.toppanel.item';
+		return 'digs.alert.item';
 	}
 }

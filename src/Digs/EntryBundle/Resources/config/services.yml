@@ -25,6 +25,12 @@ services:
             - [{controller: DigsEntryBundle:Entry:topPanel, parameters: {max: 6}}]
         tags:
             - { name: digs.toppanel.item }
+    digs_entry.alert.item:
+        class: Digs\CoreBundle\Services\AlertItem
+        arguments:
+            - [{controller: DigsEntryBundle:Entry:alert, parameters: {}}]
+        tags:
+            - { name: digs.alert.item }
     digs_entry.profilepanel.item:
         class: Digs\CoreBundle\Services\ProfilePanelItem
         arguments:

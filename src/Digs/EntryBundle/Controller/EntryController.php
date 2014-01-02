@@ -9,6 +9,7 @@ use Digs\EntryBundle\Entity\Entry;
 use Digs\EntryBundle\Form\EntryType;
 use Digs\EntryBundle\Entity\EntryComment;
 use Digs\EntryBundle\Form\EntryCommentType;
+use Digs\EntryBundle\Entity\EntryAlert;
 
 /**
  * Entry controller.
@@ -42,6 +43,16 @@ class EntryController extends Controller
 			->getRepository('DigsEntryBundle:Entry')->findOpenedDsc($max);
 
 		return $this->render('DigsEntryBundle:Entry:toppanel.html.twig', array(
+            'entities' => $entities,
+        ));
+    }
+
+    public function alertAction()
+    {
+		$entities = $this->getDoctrine()->getManager()
+			->getRepository('DigsEntryBundle:EntryAlert')->findByMember($this->getUser()->getId());
+
+		return $this->render('DigsEntryBundle:Entry:alert.html.twig', array(
             'entities' => $entities,
         ));
     }
@@ -122,6 +133,12 @@ class EntryController extends Controller
             'action' => $this->generateUrl('entry_show', array('id' => $entity->getId())),
             'method' => 'POST',
         ));
+
+		if ($entity->getMember()->getId() === $this->getUser()->getId())
+		{
+			$em->getRepository('DigsEntryBundle:EntryAlert')->deleteByMemberAndEntry($this->getUser()->getId(), $entity->getId());
+		}
+
 		if ($request->isMethod('POST'))
 		{
 	        $commentForm->handleRequest($request);
@@ -129,6 +146,15 @@ class EntryController extends Controller
 				$em = $this->getDoctrine()->getManager();
 				$em->persist($comment);
 				$em->flush();
+
+				if ($entity->getMember()->getId() !== $this->getUser()->getId())
+				{
+					$alert = new EntryAlert();
+					$alert->setEntry($entity);
+					$alert->setMember($entity->getMember());
+					$em->persist($alert);
+					$em->flush();
+				}
 			}
             return $this->redirect($this->generateUrl('entry_show', array('id' => $entity->getId())));
 		}
@@ -189,12 +215,11 @@ class EntryController extends Controller
             'action' => $this->generateUrl('entry_edit', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
-//
-//        $form->add('submit', 'submit', array('label' => 'Update'));
 
-        return $form;
+		return $form;
     }
-    /**
+
+	/**
      * Deletes a Entry entity.
      *
      */
@@ -206,10 +231,13 @@ class EntryController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('DigsEntryBundle:Entry')->find($id);
-
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Entry entity.');
             }
+			if ($entity->getMember()->getId() !== $this->getUser()->getId())
+			{
+                throw $this->createNotFoundException('Unable to delete Entry entity.');
+			}
 			$entity->setStatus(0);
             $em->persist($entity);
             $em->flush();

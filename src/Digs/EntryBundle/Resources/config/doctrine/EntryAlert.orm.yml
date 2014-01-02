@@ -1,0 +1,17 @@
+Digs\EntryBundle\Entity\EntryAlert:
+    type: entity
+    table: null
+    repositoryClass: Digs\EntryBundle\Entity\EntryAlertRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    manyToOne:
+      member:
+        targetEntity: Digs\CoreBundle\Entity\Member
+      entry:
+        targetEntity: Digs\EntryBundle\Entity\Entry
+    
+    lifecycleCallbacks: {  }

@@ -1,0 +1,8 @@
+
+{% if entities %}
+<div class="alert alert-info">
+    {% for entity in entities %}
+    <p><a class="alert-link"  href="{{ path('entry_show', { 'id': entity.entry.id }) }}">{{ entity.entry.title }}</a> にコメントが追加されました。</p>
+    {% endfor %}
+</div>
+{% endif %}
