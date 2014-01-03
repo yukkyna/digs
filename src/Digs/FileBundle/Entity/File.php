@@ -17,16 +17,10 @@ class File
 	{
 		$this->setCreatedAt(new \DateTime());
 	}
-
-	/**
+    /**
      * @var integer
      */
     private $id;
-
-    /**
-     * @var string
-     */
-    private $file;
 
     /**
      * @var string
@@ -36,17 +30,27 @@ class File
     /**
      * @var string
      */
+    private $file;
+
+    /**
+     * @var string
+     */
     private $textData;
 
     /**
-     * @var \DateTime
+     * @var integer
+     */
+    private $status;
+
+    /**
+     * @var utcdatetime
      */
     private $createdAt;
 
     /**
-     * @var boolean
+     * @var string
      */
-    private $status;
+    private $typeId;
 
 
     /**
@@ -57,29 +61,6 @@ class File
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set file
-     *
-     * @param string $file
-     * @return File
-     */
-    public function setFile($file)
-    {
-        $this->file = $file;
-
-        return $this;
-    }
-
-    /**
-     * Get file
-     *
-     * @return string 
-     */
-    public function getFile()
-    {
-        return $this->file;
     }
 
     /**
@@ -106,6 +87,29 @@ class File
     }
 
     /**
+     * Set file
+     *
+     * @param string $file
+     * @return File
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+
+        return $this;
+    }
+
+    /**
+     * Get file
+     *
+     * @return string 
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
      * Set textData
      *
      * @param string $textData
@@ -129,32 +133,9 @@ class File
     }
 
     /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     * @return File
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime 
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
      * Set status
      *
-     * @param boolean $status
+     * @param integer $status
      * @return File
      */
     public function setStatus($status)
@@ -167,38 +148,56 @@ class File
     /**
      * Get status
      *
-     * @return boolean 
+     * @return integer 
      */
     public function getStatus()
     {
         return $this->status;
     }
-    /**
-     * @var \Digs\CoreBundle\Entity\Member
-     */
-    private $member;
-
 
     /**
-     * Set member
+     * Set createdAt
      *
-     * @param \Digs\CoreBundle\Entity\Member $member
+     * @param utcdatetime $createdAt
      * @return File
      */
-    public function setMember(\Digs\CoreBundle\Entity\Member $member = null)
+    public function setCreatedAt($createdAt)
     {
-        $this->member = $member;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     /**
-     * Get member
+     * Get createdAt
      *
-     * @return \Digs\CoreBundle\Entity\Member 
+     * @return utcdatetime 
      */
-    public function getMember()
+    public function getCreatedAt()
     {
-        return $this->member;
+        return $this->createdAt;
+    }
+
+    /**
+     * Set typeId
+     *
+     * @param string $typeId
+     * @return File
+     */
+    public function setTypeId($typeId)
+    {
+        $this->typeId = $typeId;
+
+        return $this;
+    }
+
+    /**
+     * Get typeId
+     *
+     * @return string 
+     */
+    public function getTypeId()
+    {
+        return $this->typeId;
     }
 }

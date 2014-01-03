@@ -213,4 +213,47 @@ class ProfileController extends Controller
             'edit_form'   => $editForm->createView(),
         ));
 	}
+	
+	public function fileAction(Request $request)
+	{
+		$prefix = $this->getUser()->getId();
+        $em = $this->getDoctrine()->getManager();
+
+		return $this->get('digs_file.controller')->indexAction(
+			$em->getRepository('DigsFileBundle:File')->findAllByMemberQuery($prefix),
+			$request->query->get('page', 1),
+			12,
+			'profile_file_show',
+			$prefix,
+			'profile_file_new',
+			'profile_file'
+			);
+	}
+	
+	public function newFileAction(Request $request)
+	{
+		return $this->get('digs_file.controller')->newAction(
+			$request,
+			'profile_file_new',
+			$this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR,
+			$this->getUser()->getId()
+			);
+	}
+	
+	public function showFileAction($prefix, $file, $title)
+	{
+        $em = $this->getDoctrine()->getManager();
+
+		$entity = $em->getRepository('DigsCoreBundle:Member')->find($prefix);
+        if (!$entity) {
+            throw new NotFoundHttpException('Unable to find entity.');
+        }
+		if ($entity->getActive() == false)
+		{
+            throw new NotFoundHttpException('Member is not active.');
+		}
+
+		return $this->get('digs_file.controller')->showAction(
+			$this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR, $entity->getId(), $file);
+	}
 }

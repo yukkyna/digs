@@ -23,8 +23,11 @@ Digs\FileBundle\Entity\File:
         createdAt:
             type: utcdatetime
             column: created_at
-    manyToOne:
-      member:
-        targetEntity: Digs\CoreBundle\Entity\Member
+        typeId:
+            type: string
+            column: type_id
+#    manyToOne:
+#      member:
+#        targetEntity: Digs\CoreBundle\Entity\Member
     lifecycleCallbacks:
         prePersist: [setCreatedAtValue]

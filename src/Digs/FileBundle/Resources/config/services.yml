@@ -2,6 +2,6 @@ parameters:
 #    digs_file.example.class: Digs\FileBundle\Example
 
 services:
-#    digs_file.example:
-#        class: %digs_file.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    digs_file.controller:
+        class: Digs\FileBundle\Services\FileService
+        arguments: ["@templating", "@doctrine.orm.entity_manager", "@form.factory", "@knp_paginator", "@router"]

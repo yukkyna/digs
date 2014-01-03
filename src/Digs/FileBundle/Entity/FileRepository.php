@@ -16,12 +16,11 @@ class FileRepository extends EntityRepository
 	{
         return $this
             ->createQueryBuilder('u')
-			->select('u, m')
-			->leftJoin('u.member', 'm')
-//			->leftJoin('m.profile', 'p')
-            ->where('u.status = 1')
-			->andWhere('u.file=:file')
-			->andWhere('m.id=:memberId')
+//			->select('u, m')
+//			->leftJoin('u.member', 'm')
+//            ->where('u.status = 1')
+			->where('u.file=:file')
+			->andWhere('u.typeId=:memberId')
             ->setParameter('memberId', $memberId)
             ->setParameter('file', $file)
             ->getQuery()
@@ -32,10 +31,10 @@ class FileRepository extends EntityRepository
 	{
         return $this
             ->createQueryBuilder('u')
-			->select('u, m')
-			->leftJoin('u.member', 'm')
-            ->where('u.status = 1')
-			->andWhere('m.id=:memberId')
+//			->select('u, m')
+//			->leftJoin('u.member', 'm')
+//            ->where('u.status = 1')
+			->where('u.typeId=:memberId')
             ->setParameter('memberId', $memberId)
 			->orderBy('u.createdAt', 'DESC')
             ->getQuery();

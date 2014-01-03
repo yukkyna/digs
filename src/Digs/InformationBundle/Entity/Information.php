@@ -27,8 +27,7 @@ class Information
 	{
 		$this->setUpdatedAt(new \DateTime());
 	}
-
-	/**
+    /**
      * @var integer
      */
     private $id;
@@ -44,6 +43,11 @@ class Information
     private $message;
 
     /**
+     * @var string
+     */
+    private $escapedMessage;
+
+    /**
      * @var utcdatetime
      */
     private $createdAt;
@@ -52,6 +56,11 @@ class Information
      * @var utcdatetime
      */
     private $updatedAt;
+
+    /**
+     * @var integer
+     */
+    private $status;
 
 
     /**
@@ -111,6 +120,29 @@ class Information
     }
 
     /**
+     * Set escapedMessage
+     *
+     * @param string $escapedMessage
+     * @return Information
+     */
+    public function setEscapedMessage($escapedMessage)
+    {
+        $this->escapedMessage = $escapedMessage;
+
+        return $this;
+    }
+
+    /**
+     * Get escapedMessage
+     *
+     * @return string 
+     */
+    public function getEscapedMessage()
+    {
+        return $this->escapedMessage;
+    }
+
+    /**
      * Set createdAt
      *
      * @param utcdatetime $createdAt
@@ -155,11 +187,6 @@ class Information
     {
         return $this->updatedAt;
     }
-    /**
-     * @var integer
-     */
-    private $status;
-
 
     /**
      * Set status
@@ -182,33 +209,5 @@ class Information
     public function getStatus()
     {
         return $this->status;
-    }
-    /**
-     * @var string
-     */
-    private $escapedMessage;
-
-
-    /**
-     * Set escapedMessage
-     *
-     * @param string $escapedMessage
-     * @return Information
-     */
-    public function setEscapedMessage($escapedMessage)
-    {
-        $this->escapedMessage = $escapedMessage;
-
-        return $this;
-    }
-
-    /**
-     * Get escapedMessage
-     *
-     * @return string 
-     */
-    public function getEscapedMessage()
-    {
-        return $this->escapedMessage;
     }
 }
