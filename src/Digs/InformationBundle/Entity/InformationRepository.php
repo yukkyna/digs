@@ -20,5 +20,8 @@ class InformationRepository extends EntityRepository
 			->orderBy('e.id', 'DESC')
             ;
 	}
-	
+	public function findOpenedDsc($num)
+	{
+        return $this->findOpenedDscQueryBuilder()->setMaxResults($num)->getQuery()->getResult();
+	}
 }

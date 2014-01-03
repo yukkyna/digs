@@ -1,35 +1,7 @@
 {% extends "DigsCoreBundle::base.html.twig" %}
 
 {% block body %}
-
-{% if entities|length > 0 %}
-   {% set index = 0 %}
-    {% for entity in entities %}
-        {% if index % 3 == 0 %}
-<div class="row" style="margin-bottom: 15px;">
-        {% endif %}
-    <div class="col-md-4">
-        <h2><a href="{{ path('information_show', { 'id': entity.id }) }}" title="{{ entity.title }}">{{ entity.title|truncate(10) }}</a></h2>
-        <p>{{ entity.escapedMessage|truncate(100) }}</p>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="pull-right"><small>{{ entity.updatedAt|date('Y-m-d H:i:s')  }}</small></div>
-            </div>
-        </div>
-    </div>
-        {% set index = index + 1 %}
-        {% if index % 3 == 0 %}
-</div>
-        {% endif %}
-    {% endfor %}
-    {% if index % 3 != 0 %}
-</div>
-    {% endif %}
-{% else %}
-<div class="row">
-    <p>お知らせはありません</p>
-</div>
-{% endif %}
+{{ include('DigsInformationBundle:Information:toppanel.html.twig', { 'entities': entities }) }}
 <div class="row">
 {{ knp_pagination_render(entities) }}
 </div>

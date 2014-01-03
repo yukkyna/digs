@@ -11,6 +11,10 @@ parameters:
     digs_core.alert_manager.twig.extension.class: Digs\CoreBundle\Extension\Twig\AlertManagerTwigExtension
 
 services:
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension }
     digs_core.mymenu_manager:
         class: %digs_core.mymenu_manager.class%
     digs_core.mymenu_manager.twig.extension:

@@ -2,10 +2,6 @@ parameters:
 #    digs_entry.example.class: Digs\EntryBundle\Example
 
 services:
-    twig.extension.text:
-        class: Twig_Extensions_Extension_Text
-        tags:
-            - { name: twig.extension }
     digs_entry.mymenu.item:
         class: Digs\CoreBundle\Services\MyMenuItem
         arguments:
@@ -16,7 +12,8 @@ services:
     digs_entry.navigation.item:
         class: Digs\CoreBundle\Services\NavigationMenuItem
         arguments:
-            - [{title: エントリ, path: entry},{title: エントリ2, path: entry}]
+            - [{title: エントリ, path: entry}]
+#            - [{title: エントリ, path: entry},{title: エントリ2, path: entry}]
         tags:
             - { name: digs.navigation.item }
     digs_entry.toppanel.item:

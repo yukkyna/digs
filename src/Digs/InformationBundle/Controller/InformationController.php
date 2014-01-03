@@ -2,11 +2,12 @@
 
 namespace Digs\InformationBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use Digs\InformationBundle\Entity\Information;
 use Digs\InformationBundle\Form\InformationType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Information controller.
@@ -40,7 +41,12 @@ class InformationController extends Controller
      */
     public function newAction(Request $request)
     {
-        $entity = new Information();
+		if (false === $this->get('security.context')->isGranted('ROLE_INFORMATION'))
+		{
+			throw new AccessDeniedException();
+		}
+		
+		$entity = new Information();
         $form   = $this->createCreateForm($entity);
 
 		if ($request->isMethod('POST'))
@@ -66,11 +72,11 @@ class InformationController extends Controller
     *
     * @param Information $entity The entity
     *
-    * @return \Symfony\Component\Form\Form The form
+    * @return Form The form
     */
     private function createCreateForm(Information $entity)
     {
-        $form = $this->createForm(new InformationType(), $entity, array(
+		$form = $this->createForm(new InformationType(), $entity, array(
             'action' => $this->generateUrl('information_new'),
             'method' => 'POST',
         ));
@@ -107,7 +113,12 @@ class InformationController extends Controller
      */
     public function editAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
+		if (false === $this->get('security.context')->isGranted('ROLE_INFORMATION'))
+		{
+			throw new AccessDeniedException();
+		}
+
+		$em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('DigsInformationBundle:Information')->find($id);
         if (!$entity) {
@@ -139,7 +150,7 @@ class InformationController extends Controller
     *
     * @param Information $entity The entity
     *
-    * @return \Symfony\Component\Form\Form The form
+    * @return Form The form
     */
     private function createEditForm(Information $entity)
     {
@@ -159,7 +170,12 @@ class InformationController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        $form = $this->createDeleteForm($id);
+		if (false === $this->get('security.context')->isGranted('ROLE_INFORMATION'))
+		{
+			throw new AccessDeniedException();
+		}
+
+		$form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -182,7 +198,7 @@ class InformationController extends Controller
      *
      * @param mixed $id The entity id
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form The form
      */
     private function createDeleteForm($id)
     {
@@ -192,5 +208,15 @@ class InformationController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+
+	public function topPanelAction($max = 10)
+    {
+		$entities = $this->getDoctrine()->getManager()
+			->getRepository('DigsInformationBundle:Information')->findOpenedDsc($max);
+
+		return $this->render('DigsInformationBundle:Information:toppanel.html.twig', array(
+            'entities' => $entities,
+        ));
     }
 }

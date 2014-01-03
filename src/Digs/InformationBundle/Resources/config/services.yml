@@ -2,6 +2,25 @@ parameters:
 #    digs_information.example.class: Digs\InformationBundle\Example
 
 services:
+    digs_information.mymenu.item:
+        class: Digs\CoreBundle\Services\MyMenuItem
+        arguments:
+            - [{title: お知らせの作成, path: information_new}]
+        tags:
+            - { name: digs.mymenu.item }
+    digs_information.navigation.item:
+        class: Digs\CoreBundle\Services\NavigationMenuItem
+        arguments:
+            - [{title: お知らせ, path: information}]
+#            - [{title: エントリ, path: entry},{title: エントリ2, path: entry}]
+        tags:
+            - { name: digs.navigation.item }
+    digs_information.toppanel.item:
+        class: Digs\CoreBundle\Services\TopPanelItem
+        arguments:
+            - [{controller: DigsInformationBundle:Information:topPanel, parameters: {max: 6}}]
+        tags:
+            - { name: digs.toppanel.item }
 #    digs_information.example:
 #        class: %digs_information.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
