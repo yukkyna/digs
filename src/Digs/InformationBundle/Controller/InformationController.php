@@ -80,9 +80,6 @@ class InformationController extends Controller
             'action' => $this->generateUrl('information_new'),
             'method' => 'POST',
         ));
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
         return $form;
     }
 
@@ -134,7 +131,7 @@ class InformationController extends Controller
 			if ($editForm->isValid()) {
 				$em->flush();
 
-				return $this->redirect($this->generateUrl('information_edit', array('id' => $id)));
+				return $this->redirect($this->generateUrl('information_show', array('id' => $id)));
 			}
 		}
 
@@ -158,9 +155,6 @@ class InformationController extends Controller
             'action' => $this->generateUrl('information_edit', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
-
-        $form->add('submit', 'submit', array('label' => 'Update'));
-
         return $form;
     }
 
@@ -185,9 +179,9 @@ class InformationController extends Controller
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Information entity.');
             }
-
-            $em->remove($entity);
-            $em->flush();
+			$entity->setStatus(0);
+			$em->persist($entity);
+			$em->flush();
         }
 
         return $this->redirect($this->generateUrl('information'));
@@ -205,7 +199,6 @@ class InformationController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('information_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
     }
@@ -219,4 +212,99 @@ class InformationController extends Controller
             'entities' => $entities,
         ));
     }
+
+	public function fileAction(Request $request)
+	{
+		if (false === $this->get('security.context')->isGranted('ROLE_INFORMATION'))
+		{
+			throw new AccessDeniedException();
+		}
+
+		$prefix = 'information';
+        $em = $this->getDoctrine()->getManager();
+
+		return $this->get('digs_file.controller')->indexAction(
+			$em->getRepository('DigsFileBundle:File')->findAllByMemberQuery($prefix),
+			$request->query->get('page', 1),
+			12,
+			'information_file_show',
+			$prefix,
+			'information_file_new',
+			'information_file'
+			);
+	}
+
+	public function newFileAction(Request $request)
+	{
+		if (false === $this->get('security.context')->isGranted('ROLE_INFORMATION'))
+		{
+			throw new AccessDeniedException();
+		}
+
+		return $this->get('digs_file.controller')->newAction(
+			$request,
+			'information_file_new',
+			$this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR,
+			'information'
+			);
+	}
+
+	public function showFileAction($file, $title)
+	{
+		return $this->get('digs_file.controller')->showAction(
+			$this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR, 'information', $file);
+	}
+	
+	public function photoAction(Request $request)
+	{
+		if (false === $this->get('security.context')->isGranted('ROLE_INFORMATION'))
+		{
+			throw new AccessDeniedException();
+		}
+
+		$prefix = 'information';
+        $em = $this->getDoctrine()->getManager();
+
+		return $this->get('digs_photo.controller')->indexAction(
+			$em->getRepository('DigsPhotoBundle:Photo')->findAllByMemberOrderByDescQuery($prefix),
+			$request->query->get('page', 1),
+			12,
+			'information_photo_show',
+			$prefix,
+			'information_photo_new',
+			'information_photo',
+			'information_photo_thumbnail_show'
+			);
+	}
+
+	public function newPhotoAction(Request $request)
+	{
+		if (false === $this->get('security.context')->isGranted('ROLE_INFORMATION'))
+		{
+			throw new AccessDeniedException();
+		}
+
+		return $this->get('digs_photo.controller')->newAction(
+			$request,
+			'information_photo_new',
+			$this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR,
+			'information'
+			);
+	}
+
+	public function showPhotoAction($file)
+	{
+		return $this->get('digs_photo.controller')->showAction(
+			$this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR,
+			'information',
+			$file);
+	}
+
+	public function showThumbnailAction($file)
+	{
+		return $this->get('digs_photo.controller')->showThumbnailAction(
+			$this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR,
+			'information',
+			$file);
+	}
 }

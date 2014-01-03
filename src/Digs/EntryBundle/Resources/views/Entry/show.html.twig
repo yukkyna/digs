@@ -3,7 +3,7 @@
 {% set profile=entity.member.profile %}
 
 {% block stylesheets %}
-<link rel="stylesheet" href="{{ asset('bundles/digsentry/css/entry.css') }}" type="text/css" media="all" />
+<link rel="stylesheet" href="{{ asset('bundles/digsentry/css/richtexteditor.css') }}" type="text/css" media="all" />
 {% endblock %}
 
 {% block javascripts %}
@@ -15,7 +15,7 @@
         }
     };
     $(document).ready(function(){
-        RichTextEditor.init("{{ asset('bundles/digscore/bootstrap/css/bootstrap.min.css') }},{{ asset('bundles/digsentry/css/entry.css') }}",
+        RichTextEditor.init("{{ asset('bundles/digscore/bootstrap/css/bootstrap.min.css') }},{{ asset('bundles/digsentry/css/richtexteditor.css') }}",
             "{{ path('profile_photo') }}", "{{ path('profile_file') }}");
         EntryShowPage.init();
     });
@@ -23,51 +23,51 @@
 {% endblock %}
 
 {% block profile_body -%}
-        <div class="row">
+<div class="row">
 {% if profile.entryLead %}
-            <p class="lead">{{ profile.entryLead }}</p>
+    <p class="lead">{{ profile.entryLead }}</p>
 {% endif %}
-            <div id="entry-inner" class="panel panel-default">
-                <div class="panel-heading">
-                    <h2 class="panel-title">{{ entity.title }} <small>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</small>
+    <div class="panel panel-default richtexteditor">
+        <div class="panel-heading">
+            <h2 class="panel-title">{{ entity.title }} <small>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</small>
 {% if app.user.id == entity.member.id %}
- <a class="btn btn-default btn-sm" href="{{ path('entry_edit', { 'id': entity.id }) }}">編集</a>
+                <a class="btn btn-default btn-sm" href="{{ path('entry_edit', { 'id': entity.id }) }}">編集</a>
 {% endif %}
-</h2>
-                </div>
-                <div class="panel-body">{{ entity.message|raw }}</div>
-            </div>
-            <div id="comment-wrapper" class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">コメント <span class="badge">{{ entity.comments|length }}</span></h3>
-                </div>
-                <ul class="list-group">
-                    <li class="list-group-item">
+            </h2>
+        </div>
+        <div class="panel-body">{{ entity.message|raw }}</div>
+    </div>
+    <div class="panel panel-default richtexteditor">
+        <div class="panel-heading">
+            <h3 class="panel-title">コメント <span class="badge">{{ entity.comments|length }}</span></h3>
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item">
 {{ form_start(comment_form) }}
 {{ form_errors(comment_form) }}
-                        <div class="form-group">
+                <div class="form-group">
 {{ form_errors(comment_form.message) }}
 {{ form_widget(comment_form.message, {'attr': {'class': 'form-control', 'rows': 3}}) }}
-                        </div>
-    <button type="submit" class="btn btn-primary">コメント</button>
+                </div>
+                <button type="submit" class="btn btn-primary">コメント</button>
 {{ form_end(comment_form) }}
-                    </li>
+            </li>
 {% for comment in entity.comments %}
-                    <li class="list-group-item">
-                        <div class="media">
-                            <a class="pull-left" href="{{ path('profile_show', { 'id': comment.member.profile.id }) }}">
-                                <img class="media-object" style="width: 48px" src="{{ path('profile_image_show', { 'id': comment.member.profile.id}) }}" />
-                            </a>
-                            <div class="media-body">
-                                <h4 class="media-heading">
-                                    <a href="{{ path('profile_show', { 'id': comment.member.profile.id }) }}">{{ comment.member.profile.nickname }}</a>
-                                    <small>{{ comment.createdAt|date('Y-m-d H:i:s') }}</small></h4>
-                                <p>{{ comment.message|raw }}</p>
-                            </div>
-                        </div>
-                    </li>
+            <li class="list-group-item">
+                <div class="media">
+                    <a class="pull-left" href="{{ path('profile_show', { 'id': comment.member.profile.id }) }}">
+                        <img class="media-object" style="width: 48px" src="{{ path('profile_image_show', { 'id': comment.member.profile.id}) }}" />
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            <a href="{{ path('profile_show', { 'id': comment.member.profile.id }) }}">{{ comment.member.profile.nickname }}</a>
+                            <small>{{ comment.createdAt|date('Y-m-d H:i:s') }}</small></h4>
+                        <p>{{ comment.message|raw }}</p>
+                    </div>
+                </div>
+            </li>
 {% endfor %}
-                </ul>
-            </div>
-        </div>
+        </ul>
+    </div>
+</div>
 {% endblock %}

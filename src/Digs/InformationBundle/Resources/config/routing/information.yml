@@ -2,6 +2,36 @@ information:
     pattern:  /
     defaults: { _controller: "DigsInformationBundle:Information:index" }
 
+information_file:
+    pattern: /file
+    defaults: { _controller: "DigsInformationBundle:Information:file" }
+
+information_file_new:
+    pattern: /file/new
+    defaults: { _controller: "DigsInformationBundle:Information:newFile" }
+
+information_file_show:
+    pattern:  /file/{file}/{title}
+    defaults: { _controller: "DigsInformationBundle:Information:showFile" }
+
+information_photo:
+    pattern: /photo
+    defaults: { _controller: "DigsInformationBundle:Information:photo" }
+
+information_photo_new:
+    pattern: /photo/new
+    defaults: { _controller: "DigsInformationBundle:Information:newPhoto" }
+
+information_photo_show:
+    pattern:  /photo/{file}.jpg
+    defaults: { _controller: "DigsInformationBundle:Information:showPhoto" }
+
+information_photo_thumbnail_show:
+    pattern:  /thumbnail/{file}.jpg
+    defaults: { _controller: "DigsInformationBundle:Information:showThumbnail" }
+
+
+
 information_new:
     pattern:  /new
     defaults: { _controller: "DigsInformationBundle:Information:new" }

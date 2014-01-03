@@ -5,6 +5,7 @@ namespace Digs\InformationBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class InformationType extends AbstractType
 {
@@ -16,10 +17,15 @@ class InformationType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('message')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('status')
+            ->add('message', 'textarea', array(
+				'required' => false,
+				'constraints' => array(
+					new NotBlank()
+				)
+			))
+//            ->add('createdAt')
+//            ->add('updatedAt')
+//            ->add('status')
         ;
     }
     

@@ -1,8 +1,12 @@
 {% extends "DigsCoreBundle::base.html.twig" %}
 
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('bundles/digsentry/css/richtexteditor.css') }}" type="text/css" media="all" />
+{% endblock %}
+
 {% block body -%}
 <div class="row">
-    <div class="panel panel-default">
+    <div class="panel panel-default richtexteditor">
         <div class="panel-heading">
             <h2 class="panel-title">{{ entity.title }} <small>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</small>
 {% if is_granted('ROLE_INFORMATION') %}

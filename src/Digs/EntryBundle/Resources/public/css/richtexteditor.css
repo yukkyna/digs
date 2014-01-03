@@ -1,0 +1,10 @@
+
+.mce-content-body
+{
+    margin: 15px;
+}
+.richtexteditor .thumbnail,
+#tinymce .thumbnail
+{
+    display: inline-block;
+}
