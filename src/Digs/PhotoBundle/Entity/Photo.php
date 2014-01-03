@@ -17,22 +17,11 @@ class Photo
 	{
 		$this->setCreatedAt(new \DateTime());
 	}
-
     /**
      * @var integer
      */
     private $id;
 
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
     /**
      * @var string
      */
@@ -54,10 +43,20 @@ class Photo
     private $status;
 
     /**
-     * @var \Digs\CoreBundle\Entity\Member
+     * @var string
      */
-    private $member;
+    private $typeId;
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set title
@@ -152,25 +151,25 @@ class Photo
     }
 
     /**
-     * Set member
+     * Set typeId
      *
-     * @param \Digs\CoreBundle\Entity\Member $member
+     * @param string $typeId
      * @return Photo
      */
-    public function setMember(\Digs\CoreBundle\Entity\Member $member = null)
+    public function setTypeId($typeId)
     {
-        $this->member = $member;
+        $this->typeId = $typeId;
 
         return $this;
     }
 
     /**
-     * Get member
+     * Get typeId
      *
-     * @return \Digs\CoreBundle\Entity\Member 
+     * @return string 
      */
-    public function getMember()
+    public function getTypeId()
     {
-        return $this->member;
+        return $this->typeId;
     }
 }

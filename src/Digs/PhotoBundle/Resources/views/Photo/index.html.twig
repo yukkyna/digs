@@ -1,25 +1,61 @@
-{% extends "DigsCoreBundle::base.html.twig" %}
+{% extends "DigsCoreBundle::plane.html.twig" %}
+
+{% block javascripts %}
+<script type="text/javascript">
+    var SelectPhotoPage = {
+        init: function()
+        {
+            $('.thumbnail').click(function(e) {
+                e.preventDefault();
+                window.parent.RichTextEditor.selectPhoto($(this));
+            });
+        },
+        showUploadError: function(err)
+        {
+            $('#upload-error').append(err);
+        },
+        reload: function()
+        {
+            window.location = "{{ path(reloadRoute) }}";
+        }
+    };
+    $(document).ready(SelectPhotoPage.init);
+</script>
+{% endblock %}
 
 {% block body -%}
-{% set index = 0 %}
-{% for entity in entities %}
-{% if index % 4 == 0 %}
-<div class="row">
-{% endif %}
-    <div class="col-md-3">
-        <a href="#" class="thumbnail">
-            <div class="caption">{{ entity.title }}</div>
-            <img src="{{ path('photo_thumbnail_show', {'prefix': prefix, 'id': entity.file }) }}" />
+
+<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+    <div id="upload-error"></div>
+{{ form_start(upload_form, {'attr': {'target': 'uploader'}}) }}
+    <div class="input-group">
+        <label class="input-group-addon">新しい写真をアップロードする</label>
+        {{ form_widget(upload_form.file, {'attr': {'class': 'form-control'}}) }}
+        <span class="input-group-btn"><button type="submit" class="btn btn-primary">アップロード</button></span>
+    </div>
+{{ form_end(upload_form) }}
+    <iframe name="uploader" src="" style="width: 0; height: 0; border:0; overflow: hidden; display: none;"></iframe>
+</div>
+    {% set index = 0 %}
+    {% for entity in entities %}
+        {% if index % 3 == 0 %}
+<div class="row" style="margin-bottom: 15px;">
+        {% endif %}
+    <div class="col-sm-4">
+        <div class="caption">{{ entity.title }}</div>
+        <small>{{ entity.createdAt|date('Y-m-d H:i:s') }}</small>
+        <a href="{{ path(showRoute, {'prefix': prefix, 'file': entity.file}) }}" class="thumbnail">
+            <img src="{{ path(showThumbnailRoute, {'prefix': prefix, 'file': entity.file }) }}" />
         </a>
     </div>
-{% set index = index + 1 %}
-{% if index % 4 == 0 %}
+        {% set index = index + 1 %}
+        {% if index % 3 == 0 %}
 </div>
-{% endif %}
-{% endfor %}
-{% if index % 4 != 0 %}
+        {% endif %}
+    {% endfor %}
+    {% if index % 3 != 0 %}
 </div>
-{% endif %}
+    {% endif %}
 <div class="row">
 {{ knp_pagination_render(entities) }}
 </div>

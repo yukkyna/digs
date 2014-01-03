@@ -10,6 +10,14 @@ profile_file_new:
     pattern: /file/new
     defaults: { _controller: "DigsCoreBundle:Profile:newFile" }
 
+profile_photo:
+    pattern: /photo
+    defaults: { _controller: "DigsCoreBundle:Profile:photo" }
+
+profile_photo_new:
+    pattern: /photo/new
+    defaults: { _controller: "DigsCoreBundle:Profile:newPhoto" }
+
 profile_new:
     pattern:  /new
     defaults: { _controller: "DigsCoreBundle:Profile:new" }
@@ -33,4 +41,12 @@ profile_image_show:
 profile_file_show:
     pattern:  /{prefix}/file/{file}/{title}
     defaults: { _controller: "DigsCoreBundle:Profile:showFile" }
+
+profile_photo_show:
+    pattern:  /{prefix}/photo/{file}.jpg
+    defaults: { _controller: "DigsCoreBundle:Profile:showPhoto" }
+
+profile_photo_thumbnail_show:
+    pattern:  /{prefix}/thumbnail/{file}.jpg
+    defaults: { _controller: "DigsCoreBundle:Profile:showThumbnail" }
     

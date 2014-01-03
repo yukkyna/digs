@@ -136,11 +136,11 @@ class FileService
 
 	/**
      * Finds and displays a File entity.
+	 * 事前にユーザーチェックすること
      *
      */
     public function showAction($uploadDir, $prefix, $file)
     {
-		// ユーザーチェックする
         $entity = $this->em->getRepository('DigsFileBundle:File')->findMemberFile($prefix, $file);
         if (!$entity) {
             throw new NotFoundHttpException('Unable to find entity.');
@@ -161,19 +161,5 @@ class FileService
 //		$response =  new Response($image, 200);
 		$response->setLastModified($entity->getCreatedAt());
         return $response;
-
-//		$em = $this->getDoctrine()->getManager();
-//
-//        $entity = $em->getRepository('DigsFileBundle:File')->find($id);
-//
-//        if (!$entity) {
-//            throw $this->createNotFoundException('Unable to find File entity.');
-//        }
-//
-//        $deleteForm = $this->createDeleteForm($id);
-//
-//        return $this->render('DigsFileBundle:File:show.html.twig', array(
-//            'entity'      => $entity,
-//            'delete_form' => $deleteForm->createView(),        ));
     }
 }

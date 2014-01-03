@@ -19,8 +19,9 @@ Digs\PhotoBundle\Entity\Photo:
             column: created_at
         status:
             type: integer
-    manyToOne:
-      member:
-        targetEntity: Digs\CoreBundle\Entity\Member
+        typeId:
+            type: string
+            length: 255
+            column: type_id
     lifecycleCallbacks:
         prePersist: [setCreatedAtValue]

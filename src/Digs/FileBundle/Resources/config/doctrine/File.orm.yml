@@ -25,9 +25,7 @@ Digs\FileBundle\Entity\File:
             column: created_at
         typeId:
             type: string
+            length: 255
             column: type_id
-#    manyToOne:
-#      member:
-#        targetEntity: Digs\CoreBundle\Entity\Member
     lifecycleCallbacks:
         prePersist: [setCreatedAtValue]

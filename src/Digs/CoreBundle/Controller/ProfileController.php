@@ -239,7 +239,7 @@ class ProfileController extends Controller
 			$this->getUser()->getId()
 			);
 	}
-	
+
 	public function showFileAction($prefix, $file, $title)
 	{
         $em = $this->getDoctrine()->getManager();
@@ -255,5 +255,70 @@ class ProfileController extends Controller
 
 		return $this->get('digs_file.controller')->showAction(
 			$this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR, $entity->getId(), $file);
+	}
+	
+	public function photoAction(Request $request)
+	{
+		$prefix = $this->getUser()->getId();
+        $em = $this->getDoctrine()->getManager();
+
+		return $this->get('digs_photo.controller')->indexAction(
+			$em->getRepository('DigsPhotoBundle:Photo')->findAllByMemberOrderByDescQuery($prefix),
+			$request->query->get('page', 1),
+			12,
+			'profile_photo_show',
+			$prefix,
+			'profile_photo_new',
+			'profile_photo',
+			'profile_photo_thumbnail_show'
+			);
+	}
+
+	public function newPhotoAction(Request $request)
+	{
+		return $this->get('digs_photo.controller')->newAction(
+			$request,
+			'profile_photo_new',
+			$this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR,
+			$this->getUser()->getId()
+			);
+	}
+
+	public function showPhotoAction($prefix, $file)
+	{
+        $em = $this->getDoctrine()->getManager();
+
+		$entity = $em->getRepository('DigsCoreBundle:Member')->find($prefix);
+        if (!$entity) {
+            throw new NotFoundHttpException('Unable to find entity.');
+        }
+		if ($entity->getActive() == false)
+		{
+            throw new NotFoundHttpException('Member is not active.');
+		}
+
+		return $this->get('digs_photo.controller')->showAction(
+			$this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR,
+			$entity->getId(),
+			$file);
+	}
+
+	public function showThumbnailAction($prefix, $file)
+	{
+        $em = $this->getDoctrine()->getManager();
+
+		$entity = $em->getRepository('DigsCoreBundle:Member')->find($prefix);
+        if (!$entity) {
+            throw new NotFoundHttpException('Unable to find entity.');
+        }
+		if ($entity->getActive() == false)
+		{
+            throw new NotFoundHttpException('Member is not active.');
+		}
+
+		return $this->get('digs_photo.controller')->showThumbnailAction(
+			$this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR,
+			$entity->getId(),
+			$file);
 	}
 }

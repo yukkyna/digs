@@ -2,14 +2,6 @@ digs_information:
     resource: "@DigsInformationBundle/Resources/config/routing.yml"
     prefix:   /
 
-digs_file:
-    resource: "@DigsFileBundle/Resources/config/routing.yml"
-    prefix:   /
-
-digs_photo:
-    resource: "@DigsPhotoBundle/Resources/config/routing.yml"
-    prefix:   /
-
 digs_entry:
     resource: "@DigsEntryBundle/Resources/config/routing.yml"
     prefix:   /

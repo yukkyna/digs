@@ -1,3 +1,0 @@
-DigsFileBundle_file:
-    resource: "@DigsFileBundle/Resources/config/routing/file.yml"
-    prefix:   /file

@@ -16,14 +16,11 @@ class PhotoRepository extends EntityRepository
 	{
         return $this
             ->createQueryBuilder('u')
-			->select('u, m')
-			->leftJoin('u.member', 'm')
-//			->leftJoin('m.profile', 'p')
             ->where('u.status = 1')
 			->andWhere('u.file=:id')
-			->andWhere('m.id=:memberId')
-            ->setParameter('memberId', $memberId)
+			->andWhere('u.typeId=:memberId')
             ->setParameter('id', $id)
+            ->setParameter('memberId', $memberId)
             ->getQuery()
 			->getSingleResult();
 	}
@@ -32,11 +29,8 @@ class PhotoRepository extends EntityRepository
 	{
         return $this
             ->createQueryBuilder('u')
-			->select('u, m')
-			->leftJoin('u.member', 'm')
-//			->leftJoin('m.profile', 'p')
             ->where('u.status = 1')
-			->andWhere('m.id=:memberId')
+			->andWhere('u.typeId=:memberId')
             ->setParameter('memberId', $memberId)
 			->orderBy('u.createdAt', 'DESC')
             ->getQuery();
