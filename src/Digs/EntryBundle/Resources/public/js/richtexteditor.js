@@ -66,6 +66,7 @@ var RichTextEditor =
                 "insertdatetime media table contextmenu paste digsimage digscode digsfile"
             ],
             relative_urls: false,
+            remove_script_host : false,
             content_css: contentCssPath,
             menubar : false,
             style_formats : [
@@ -151,7 +152,7 @@ var RichTextEditor =
             if (selectedElm.nodeName != "IMG" && data.text.length == 0) {
                 text = elm.html();
             }
-            alert(href + '[' + data.text + ']');
+//            alert(href + '[' + data.text + ']');
             editor.insertContent(dom.createHTML('a', {
                 href: href,
                 class: 'digsfile'

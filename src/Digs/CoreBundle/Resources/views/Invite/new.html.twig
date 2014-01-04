@@ -1,42 +1,9 @@
 {% extends "DigsCoreBundle::base.html.twig" %}
 
-{% form_theme form _self %}
-{% block choice_widget_expanded %}
-{% spaceless %}
-    {% for child in form %}
-    <div {{ block('widget_container_attributes') }}>
-        {{ form_widget(child) }}
-{#
-        {{ form_label(child) }}
-#}
-    </div>
-    {% endfor %}
-{% endspaceless %}
-{% endblock choice_widget_expanded %}
-{% block checkbox_widget %}
-{% spaceless %}
-<label>
-    <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
-    {% if label is not sameas(false) %}
-{#
-        {% if not compound %}
-            {% set label_attr = label_attr|merge({'for': id}) %}
-        {% endif %}
-#}
-        {% if required %}
-            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
-        {% endif %}
-        {% if label is empty %}
-            {% set label = name|humanize %}
-        {% endif %}
-        {{ label|trans({}, translation_domain) }}
-    {% endif %}
-</label>
-{% endspaceless %}
-{% endblock checkbox_widget %}
+{% form_theme form 'DigsCoreBundle:Form:form_bootstrap_layout_expanded_checkbox.html.twig' %}
 
 {% block body -%}
-    <h2>ユーザーの追加</h2>
+<h2>ユーザーの追加</h2>
 <div class="row">
     <div class="col-md-6">
     {{ form_start(form) }}

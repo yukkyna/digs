@@ -15,3 +15,4 @@ app/config/parameters.yml
 bin/doctrine*
 nbproject
 *php~
+src/Digs/ImageConverterBundle/Resources/config/service_parameters.yml

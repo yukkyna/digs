@@ -58,12 +58,32 @@ class InformationController extends Controller
 				$em->persist($entity);
 				$em->flush();
 
+				$groups = $form['sendMailGroups']->getData();
+				if ($groups && count($groups) > 0)
+				{
+					$ids = array();
+					foreach ($groups as $g)
+					{
+						$ids[] = $g->getId();
+					}
+					$members = $em->getRepository('DigsCoreBundle:Member')->findByGroup($ids);
+					foreach ($members as $m)
+					{
+						$message = \Swift_Message::newInstance()
+							->setSubject($entity->getTitle())
+							->setFrom($this->container->getParameter('mailer_from'))
+							->setTo($m->getEmail())
+							->setBody($entity->getMessage(), 'text/html');
+						$this->get('mailer')->send($message);
+					}
+				}
+
 				return $this->redirect($this->generateUrl('information_show', array('id' => $entity->getId())));
 			}
 		}
-        return $this->render('DigsInformationBundle:Information:new.html.twig', array(
+        return $this->render('DigsInformationBundle:Information:edit.html.twig', array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'edit_form'   => $form->createView(),
         ));
     }
 
@@ -80,7 +100,14 @@ class InformationController extends Controller
             'action' => $this->generateUrl('information_new'),
             'method' => 'POST',
         ));
-        return $form;
+		$form->add('sendMailGroups', 'entity', array(
+				'class' => 'DigsCoreBundle:MemberGroup',
+				'property' => 'name',
+				'multiple' => true,
+				'expanded' => true,
+				'mapped' => false,
+			));
+		return $form;
     }
 
     /**

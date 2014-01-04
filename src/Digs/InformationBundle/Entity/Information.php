@@ -9,6 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Information
 {
+    public function __construct()
+    {
+        $this->setStatus(1);
+    }
+
 	public function setCreatedAtValue()
 	{
 		$this->setCreatedAt(new \DateTime());

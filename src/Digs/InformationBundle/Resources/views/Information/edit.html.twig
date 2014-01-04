@@ -1,5 +1,7 @@
 {% extends "DigsCoreBundle::base.html.twig" %}
 
+{% form_theme edit_form 'DigsCoreBundle:Form:form_bootstrap_layout_expanded_checkbox.html.twig' %}
+
 {% block javascripts %}
 <script type="text/javascript" src="{{ asset('bundles/digscore/js/tinymce/tinymce.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/digsentry/js/richtexteditor.js') }}"></script>
@@ -45,13 +47,19 @@
 {{ form_errors(edit_form.message) }}
 {{ form_widget(edit_form.message, {'attr': {'class': 'form-control', 'rows': 20}}) }}
     </div>
+{% if delete_form is not defined %}
+    <div class="form-group">
+        <label style="margin-bottom: 0">メールを送信するグループ</label>
+{{ form_errors(edit_form.sendMailGroups) }}
+{{ form_widget(edit_form.sendMailGroups, {'attr': {'class': 'checkbox'}}) }}
+    </div>
+{% endif %}
     <div class="form-group">
         <button type="submit" class="btn btn-primary">保存</button>
 {% if delete_form is defined %}
         <button id="submit-delete" type="button" class="pull-right btn btn-danger">削除</button>
 {% endif %}
     </div>
-
 {{ form_end(edit_form) }}
 </div>
 {% if delete_form is defined %}

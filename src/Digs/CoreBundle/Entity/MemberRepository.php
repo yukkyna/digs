@@ -17,6 +17,20 @@ use Doctrine\ORM\NoResultException;
  */
 class MemberRepository extends EntityRepository implements UserProviderInterface
 {
+	public function findByGroup($groups)
+	{
+        return $this
+            ->createQueryBuilder('u')
+			->select('u, g')
+			->leftJoin('u.groups', 'g')
+            ->where('u.active=true')
+			->andWhere('g.id IN(:groups)')
+			->setParameter('groups', $groups)
+			->orderBy('u.id', 'ASC')
+            ->getQuery()
+			->getResult();
+	}
+
 	public function findAllActive()
 	{
         return $this

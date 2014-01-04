@@ -44,8 +44,8 @@
     <div class="col-sm-4">
         <div class="caption">{{ entity.title }}</div>
         <small>{{ entity.createdAt|date('Y-m-d H:i:s') }}</small>
-        <a href="{{ path(showRoute, {'prefix': prefix, 'file': entity.file}) }}" class="thumbnail">
-            <img src="{{ path(showThumbnailRoute, {'prefix': prefix, 'file': entity.file }) }}" />
+        <a href="{{ url(showRoute, {'prefix': prefix, 'file': entity.file}) }}" class="thumbnail">
+            <img src="{{ url(showThumbnailRoute, {'prefix': prefix, 'file': entity.file }) }}" />
         </a>
     </div>
         {% set index = index + 1 %}

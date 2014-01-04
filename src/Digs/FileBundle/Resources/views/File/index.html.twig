@@ -40,7 +40,7 @@
     <tbody>
 {% for entity in entities %}
         <tr>
-            <td><a href="{{ path(showRoute, { 'prefix': prefix, 'file': entity.file, 'title': entity.title }) }}" class="digsfile">{{ entity.title }}</a></td>
+            <td><a href="{{ url(showRoute, { 'prefix': prefix, 'file': entity.file, 'title': entity.title }) }}" class="digsfile">{{ entity.title }}</a></td>
             <td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>
         </tr>
 {% endfor %}
