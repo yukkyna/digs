@@ -118,10 +118,10 @@ class PhotoService
 					$file = $form['file']->getData();
 					$file->move($dir, $newname . '.original');
 					
-					$ret = $this->converter->convert('-quality 100 ' . $dir . $newname . '.original ' . $dir . $newname . '.jpg');
+					$ret = $this->converter->convert($dir . $newname . '.original ' . '-quality 100 ' . $dir . $newname . '.jpg');
 					if ($ret == 0)
 					{
-						$this->converter->convert('-quality 60 -resize 300x300 ' . $dir . $newname . '.original ' . $dir . 't_' . $newname . '.jpg');
+						$this->converter->convert($dir . $newname . '.original ' . '-quality 60 -resize 300x300 ' . $dir . 't_' . $newname . '.jpg');
 						$entity = new Photo();
 						$entity->setTitle($file->getClientOriginalName());
 						$entity->setFile($newname);
