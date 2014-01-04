@@ -132,29 +132,20 @@ class ProfileController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Photo entity.');
         }
+		
+		$path = $this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR
+			. $entity->getMember()->getId() . DIRECTORY_SEPARATOR . 'profile.png';
+		ob_start();
+			readfile($path);
+			$image = ob_get_contents();
+		ob_end_clean();
 
-		$response = new Response();
-//		$response->setLastModified($entity->getCreatedAt()->);
-//		if ($response->isNotModified($request))
-//		{
-//			return $response;
-//		}
-
-		$response->headers->add(array(
+		$response = new Response($image, 200, array(
 			'Content-Type'   => 'image/png',
-//			'Content-Length' => filesize($path),
-			'X-Sendfile'     => $this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR
-			. $entity->getMember()->getId() . DIRECTORY_SEPARATOR . 'profile.png',
+			'Content-Length' => filesize($path),
 		));
-		$response->setStatusCode(200);
-//		$response =  new Response($image, 200);
 		$response->setLastModified($entity->getUpdatedAt());
         return $response;
-//		
-//		
-//        return $this->render('DigsPhotoBundle:Photo:show.html.twig', array(
-//            'entity'      => $entity,
-//			));
     }
 	
 	public function editPasswordAction(Request $request)
