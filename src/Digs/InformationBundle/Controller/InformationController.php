@@ -319,17 +319,19 @@ class InformationController extends Controller
 			);
 	}
 
-	public function showPhotoAction($file)
+	public function showPhotoAction(Request $request, $file)
 	{
 		return $this->get('digs_photo.controller')->showAction(
+			$request,
 			$this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR,
 			'information',
 			$file);
 	}
 
-	public function showThumbnailAction($file)
+	public function showThumbnailAction(Request $request, $file)
 	{
 		return $this->get('digs_photo.controller')->showThumbnailAction(
+			$request,
 			$this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR,
 			'information',
 			$file);

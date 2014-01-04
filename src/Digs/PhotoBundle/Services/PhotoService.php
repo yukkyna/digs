@@ -152,52 +152,58 @@ class PhotoService
 	 * 事前にユーザーチェックすること
      *
      */
-    public function showAction($uploadDir, $prefix, $file)
+    public function showAction(Request $request, $uploadDir, $prefix, $file)
     {
         $entity = $this->em->getRepository('DigsPhotoBundle:Photo')->findMemberPhoto($prefix, $file);
         if (!$entity) {
             throw new NotFoundHttpException('Unable to find Photo entity.');
         }
-
-		$response = new Response();
-//		$response->setLastModified($entity->getCreatedAt()->);
+//
+//		$response = new Response();
+//		$response->setLastModified($entity->getCreatedAt());
 //		if ($response->isNotModified($request))
 //		{
 //			return $response;
 //		}
 
-		$response->headers->add(array(
+		$path = $uploadDir . $prefix . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR . $entity->getFile() . '.jpg';
+		ob_start();
+			readfile($path);
+			$image = ob_get_contents();
+		ob_end_clean();
+		
+		$response = new Response($image, 200, array(
 			'Content-Type'   => 'image/jpeg',
-//			'Content-Length' => filesize($path),
-			'X-Sendfile'     => $uploadDir . $prefix . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR . $entity->getFile() . '.jpg',
+			'Content-Length' => filesize($path),
 		));
-		$response->setStatusCode(200);
-//		$response =  new Response($image, 200);
 		$response->setLastModified($entity->getCreatedAt());
         return $response;
     }
 
-    public function showThumbnailAction($uploadDir, $prefix, $file)
+    public function showThumbnailAction(Request $request, $uploadDir, $prefix, $file)
     {
         $entity = $this->em->getRepository('DigsPhotoBundle:Photo')->findMemberPhoto($prefix, $file);
         if (!$entity) {
             throw new NotFoundHttpException('Unable to find Photo entity.');
         }
-
-		$response = new Response();
-//		$response->setLastModified($entity->getCreatedAt()->);
+//
+//		$response = new Response();
+//		$response->setLastModified($entity->getCreatedAt());
 //		if ($response->isNotModified($request))
 //		{
 //			return $response;
 //		}
 
-		$response->headers->add(array(
+		$path = $uploadDir . $prefix . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR . 't_' .$entity->getFile() . '.jpg';
+		ob_start();
+			readfile($path);
+			$image = ob_get_contents();
+		ob_end_clean();
+
+		$response = new Response($image, 200, array(
 			'Content-Type'   => 'image/jpeg',
-//			'Content-Length' => filesize($path),
-			'X-Sendfile'     => $uploadDir . $prefix . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR . 't_' .$entity->getFile() . '.jpg',
+			'Content-Length' => filesize($path),
 		));
-		$response->setStatusCode(200);
-//		$response =  new Response($image, 200);
 		$response->setLastModified($entity->getCreatedAt());
         return $response;
     }

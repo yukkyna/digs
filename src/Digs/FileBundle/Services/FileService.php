@@ -145,20 +145,17 @@ class FileService
         if (!$entity) {
             throw new NotFoundHttpException('Unable to find entity.');
         }
-
-		$response = new Response();
-//		$response->setLastModified($entity->getCreatedAt()->);
-//		if ($response->isNotModified($request))
-//		{
-//			return $response;
-//		}
-		$response->headers->add(array(
+		
+		$path = $uploadDir . $prefix . DIRECTORY_SEPARATOR . 'file' . DIRECTORY_SEPARATOR . $entity->getFile();
+		ob_start();
+			readfile($path);
+			$image = ob_get_contents();
+		ob_end_clean();
+		
+		$response = new Response($image, 200, array(
 			'Content-Type'   => 'application/octet-stream',
-//			'Content-Length' => filesize($path),
-			'X-Sendfile'     => $uploadDir . $prefix . DIRECTORY_SEPARATOR . 'file' . DIRECTORY_SEPARATOR . $entity->getFile(),
+			'Content-Length' => filesize($path),
 		));
-		$response->setStatusCode(200);
-//		$response =  new Response($image, 200);
 		$response->setLastModified($entity->getCreatedAt());
         return $response;
     }
