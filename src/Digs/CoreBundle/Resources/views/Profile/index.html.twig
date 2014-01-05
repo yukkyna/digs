@@ -1,34 +1,32 @@
 {% extends "DigsCoreBundle::base.html.twig" %}
 
 {% block body -%}
-    {% set index = 0 %}
-    {% for entity in entities %}
-        {% if index % 3 == 0 %}
-<div class="row" style="margin-bottom: 15px;">
-        {% endif %}
-    <div class="col-md-4">
-        <div class="media">
-            <a class="pull-left" href="{{ path('profile_show', { 'id': entity.id }) }}">
-                <img class="media-object" style="width: 64px;" src="{{ path('profile_image_show', { 'id': entity.id }) }}" alt="{{ entity.nickname }}">
-            </a>
-            <div class="media-body">
-                <h4 class="media-heading">
-                    <a href="{{ path('profile_show', { 'id': entity.id }) }}">{{ entity.nickname }}</a>
-                </h4>
-                <p>{{ entity.message|truncate(100) }}</p>
-                <small>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</small>
-            </div>
-        </div>
+    {% if entities|length > 0 %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">プロフィール</h2>
     </div>
-        {% set index = index + 1 %}
-        {% if index % 3 == 0 %}
+    <ul class="list-group">
+        {% for entity in entities %}
+        <li class="list-group-item">
+            <div class="media">
+                <a class="pull-left" href="{{ path('profile_show', { 'id': entity.member.id }) }}">
+                    <img class="media-object" style="width: 64px;" src="{{ path('profile_image_show', { 'id': entity.member.id }) }}" alt="{{ entity.nickname }}">
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        <a href="{{ path('profile_show', { 'id': entity.member.id }) }}">{{ entity.nickname }}</a>
+                    </h4>
+                    <p>{{ entity.message|truncate(100) }}</p>
+                    <small>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</small>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
 </div>
-        {% endif %}
-    {% endfor %}
-    {% if index % 3 != 0 %}
+<div class="row">
+    {{ knp_pagination_render(entities) }}
 </div>
     {% endif %}
-<div class="row">
-{{ knp_pagination_render(entities) }}
-</div>
-    {% endblock %}
+{% endblock %}

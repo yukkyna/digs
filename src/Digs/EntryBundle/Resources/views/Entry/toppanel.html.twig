@@ -1,28 +1,26 @@
-    {% set index = 0 %}
+{% if entities|length > 0 %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">エントリ</h2>
+    </div>
+    <ul class="list-group">
     {% for entity in entities %}
-        {% if index % 3 == 0 %}
-<div class="row" style="margin-bottom: 15px;">
-        {% endif %}
-    <div class="col-md-4">
-        <h2><a href="{{ path('entry_show', { 'id': entity.id }) }}" title="{{ entity.title }}">{{ entity.title|truncate(10) }}</a></h2>
-        <p>{{ entity.escapedMessage|truncate(100) }}</p>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="pull-right">
-                    <a href="{{ path('profile_show', { 'id': entity.member.profile.id }) }}">
-                        <img src="{{ path('profile_image_show', { 'id': entity.member.profile.id}) }}" alt="profile" style="width:32px"/>
-                    </a>
-                    <a href="{{ path('profile_show', { 'id': entity.member.profile.id }) }}">{{ entity.member.profile.nickname }}</a>
-                    <small>{{ entity.updatedAt|date('Y-m-d H:i:s')  }}</small>
+        <li class="list-group-item">
+            <h3><a href="{{ path('entry_show', { 'id': entity.id }) }}" title="{{ entity.title }}">{{ entity.title|truncate(100) }}</a></h3>
+            <p>{{ entity.escapedMessage|truncate(200) }}</p>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pull-right">
+                        <a href="{{ path('profile_show', { 'id': entity.member.id }) }}">
+                            <img src="{{ path('profile_image_show', { 'id': entity.member.id}) }}" alt="profile" style="width:32px"/>
+                        </a>
+                        <a href="{{ path('profile_show', { 'id': entity.member.id }) }}">{{ entity.member.profile.nickname }}</a>
+                        <small>{{ entity.updatedAt|date('Y-m-d H:i:s')  }}</small>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-        {% set index = index + 1 %}
-        {% if index % 3 == 0 %}
-</div>
-        {% endif %}
+        </li>
     {% endfor %}
-    {% if index % 3 != 0 %}
+    </ul>
 </div>
-    {% endif %}
+{% endif %}

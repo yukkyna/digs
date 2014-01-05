@@ -1,6 +1,6 @@
 {% extends "DigsCoreBundle:Profile:show.html.twig" %}
 
-{% set profile=entity.member.profile %}
+{% set member=entity.member %}
 
 {% block stylesheets %}
 <link rel="stylesheet" href="{{ asset('bundles/digsentry/css/richtexteditor.css') }}" type="text/css" media="all" />
@@ -24,8 +24,8 @@
 
 {% block profile_body -%}
 <div class="row">
-{% if profile.entryLead %}
-    <p class="lead">{{ profile.entryLead }}</p>
+{% if member.profile.entryLead %}
+    <p class="lead text-center">{{ member.profile.entryLead }}</p>
 {% endif %}
     <div class="panel panel-default richtexteditor">
         <div class="panel-heading">
@@ -55,12 +55,12 @@
 {% for comment in entity.comments %}
             <li class="list-group-item">
                 <div class="media">
-                    <a class="pull-left" href="{{ path('profile_show', { 'id': comment.member.profile.id }) }}">
-                        <img class="media-object" style="width: 48px" src="{{ path('profile_image_show', { 'id': comment.member.profile.id}) }}" />
+                    <a class="pull-left" href="{{ path('profile_show', { 'id': comment.member.id }) }}">
+                        <img class="media-object" style="width: 48px" src="{{ path('profile_image_show', { 'id': comment.member.id}) }}" />
                     </a>
                     <div class="media-body">
                         <h4 class="media-heading">
-                            <a href="{{ path('profile_show', { 'id': comment.member.profile.id }) }}">{{ comment.member.profile.nickname }}</a>
+                            <a href="{{ path('profile_show', { 'id': comment.member.id }) }}">{{ comment.member.profile.nickname }}</a>
                             <small>{{ comment.createdAt|date('Y-m-d H:i:s') }}</small></h4>
                         <p>{{ comment.message|raw }}</p>
                     </div>

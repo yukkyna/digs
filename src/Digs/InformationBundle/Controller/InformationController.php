@@ -66,7 +66,7 @@ class InformationController extends Controller
 					{
 						$ids[] = $g->getId();
 					}
-					$members = $em->getRepository('DigsCoreBundle:Member')->findByGroup($ids);
+					$members = $em->getRepository('DigsCoreBundle:Member')->findActiveByGroup($ids);
 					foreach ($members as $m)
 					{
 						$message = \Swift_Message::newInstance()

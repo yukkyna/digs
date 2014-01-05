@@ -27,7 +27,7 @@ class ProfileController extends Controller
         $em = $this->getDoctrine()->getManager();
 
 		$entities = $this->get('knp_paginator')->paginate(
-			$em->getRepository('DigsCoreBundle:Profile')->findAllActiveQueryBuilder()->getQuery(),
+			$em->getRepository('DigsCoreBundle:Profile')->findAllQueryBuilder()->getQuery(),
 			$request->query->get('page', 1),
 			18
 			);
@@ -45,14 +45,13 @@ class ProfileController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('DigsCoreBundle:Profile')->find($id);
-
+        $entity = $em->getRepository('DigsCoreBundle:Member')->find($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Profile entity.');
         }
 
         return $this->render('DigsCoreBundle:Profile:show.html.twig', array(
-            'profile' => $entity
+            'member' => $entity
 			));
     }
 
@@ -64,9 +63,8 @@ class ProfileController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 		$id = $this->getUser()->getProfile()->getId();
-			
-        $entity = $em->getRepository('DigsCoreBundle:Profile')->find($id);
 
+        $entity = $em->getRepository('DigsCoreBundle:Profile')->find($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Profile entity.');
         }
@@ -128,13 +126,12 @@ class ProfileController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('DigsCoreBundle:Profile')->find($id);
+        $entity = $em->getRepository('DigsCoreBundle:Member')->find($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Photo entity.');
         }
 		
-		$path = $this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR
-			. $entity->getMember()->getId() . DIRECTORY_SEPARATOR . 'profile.png';
+		$path = $this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR . $entity->getId() . DIRECTORY_SEPARATOR . 'profile.png';
 		ob_start();
 			readfile($path);
 			$image = ob_get_contents();
@@ -144,19 +141,13 @@ class ProfileController extends Controller
 			'Content-Type'   => 'image/png',
 			'Content-Length' => filesize($path),
 		));
-		$response->setLastModified($entity->getUpdatedAt());
+		$response->setLastModified($entity->getProfile()->getUpdatedAt());
         return $response;
     }
 	
 	public function editPasswordAction(Request $request)
 	{
         $em = $this->getDoctrine()->getManager();
-//		$id = $this->getUser()->getProfile()->getId();
-//        $entity = $em->getRepository('DigsCoreBundle:Profile')->find($id);
-//
-//        if (!$entity) {
-//            throw $this->createNotFoundException('Unable to find Profile entity.');
-//        }
 
         $editForm = $this->createFormBuilder()
 			->setAction($this->generateUrl('profile_password_edit'))
@@ -239,10 +230,6 @@ class ProfileController extends Controller
         if (!$entity) {
             throw new NotFoundHttpException('Unable to find entity.');
         }
-		if ($entity->getActive() == false)
-		{
-            throw new NotFoundHttpException('Member is not active.');
-		}
 
 		return $this->get('digs_file.controller')->showAction(
 			$this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR, $entity->getId(), $file);
@@ -283,10 +270,6 @@ class ProfileController extends Controller
         if (!$entity) {
             throw new NotFoundHttpException('Unable to find entity.');
         }
-		if ($entity->getActive() == false)
-		{
-            throw new NotFoundHttpException('Member is not active.');
-		}
 
 		return $this->get('digs_photo.controller')->showAction(
 			$request,
@@ -303,10 +286,6 @@ class ProfileController extends Controller
         if (!$entity) {
             throw new NotFoundHttpException('Unable to find entity.');
         }
-		if ($entity->getActive() == false)
-		{
-            throw new NotFoundHttpException('Member is not active.');
-		}
 
 		return $this->get('digs_photo.controller')->showThumbnailAction(
 			$request,

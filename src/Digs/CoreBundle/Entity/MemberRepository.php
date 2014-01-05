@@ -17,7 +17,7 @@ use Doctrine\ORM\NoResultException;
  */
 class MemberRepository extends EntityRepository implements UserProviderInterface
 {
-	public function findByGroup($groups)
+	public function findActiveByGroup($groups)
 	{
         return $this
             ->createQueryBuilder('u')

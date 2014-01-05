@@ -57,10 +57,10 @@ class EntryController extends Controller
         ));
     }
 
-    public function profilePanelAction($profile, $max = 10)
+    public function profilePanelAction($member, $max = 10)
     {
 		$entities = $this->getDoctrine()->getManager()
-			->getRepository('DigsEntryBundle:Entry')->findOpenedByProfileDsc($profile, $max);
+			->getRepository('DigsEntryBundle:Entry')->findOpenedByMemberDsc($member, $max);
 
 		return $this->render('DigsEntryBundle:Entry:profilepanel.html.twig', array(
             'entities' => $entities,

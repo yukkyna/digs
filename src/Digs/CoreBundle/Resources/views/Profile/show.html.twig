@@ -4,19 +4,19 @@
 <div class="row">
     <div class="col-md-3">
         <div class="thumbnail">
-            <img src="{{ path('profile_image_show', { 'id': profile.id, 'v': profile.updatedAt|date('U') }) }}" alt="profile">
+            <img src="{{ path('profile_image_show', { 'id': member.id, 'v': member.profile.updatedAt|date('U') }) }}" alt="profile">
             <div class="caption text-center">
-                <h3 style="margin-top: 0"><a href="{{ path('profile_show', { 'id': profile.id }) }}">{{ profile.nickname }}</a></h3>
-                <p>{{ profile.message }}</p>
+                <h3 style="margin-top: 0"><a href="{{ path('profile_show', { 'id': member.id }) }}">{{ member.profile.nickname }}</a></h3>
+                <p>{{ member.profile.message }}</p>
             </div>
         </div>
     </div>
     <div class="col-md-9">
-        {% block profile_body %}
+{% block profile_body %}
     {% for item in profilepanel.items %}
-        {{ render(controller(item.controller, item.parameters|merge({ 'profile': profile }))) }}
+        {{ render(controller(item.controller, item.parameters|merge({ 'member': member }))) }}
     {% endfor %}
-        {% endblock %}
+{% endblock %}
     </div>
 </div>
 {% endblock %}

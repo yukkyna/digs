@@ -9,7 +9,7 @@
 {{ form_errors(edit_form.profileImage) }}
     <div class="input-group">
         <span class="input-group-addon">
-            <img src="{{ path('profile_image_show', { 'id': app.user.profile.id, 'v': app.user.profile.updatedAt|date('U')  }) }}" style="width: 128px;">
+            <img src="{{ path('profile_image_show', { 'id': app.user.id, 'v': app.user.profile.updatedAt|date('U')  }) }}" style="width: 128px;">
         </span>
 {{ form_widget(edit_form.profileImage, {'attr': {'class': 'form-control'}}) }}
     </div>
