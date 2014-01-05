@@ -6,20 +6,20 @@ services:
         class: Digs\CoreBundle\Services\MyMenuItem
         arguments:
 #            - [{title: エントリの作成, path: entry_new}, {title: エントリ2, path: entry, role: ROLE_ADMIN}]
-            - [{title: エントリの作成, path: entry_new}]
+            - [{section: global, title: エントリの作成, path: entry_new, weight: 100}]
         tags:
             - { name: digs.mymenu.item }
     digs_entry.navigation.item:
         class: Digs\CoreBundle\Services\NavigationMenuItem
         arguments:
-            - [{title: エントリ, path: entry}]
+            - [{title: エントリ, path: entry, weight: 100}]
 #            - [{title: エントリ, path: entry},{title: エントリ2, path: entry}]
         tags:
             - { name: digs.navigation.item }
     digs_entry.toppanel.item:
         class: Digs\CoreBundle\Services\TopPanelItem
         arguments:
-            - [{controller: DigsEntryBundle:Entry:topPanel, parameters: {max: 6}}]
+            - [{controller: DigsEntryBundle:Entry:topPanel, parameters: {max: 9}, weight: 100}]
         tags:
             - { name: digs.toppanel.item }
     digs_entry.alert.item:

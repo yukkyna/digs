@@ -1,8 +1,15 @@
 {% extends "DigsCoreBundle::base.html.twig" %}
 
 {% block body %}
+
+{% if entities|length > 0 %}
 {{ include('DigsEntryBundle:Entry:toppanel.html.twig', { 'entities': entities }) }}
 <div class="row">
 {{ knp_pagination_render(entities) }}
 </div>
+{% else %}
+<div class="row">
+    <p>エントリーはありません</p>
+</div>
+{% endif %}
 {% endblock %}

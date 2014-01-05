@@ -230,10 +230,10 @@ class InformationController extends Controller
         ;
     }
 
-	public function topPanelAction($max = 10)
+	public function topPanelAction($limit = 5)
     {
 		$entities = $this->getDoctrine()->getManager()
-			->getRepository('DigsInformationBundle:Information')->findOpenedDsc($max);
+			->getRepository('DigsInformationBundle:Information')->findByDateOpenedDsc($limit);
 
 		return $this->render('DigsInformationBundle:Information:toppanel.html.twig', array(
             'entities' => $entities,

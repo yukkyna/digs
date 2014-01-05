@@ -24,4 +24,12 @@ class InformationRepository extends EntityRepository
 	{
         return $this->findOpenedDscQueryBuilder()->setMaxResults($num)->getQuery()->getResult();
 	}
+
+	public function findByDateOpenedDsc($limit)
+	{
+        return $this->findOpenedDscQueryBuilder()
+			->andWhere('e.createdAt > :limit')
+			->setParameter('limit', new \DateTime($limit * -1 . ' hour'))
+			->getQuery()->getResult();
+	}
 }

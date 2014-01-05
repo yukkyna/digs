@@ -1,5 +1,3 @@
-
-{% if entities|length > 0 %}
     {% set index = 0 %}
     {% for entity in entities %}
         {% if index % 3 == 0 %}
@@ -28,8 +26,3 @@
     {% if index % 3 != 0 %}
 </div>
     {% endif %}
-{% else %}
-<div class="row">
-    <p>エントリーはありません</p>
-</div>
-{% endif %}

@@ -51,16 +51,30 @@
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
-{% for item in mymenu.items %}
+{% if mymenu.items.global|length > 0 %}
+    {% for item in mymenu.items.global %}
                                 <li><a href="{{ path(item.path) }}">{{ item.title }}</a></li>
-{% endfor %}
+    {% endfor %}
                                 <li class="divider"></li>
-                                <li><a href="{{ path('profile_password_edit') }}">パスワードの変更</a></li>
-{% if is_granted('ROLE_ADMIN') %}
-                                <li class="divider"></li>
-                                <li><a href="{{ path('invite_new') }}">ユーザーの追加</a></li>
 {% endif %}
+
+{% if mymenu.items.private|length > 0 %}
+    {% for item in mymenu.items.private %}
+                                <li><a href="{{ path(item.path) }}">{{ item.title }}</a></li>
+    {% endfor %}
                                 <li class="divider"></li>
+{% endif %}
+
+{% set adminitem=0 %}
+    {% for item in mymenu.items.admin %}
+        {% if item.role is defined and is_granted(item.role) %}
+                                <li><a weight="{{ item.weight }}" href="{{ path(item.path) }}">{{ item.title }}</a></li>
+            {% set adminitem = 1 %}
+        {% endif %}
+    {% endfor %}
+{% if adminitem == 1 %}
+                                <li class="divider"></li>
+{% endif %}
                                 <li><a href="{{ path('logout') }}">ログアウト</a></li>
                             </ul>
                         </li>

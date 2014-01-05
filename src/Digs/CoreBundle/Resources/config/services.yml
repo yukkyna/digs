@@ -61,13 +61,13 @@ services:
     digs_core.mymenu.item:
         class: Digs\CoreBundle\Services\MyMenuItem
         arguments:
-            - [{title: プロフィールの変更, path: profile_edit}]
+            - [{ section: private, title: プロフィールの変更, path: profile_edit, weight: 100 }, { section: private, title: パスワードの変更, path: profile_password_edit, weight: 9999 }, { section: admin, title: ユーザー登録, path: invite_new, weight: 9999, role: ROLE_ADMIN }]
         tags:
             - { name: digs.mymenu.item }
     digs_core.navigation.item:
         class: Digs\CoreBundle\Services\NavigationMenuItem
         arguments:
-            - [{title: プロフィール, path: profile}]
+            - [{title: プロフィール, path: profile, weight: 300}]
         tags:
             - { name: digs.navigation.item }
 
