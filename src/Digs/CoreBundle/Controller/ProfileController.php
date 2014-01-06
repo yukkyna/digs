@@ -90,7 +90,7 @@ class ProfileController extends Controller
 					$entity->setUpdatedAt(new \DateTime());
 					$em->flush();
 					return $this->redirect($this->generateUrl('profile_show', array(
-						'id' => $id
+						'id' => $this->getUser()->getId()
 						)));
 				}
 				else {
@@ -130,7 +130,7 @@ class ProfileController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Photo entity.');
         }
-		
+
 		$path = $this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR . $entity->getId() . DIRECTORY_SEPARATOR . 'profile.png';
 		ob_start();
 			readfile($path);
@@ -144,7 +144,7 @@ class ProfileController extends Controller
 		$response->setLastModified($entity->getProfile()->getUpdatedAt());
         return $response;
     }
-	
+
 	public function editPasswordAction(Request $request)
 	{
         $em = $this->getDoctrine()->getManager();
@@ -174,14 +174,14 @@ class ProfileController extends Controller
 				if ($this->getUser()->getPassword() === $encCurPass)
 				{
 					$newPass = $encoder->encodePassword($editForm['newPassword']->getData(), $this->getUser()->getSalt());
-					
+
 					$em = $this->getDoctrine()->getManager();
 					$entity = $em->getRepository('DigsCoreBundle:Member')->find($this->getUser()->getId());
 					$entity->setPassword($newPass);
 					$em->persist($entity);
 					$em->flush();
 					return $this->redirect($this->generateUrl('profile_show', array(
-						'id' => $this->getUser()->getProfile()->getId()
+						'id' => $this->getUser()->getId()
 						)));
 				}
 				else
@@ -195,7 +195,7 @@ class ProfileController extends Controller
             'edit_form'   => $editForm->createView(),
         ));
 	}
-	
+
 	public function fileAction(Request $request)
 	{
 		$prefix = $this->getUser()->getId();
@@ -211,7 +211,7 @@ class ProfileController extends Controller
 			'profile_file'
 			);
 	}
-	
+
 	public function newFileAction(Request $request)
 	{
 		return $this->get('digs_file.controller')->newAction(
@@ -234,7 +234,7 @@ class ProfileController extends Controller
 		return $this->get('digs_file.controller')->showAction(
 			$this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR, $entity->getId(), $file);
 	}
-	
+
 	public function photoAction(Request $request)
 	{
 		$prefix = $this->getUser()->getId();
