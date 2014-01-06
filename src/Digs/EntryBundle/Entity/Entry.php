@@ -73,6 +73,11 @@ class Entry
     private $member;
 
     /**
+     * @var \Digs\EntryBundle\Entity\EntryTag
+     */
+    private $tags;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -282,5 +287,28 @@ class Entry
     public function getMember()
     {
         return $this->member;
+    }
+
+    /**
+     * Set tags
+     *
+     * @param \Digs\EntryBundle\Entity\EntryTag $tags
+     * @return Entry
+     */
+    public function setTags(\Digs\EntryBundle\Entity\EntryTag $tags = null)
+    {
+        $this->tags = $tags;
+
+        return $this;
+    }
+
+    /**
+     * Get tags
+     *
+     * @return \Digs\EntryBundle\Entity\EntryTag 
+     */
+    public function getTags()
+    {
+        return $this->tags;
     }
 }

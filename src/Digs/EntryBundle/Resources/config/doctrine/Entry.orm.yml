@@ -27,6 +27,8 @@ Digs\EntryBundle\Entity\Entry:
     manyToOne:
       member:
         targetEntity: Digs\CoreBundle\Entity\Member
+      tags:
+        targetEntity: EntryTag
     oneToMany:
       comments:
         targetEntity: EntryComment

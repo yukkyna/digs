@@ -1,0 +1,20 @@
+Digs\EntryBundle\Entity\EntryTag:
+    type: entity
+    table: null
+    repositoryClass: Digs\EntryBundle\Entity\EntryTagRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+            unique: true
+    manyToMany:
+        entries:
+            targetEntity: Entry
+
+    lifecycleCallbacks: {  }
