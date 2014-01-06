@@ -27,6 +27,7 @@ Digs\EntryBundle\Entity\Entry:
     manyToOne:
       member:
         targetEntity: Digs\CoreBundle\Entity\Member
+    manyToMany:
       tags:
         targetEntity: EntryTag
     oneToMany:

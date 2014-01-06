@@ -9,6 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Entry
 {
+    public function __construct()
+    {
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
 	public function setCreatedAtValue()
 	{
 		$this->setCreatedAt(new \DateTime());
@@ -73,17 +78,10 @@ class Entry
     private $member;
 
     /**
-     * @var \Digs\EntryBundle\Entity\EntryTag
+     * @var \Doctrine\Common\Collections\Collection
      */
     private $tags;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -290,22 +288,32 @@ class Entry
     }
 
     /**
-     * Set tags
+     * Add tags
      *
      * @param \Digs\EntryBundle\Entity\EntryTag $tags
      * @return Entry
      */
-    public function setTags(\Digs\EntryBundle\Entity\EntryTag $tags = null)
+    public function addTag(\Digs\EntryBundle\Entity\EntryTag $tags)
     {
-        $this->tags = $tags;
+        $this->tags[] = $tags;
 
         return $this;
     }
 
     /**
+     * Remove tags
+     *
+     * @param \Digs\EntryBundle\Entity\EntryTag $tags
+     */
+    public function removeTag(\Digs\EntryBundle\Entity\EntryTag $tags)
+    {
+        $this->tags->removeElement($tags);
+    }
+
+    /**
      * Get tags
      *
-     * @return \Digs\EntryBundle\Entity\EntryTag 
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getTags()
     {

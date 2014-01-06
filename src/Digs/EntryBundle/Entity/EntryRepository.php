@@ -20,14 +20,22 @@ class EntryRepository extends EntityRepository
 			->leftJoin('e.member', 'm')
 			->leftJoin('m.profile', 'p')
             ->where('e.status = 1')
-//            ->setParameter('email', $username)
 			->orderBy('e.id', 'DESC')
             ;
 	}
 	
 	public function findOpenedDsc($num)
 	{
-        return $this->findOpenedDscQueryBuilder()->setMaxResults($num)->getQuery()->getResult();
+        return $this
+            ->createQueryBuilder('e')
+			->select('e, m, p, t')
+			->leftJoin('e.member', 'm')
+			->leftJoin('m.profile', 'p')
+			->leftJoin('e.tags', 't')
+            ->where('e.status = 1')
+			->orderBy('e.id', 'DESC')
+			->setMaxResults($num)
+			->getQuery()->getResult();
 	}
 
 	public function findOpenedByMemberDsc($member, $num)

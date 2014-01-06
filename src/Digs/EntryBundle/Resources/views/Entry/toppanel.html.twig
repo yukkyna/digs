@@ -7,6 +7,13 @@
     {% for entity in entities %}
         <li class="list-group-item">
             <h3><a href="{{ path('entry_show', { 'id': entity.id }) }}" title="{{ entity.title }}">{{ entity.title|truncate(100) }}</a></h3>
+            {% if entity.tags|length > 0 %}
+            <p><span class="glyphicon glyphicon-tags"></span>
+                {% for tag in entity.tags %}
+                &nbsp;{{ tag.name }}
+                {% endfor %}
+            </p>
+            {% endif %}
             <p>{{ entity.escapedMessage|truncate(200) }}</p>
             <div class="row">
                 <div class="col-md-12">
