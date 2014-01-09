@@ -12,4 +12,21 @@ use Doctrine\ORM\EntityRepository;
  */
 class EntryTagRepository extends EntityRepository
 {
+	public function findOneByNameOrderASC($name)
+	{
+		$result = $this
+            ->createQueryBuilder('e')
+            ->where('e.name = :name')
+			->orderBy('e.id', 'ASC')
+            ->setParameter('name', $name)
+            ->setMaxResults(1)
+            ->getQuery()
+			->getResult()
+            ;
+		if (count($result) > 0)
+		{
+			return $result[0];
+		}
+		return null;
+	}
 }

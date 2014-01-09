@@ -12,9 +12,9 @@ Digs\EntryBundle\Entity\EntryTag:
         name:
             type: string
             length: 255
-            unique: true
     manyToMany:
         entries:
             targetEntity: Entry
+            mappedBy: tags
 
     lifecycleCallbacks: {  }

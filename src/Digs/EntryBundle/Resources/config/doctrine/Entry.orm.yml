@@ -30,6 +30,8 @@ Digs\EntryBundle\Entity\Entry:
     manyToMany:
       tags:
         targetEntity: EntryTag
+        inversedBy: entries
+        
     oneToMany:
       comments:
         targetEntity: EntryComment

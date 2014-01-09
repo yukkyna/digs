@@ -4,8 +4,10 @@ namespace Digs\EntryBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Doctrine\DBAL\DBALException;
 
 use Digs\EntryBundle\Entity\Entry;
+use Digs\EntryBundle\Entity\EntryTag;
 use Digs\EntryBundle\Form\EntryType;
 use Digs\EntryBundle\Entity\EntryComment;
 use Digs\EntryBundle\Form\EntryCommentType;
@@ -67,21 +69,68 @@ class EntryController extends Controller
         ));
     }
 
+	private function setTagList(Entry $entity, $taglist)
+	{
+		$em = $this->getDoctrine()->getManager();
+
+		$entity->getTags()->clear();
+
+		$isDuplicate = array();
+		$tagNames = explode(',', $taglist);
+
+		foreach ($tagNames as $name)
+		{
+			$str = preg_replace('/^[ 　]+/u', '', $name);
+			$str = preg_replace('/[ 　]+$/u', '', $str);
+			if (mb_strlen($str, 'UTF-8') === 0 || mb_strlen($str, 'UTF-8') === FALSE)
+			{
+				continue;
+			}
+			if (isset($isDuplicate[$str]))
+			{
+				continue;
+			}
+
+			for ($i = 0; $i < 2; $i ++)
+			{
+				$tag = $em->getRepository('DigsEntryBundle:EntryTag')->findOneByNameOrderASC($str);
+				if (!$tag)
+				{
+					$tag = new EntryTag();
+					$tag->setName($str);
+					$em->persist($tag);
+					$em->flush();
+
+					$tag = new EntryTag();
+					$tag->setName($str);
+					$em->persist($tag);
+					$em->flush();
+				}
+			}
+			$entity->addTag($tag);
+			$isDuplicate[$str] = true;
+		}
+	}
+
 	/**
      * Displays a form to create a new Entry entity.
      *
      */
     public function newAction(Request $request)
     {
-        $entity = new Entry();
-        $form   = $this->createCreateForm($entity);
-		
+		$entity = new Entry();
+		$form = $this->createCreateForm($entity);
+
 		if ($request->isMethod('POST'))
 		{
 			$form->handleRequest($request);
 			if ($form->isValid()) {
+
+				$this->setTagList($entity, $form['taglist']->getData());
+
 				$entity->setMember($this->getUser());
 				$entity->setStatus(1);
+
 				$em = $this->getDoctrine()->getManager();
 				$em->persist($entity);
 				$em->flush();
@@ -108,6 +157,9 @@ class EntryController extends Controller
             'action' => $this->generateUrl('entry_new'),
             'method' => 'POST',
         ));
+		$form->add('taglist', 'text', array(
+			'mapped' => false
+		));
 
         return $form;
     }
@@ -189,6 +241,11 @@ class EntryController extends Controller
 			$editForm->handleRequest($request);
 
 			if ($editForm->isValid()) {
+
+				$this->setTagList($entity, $editForm['taglist']->getData());
+
+		        $em = $this->getDoctrine()->getManager();
+				$em->persist($entity);
 				$em->flush();
 
 				return $this->redirect($this->generateUrl('entry_show', array('id' => $id)));
@@ -215,7 +272,21 @@ class EntryController extends Controller
             'action' => $this->generateUrl('entry_edit', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
-
+		$form->add('taglist', 'text', array(
+			'mapped' => false
+		));
+		$taglist = '';
+		$flag = false;
+		foreach ($entity->getTags() as $tag)
+		{
+			if ($flag)
+			{
+				$taglist .= ', ';
+			}
+			$taglist .= $tag->getName();
+			$flag = true;
+		}
+		$form['taglist']->setData($taglist);
 		return $form;
     }
 
