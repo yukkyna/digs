@@ -110,6 +110,10 @@ class EntryController extends Controller
 //					$em->persist($tag);
 //					$em->flush();
 				}
+				else
+				{
+					break;
+				}
 			}
 			$entity->addTag($tag);
 			$isDuplicate[$str] = true;

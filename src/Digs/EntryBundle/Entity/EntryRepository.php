@@ -19,13 +19,13 @@ class EntryRepository extends EntityRepository
 			->select('e, m, p')
 			->leftJoin('e.member', 'm')
 			->leftJoin('m.profile', 'p')
-			->leftJoin('e.tags', 't')
             ->where('e.status = 1')
 			->orderBy('e.id', 'DESC')
             ;
 		if ($tag)
 		{
-			$qb->andWhere('t.name = :tag')
+			$qb->leftJoin('e.tags', 't')
+				->andWhere('t.name = :tag')
 				->setParameter('tag', $tag)
 			; 
 		}

@@ -8,6 +8,7 @@
     {% for entity in entities %}
         <li class="list-group-item">
             <h3><a href="{{ path('entry_show', { 'id': entity.id }) }}">{{ entity.title }}</a></h3>
+            {{ include('DigsEntryBundle:Entry:tagline.html.twig', { 'entity': entity }) }}
             <p>{{ entity.escapedMessage|truncate(200) }}</p>
             <div class="row">
                 <div class="col-md-12">
