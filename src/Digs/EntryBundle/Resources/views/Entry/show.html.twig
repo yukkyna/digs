@@ -35,7 +35,10 @@
 {% endif %}
             </h2>
         </div>
-        <div class="panel-body">{{ entity.message|raw }}</div>
+        <div class="panel-body">
+            {{ include('DigsEntryBundle:Entry:tagline.html.twig', { 'entity': entity }) }}
+{{ entity.message|raw }}
+        </div>
     </div>
     <div class="panel panel-default richtexteditor">
         <div class="panel-heading">

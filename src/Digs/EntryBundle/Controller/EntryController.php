@@ -2,16 +2,15 @@
 
 namespace Digs\EntryBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Doctrine\DBAL\DBALException;
-
 use Digs\EntryBundle\Entity\Entry;
-use Digs\EntryBundle\Entity\EntryTag;
-use Digs\EntryBundle\Form\EntryType;
-use Digs\EntryBundle\Entity\EntryComment;
-use Digs\EntryBundle\Form\EntryCommentType;
 use Digs\EntryBundle\Entity\EntryAlert;
+use Digs\EntryBundle\Entity\EntryComment;
+use Digs\EntryBundle\Entity\EntryTag;
+use Digs\EntryBundle\Form\EntryCommentType;
+use Digs\EntryBundle\Form\EntryType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Entry controller.
@@ -29,7 +28,9 @@ class EntryController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entities = $this->get('knp_paginator')->paginate(
-			$em->getRepository('DigsEntryBundle:Entry')->findOpenedDscQueryBuilder()->getQuery(),
+			$em->getRepository('DigsEntryBundle:Entry')->findOpenedDscQueryBuilder(
+					$request->query->get('tag')
+				)->getQuery(),
 			$request->query->get('page', 1),
 			18
 			);
@@ -73,7 +74,10 @@ class EntryController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 
-		$entity->getTags()->clear();
+		if ($entity->getTags())
+		{
+			$entity->getTags()->clear();
+		}
 
 		$isDuplicate = array();
 		$tagNames = explode(',', $taglist);
@@ -100,11 +104,11 @@ class EntryController extends Controller
 					$tag->setName($str);
 					$em->persist($tag);
 					$em->flush();
-
-					$tag = new EntryTag();
-					$tag->setName($str);
-					$em->persist($tag);
-					$em->flush();
+//
+//					$tag = new EntryTag();
+//					$tag->setName($str);
+//					$em->persist($tag);
+//					$em->flush();
 				}
 			}
 			$entity->addTag($tag);
@@ -149,7 +153,7 @@ class EntryController extends Controller
     *
     * @param Entry $entity The entity
     *
-    * @return \Symfony\Component\Form\Form The form
+    * @return Form The form
     */
     private function createCreateForm(Entry $entity)
     {
@@ -264,7 +268,7 @@ class EntryController extends Controller
     *
     * @param Entry $entity The entity
     *
-    * @return \Symfony\Component\Form\Form The form
+    * @return Form The form
     */
     private function createEditForm(Entry $entity)
     {
@@ -322,7 +326,7 @@ class EntryController extends Controller
      *
      * @param mixed $id The entity id
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form The form
      */
     private function createDeleteForm($id)
     {

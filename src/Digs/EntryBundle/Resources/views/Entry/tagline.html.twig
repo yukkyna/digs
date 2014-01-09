@@ -1,0 +1,9 @@
+{% spaceless %}
+{% if entity.tags|length > 0 %}
+<p><span class="glyphicon glyphicon-tags"></span>
+    {% for tag in entity.tags %}
+    &nbsp;<a href="{{ path('entry', { 'tag': tag.name }) }}"><span class="badge">{{ tag.name }}</span></a>
+    {% endfor %}
+</p>
+{% endif %}
+{% endspaceless %}
