@@ -34,3 +34,10 @@ services:
             - [{controller: DigsEntryBundle:Entry:profilePanel, parameters: {max: 5}}]
         tags:
             - { name: digs.profilepanel.item }
+
+    digs_entry.profilemenu.item:
+        class: Digs\CoreBundle\Services\ProfileMenuItem
+        arguments:
+            - [{ controller: DigsEntryBundle:Entry:profileMenu, parameters: {} }]
+        tags:
+            - { name: digs.profilemenu.item }

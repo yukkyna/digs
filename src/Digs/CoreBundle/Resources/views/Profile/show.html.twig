@@ -10,6 +10,12 @@
                 <p>{{ member.profile.message }}</p>
             </div>
         </div>
+
+    {% for item in profilemenu.items %}
+        {{ render(controller(item.controller, item.parameters|merge({ 'member': member }))) }}
+    {% endfor %}
+
+
     </div>
     <div class="col-md-9">
 {% block profile_body %}

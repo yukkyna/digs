@@ -12,6 +12,20 @@ use Doctrine\ORM\EntityRepository;
  */
 class EntryTagRepository extends EntityRepository
 {
+	public function findOpenedEntryTagByMember($memberId)
+	{
+		return $this->createQueryBuilder('t')
+			->select('t.id, t.name, COUNT(t.id) AS cnt')
+			->leftJoin('t.entries', 'e')
+            ->where('e.status = 1')
+			->andWhere('e.member=:member')
+			->setParameter('member', $memberId)
+			->groupBy('t.id, t.name')
+            ->getQuery()
+			->getResult()
+            ;
+	}
+
 	public function findOneByNameOrderASC($name)
 	{
 		$result = $this

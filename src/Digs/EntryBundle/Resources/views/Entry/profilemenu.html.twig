@@ -1,0 +1,14 @@
+
+{% if entities|length > 0 %}
+<div class="text-center">
+{% set m = 0 %}
+{% for entity in entities %}
+    {% if m < entity.cnt %}
+    {% set m = entity.cnt %}
+    {% endif %}
+{% endfor %}
+{% for entity in entities %}
+    <a class="btn btn-sm btn-default" style="font-size: {{ entity.cnt / m * 200 }}%" href="{{ path('entry', { 'tag': entity.name }) }}">{{ entity.name }}</a>
+{% endfor %}
+</div>
+{% endif %}

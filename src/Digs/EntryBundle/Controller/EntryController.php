@@ -69,6 +69,16 @@ class EntryController extends Controller
             'entities' => $entities,
         ));
     }
+	
+	public function profileMenuAction($member)
+	{
+		$entities = $this->getDoctrine()->getManager()
+			->getRepository('DigsEntryBundle:EntryTag')->findOpenedEntryTagByMember($member);
+
+		return $this->render('DigsEntryBundle:Entry:profilemenu.html.twig', array(
+            'entities' => $entities,
+        ));
+	}
 
 	private function setTagList(Entry $entity, $taglist)
 	{

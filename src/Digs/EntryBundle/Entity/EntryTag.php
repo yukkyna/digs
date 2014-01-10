@@ -12,6 +12,17 @@ class EntryTag
     /**
      * @var integer
      */
+    private $cnt;
+	public function setCnt($cnt) {
+		$this->cnt = $cnt;
+	}
+	public function getCnt() {
+		return $this->cnt;
+	}
+	
+    /**
+     * @var integer
+     */
     private $id;
 
     /**
