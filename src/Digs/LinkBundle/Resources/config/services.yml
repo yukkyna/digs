@@ -1,0 +1,7 @@
+parameters:
+#    digs_link.example.class: Digs\LinkBundle\Example
+
+services:
+#    digs_link.example:
+#        class: %digs_link.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
