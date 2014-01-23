@@ -7,6 +7,8 @@ use Digs\CoreBundle\DependencyInjection\Compiler\MyMenuCompilerPass;
 use Digs\CoreBundle\DependencyInjection\Compiler\NavigationMenuCompilerPass;
 use Digs\CoreBundle\DependencyInjection\Compiler\ProfilePanelCompilerPass;
 use Digs\CoreBundle\DependencyInjection\Compiler\TopPanelCompilerPass;
+use Digs\CoreBundle\DependencyInjection\Compiler\FooterPanelCompilerPass;
+
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -19,5 +21,6 @@ class DigsCoreBundle extends Bundle
 		$container->addCompilerPass(new ProfilePanelCompilerPass());
 		$container->addCompilerPass(new AlertCompilerPass());
 		$container->addCompilerPass(new TopPanelCompilerPass());
+		$container->addCompilerPass(new FooterPanelCompilerPass());
 	}
 }

@@ -91,6 +91,9 @@
 {% if app.user %}
         <footer class="digs-footer">
             <div class="container">
+{% for item in footerpanel.items %}
+    {{ render(controller(item.controller, item.parameters)) }}
+{% endfor %}
                 <p class="text-center"><a href="https://github.com/yukkyna/digs">digs</a></p>
             </div>
         </footer>
