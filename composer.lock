@@ -721,16 +721,16 @@
         },
         {
             "name": "jdorn/sql-formatter",
-            "version": "v1.2.16",
+            "version": "v1.2.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jdorn/sql-formatter.git",
-                "reference": "8859d664737492d313c34796731b35eca851b362"
+                "reference": "64990d96e0959dff8e059dfcdc1af130728d92bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jdorn/sql-formatter/zipball/8859d664737492d313c34796731b35eca851b362",
-                "reference": "8859d664737492d313c34796731b35eca851b362",
+                "url": "https://api.github.com/repos/jdorn/sql-formatter/zipball/64990d96e0959dff8e059dfcdc1af130728d92bc",
+                "reference": "64990d96e0959dff8e059dfcdc1af130728d92bc",
                 "shasum": ""
             },
             "require": {
@@ -767,7 +767,7 @@
                 "highlight",
                 "sql"
             ],
-            "time": "2013-11-27 22:51:13"
+            "time": "2014-01-12 16:20:24"
         },
         {
             "name": "knplabs/knp-components",
@@ -775,12 +775,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/knp-components.git",
-                "reference": "ae454fb43473127a7bdc0a777f962f64f94e2795"
+                "reference": "ec65f549d46e9a7b7f9872a3ed63db743e077dc0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/knp-components/zipball/ae454fb43473127a7bdc0a777f962f64f94e2795",
-                "reference": "ae454fb43473127a7bdc0a777f962f64f94e2795",
+                "url": "https://api.github.com/repos/KnpLabs/knp-components/zipball/ec65f549d46e9a7b7f9872a3ed63db743e077dc0",
+                "reference": "ec65f549d46e9a7b7f9872a3ed63db743e077dc0",
                 "shasum": ""
             },
             "require": {
@@ -828,7 +828,7 @@
                 "pager",
                 "paginator"
             ],
-            "time": "2013-12-23 13:48:48"
+            "time": "2014-01-21 11:19:41"
         },
         {
             "name": "knplabs/knp-paginator-bundle",
@@ -837,12 +837,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpPaginatorBundle.git",
-                "reference": "e817cbddfa13cb9a72bf1ddcaf6a36b99cda5c2d"
+                "reference": "0558122152ca6a7af71730f88b728a091dea490e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpPaginatorBundle/zipball/e817cbddfa13cb9a72bf1ddcaf6a36b99cda5c2d",
-                "reference": "e817cbddfa13cb9a72bf1ddcaf6a36b99cda5c2d",
+                "url": "https://api.github.com/repos/KnpLabs/KnpPaginatorBundle/zipball/0558122152ca6a7af71730f88b728a091dea490e",
+                "reference": "0558122152ca6a7af71730f88b728a091dea490e",
                 "shasum": ""
             },
             "require": {
@@ -854,7 +854,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.3.x-dev"
+                    "dev-master": "2.4.x-dev"
                 }
             },
             "autoload": {
@@ -887,7 +887,7 @@
                 "pagination",
                 "paginator"
             ],
-            "time": "2013-12-19 09:14:09"
+            "time": "2014-01-21 11:16:05"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -1376,17 +1376,17 @@
         },
         {
             "name": "symfony/monolog-bundle",
-            "version": "v2.4.1",
+            "version": "v2.5.0",
             "target-dir": "Symfony/Bundle/MonologBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/MonologBundle.git",
-                "reference": "e81c2e9c4dc0a9ff794674017069e036f575f278"
+                "reference": "29a17a347dfc41aed34ce9b72cceaf375635c408"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/MonologBundle/zipball/e81c2e9c4dc0a9ff794674017069e036f575f278",
-                "reference": "e81c2e9c4dc0a9ff794674017069e036f575f278",
+                "url": "https://api.github.com/repos/symfony/MonologBundle/zipball/29a17a347dfc41aed34ce9b72cceaf375635c408",
+                "reference": "29a17a347dfc41aed34ce9b72cceaf375635c408",
                 "shasum": ""
             },
             "require": {
@@ -1404,7 +1404,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4.x-dev"
+                    "dev-master": "2.5.x-dev"
                 }
             },
             "autoload": {
@@ -1432,7 +1432,7 @@
                 "log",
                 "logging"
             ],
-            "time": "2013-08-26 10:15:04"
+            "time": "2014-01-19 13:23:40"
         },
         {
             "name": "symfony/swiftmailer-bundle",
