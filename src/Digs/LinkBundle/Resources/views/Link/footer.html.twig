@@ -1,0 +1,8 @@
+{% if entities|length > 0 %}
+<dl class="col-md-4">
+    <dt>リンク</dt>
+    {% for entity in entities %}
+    <dd><a href="{{ entity.url }}">{{ entity.name }}</a></dd>
+    {% endfor %}
+</dl>
+{% endif %}

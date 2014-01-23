@@ -1,0 +1,30 @@
+link:
+    pattern:  /
+    defaults: { _controller: "DigsLinkBundle:Link:index" }
+
+link_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "DigsLinkBundle:Link:show" }
+
+link_new:
+    pattern:  /new
+    defaults: { _controller: "DigsLinkBundle:Link:new" }
+
+link_create:
+    pattern:  /create
+    defaults: { _controller: "DigsLinkBundle:Link:create" }
+    requirements: { _method: post }
+
+link_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "DigsLinkBundle:Link:edit" }
+
+link_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "DigsLinkBundle:Link:update" }
+    requirements: { _method: post|put }
+
+link_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "DigsLinkBundle:Link:delete" }
+    requirements: { _method: post|delete }

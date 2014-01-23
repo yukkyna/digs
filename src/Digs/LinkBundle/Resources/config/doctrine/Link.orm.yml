@@ -1,0 +1,21 @@
+Digs\LinkBundle\Entity\Link:
+    type: entity
+    table: null
+    repositoryClass: Digs\LinkBundle\Entity\LinkRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        url:
+            type: string
+            length: 255
+        description:
+            type: string
+            length: 255
+    lifecycleCallbacks: {  }

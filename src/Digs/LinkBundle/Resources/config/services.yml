@@ -5,3 +5,9 @@ services:
 #    digs_link.example:
 #        class: %digs_link.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
+    digs_link.footerpanel.item:
+        class: Digs\CoreBundle\Services\FooterPanelItem
+        arguments:
+            - [{controller: DigsLinkBundle:Link:footer, parameters: {}, weight: 1000}]
+        tags:
+            - { name: digs.footerpanel.item }
