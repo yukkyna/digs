@@ -6,6 +6,7 @@
 {#
         <link rel="stylesheet" href="{{ asset('bundles/digscore/css/normalize.css') }}" type="text/css" media="all" />
 #}
+        <link rel="stylesheet" href="{{ asset('bundles/digscore/css/digs.css') }}" type="text/css" media="all" />
         <link rel="stylesheet" href="{{ asset('bundles/digscore/bootstrap/css/bootstrap.min.css') }}" type="text/css" media="all" />
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
@@ -86,13 +87,15 @@
         <div class="container">
 {% block body %}{% endblock %}
         </div>
-{#
-        <div id="footer" style="background-color: #f5f5f5">
+
+{% if app.user %}
+        <footer class="digs-footer">
             <div class="container">
-                <p class="text-muted">digs</p>
+                <p class="text-center"><a href="https://github.com/yukkyna/digs">digs</a></p>
             </div>
-        </div>
-#}
+        </footer>
+{% endif %}
+
         <script type="text/javascript" src="{{ asset('bundles/digscore/js/jquery-2.0.3.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('bundles/digscore/bootstrap/js/bootstrap.min.js') }}"></script>
         {% block javascripts %}{% endblock %}
