@@ -8,7 +8,11 @@
     {% endif %}
 {% endfor %}
 {% for entity in entities %}
-    <a class="btn btn-sm btn-default" style="font-size: {{ entity.cnt / m * 200 }}%" href="{{ path('entry', { 'tag': entity.name }) }}">{{ entity.name }}</a>
+    {% set fs = entity.cnt / m * 200 %}
+    {% if fs < 60 %}
+    {% set fs = 60 %}
+    {% endif %}
+    <a class="btn btn-sm btn-default" style="font-size: {{ fs }}%" href="{{ path('entry', { 'tag': entity.name }) }}">{{ entity.name }}</a>
 {% endfor %}
 </div>
 {% endif %}

@@ -169,4 +169,32 @@ class EntryComment
 	{
 		$this->createdAt = new \DateTime();
 	}
+    /**
+     * @var string
+     */
+    private $escapedMessage;
+
+
+    /**
+     * Set escapedMessage
+     *
+     * @param string $escapedMessage
+     * @return EntryComment
+     */
+    public function setEscapedMessage($escapedMessage)
+    {
+        $this->escapedMessage = $escapedMessage;
+
+        return $this;
+    }
+
+    /**
+     * Get escapedMessage
+     *
+     * @return string 
+     */
+    public function getEscapedMessage()
+    {
+        return $this->escapedMessage;
+    }
 }

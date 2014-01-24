@@ -10,6 +10,13 @@ use Doctrine\ORM\Mapping as ORM;
 class EntryTag
 {
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->entries = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    /**
      * @var integer
      */
     private $cnt;
@@ -67,14 +74,6 @@ class EntryTag
      * @var \Doctrine\Common\Collections\Collection
      */
     private $entries;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->entries = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Add entries

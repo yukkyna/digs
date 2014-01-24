@@ -31,13 +31,6 @@ services:
     digs_entry.profilepanel.item:
         class: Digs\CoreBundle\Services\ProfilePanelItem
         arguments:
-            - [{controller: DigsEntryBundle:Entry:profilePanel, parameters: {max: 5}}]
+            - [{controller: DigsEntryBundle:Entry:profilePanelEntry, parameters: {max: 3}}, {controller: DigsEntryBundle:Entry:profilePanelComment, parameters: {max: 10}}, {controller: DigsEntryBundle:Entry:profilePanelTag, parameters: {}}]
         tags:
             - { name: digs.profilepanel.item }
-
-    digs_entry.profilemenu.item:
-        class: Digs\CoreBundle\Services\ProfileMenuItem
-        arguments:
-            - [{ controller: DigsEntryBundle:Entry:profileMenu, parameters: {} }]
-        tags:
-            - { name: digs.profilemenu.item }

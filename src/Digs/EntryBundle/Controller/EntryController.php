@@ -29,7 +29,8 @@ class EntryController extends Controller
 
         $entities = $this->get('knp_paginator')->paginate(
 			$em->getRepository('DigsEntryBundle:Entry')->findOpenedDscQueryBuilder(
-					$request->query->get('tag')
+					$request->query->get('tag'),
+					$request->query->get('profile')
 				)->getQuery(),
 			$request->query->get('page', 1),
 			18
@@ -60,7 +61,7 @@ class EntryController extends Controller
         ));
     }
 
-    public function profilePanelAction($member, $max = 10)
+    public function profilePanelEntryAction($member, $max = 10)
     {
 		$entities = $this->getDoctrine()->getManager()
 			->getRepository('DigsEntryBundle:Entry')->findOpenedByMemberDsc($member, $max);
@@ -70,15 +71,25 @@ class EntryController extends Controller
         ));
     }
 	
-	public function profileMenuAction($member)
-	{
+    public function profilePanelCommentAction($member, $max = 10)
+    {
+		$entities = $this->getDoctrine()->getManager()
+			->getRepository('DigsEntryBundle:EntryComment')->findOpenedByMemberDsc($member, $max);
+
+		return $this->render('DigsEntryBundle:Entry:profile_panel_comment.html.twig', array(
+            'entities' => $entities,
+        ));
+    }
+
+    public function profilePanelTagAction($member)
+    {
 		$entities = $this->getDoctrine()->getManager()
 			->getRepository('DigsEntryBundle:EntryTag')->findOpenedEntryTagByMember($member);
 
-		return $this->render('DigsEntryBundle:Entry:profilemenu.html.twig', array(
+		return $this->render('DigsEntryBundle:Entry:profilepanel_tag.html.twig', array(
             'entities' => $entities,
         ));
-	}
+    }
 
 	private function setTagList(Entry $entity, $taglist)
 	{
@@ -176,7 +187,8 @@ class EntryController extends Controller
             'method' => 'POST',
         ));
 		$form->add('taglist', 'text', array(
-			'mapped' => false
+			'mapped' => false,
+			'required' => false,
 		));
 
         return $form;
@@ -291,7 +303,8 @@ class EntryController extends Controller
             'method' => 'PUT',
         ));
 		$form->add('taglist', 'text', array(
-			'mapped' => false
+			'mapped' => false,
+			'required' => false,
 		));
 		$taglist = '';
 		$flag = false;

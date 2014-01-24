@@ -1,28 +1,20 @@
 {% extends "DigsCoreBundle::base.html.twig" %}
 
 {% block body -%}
-<div class="row">
-    <div class="col-md-3">
-        <div class="thumbnail">
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="text-center">
             <img src="{{ path('profile_image_show', { 'id': member.id, 'v': member.profile.updatedAt|date('U') }) }}" alt="profile">
-            <div class="caption text-center">
-                <h3 style="margin-top: 0"><a href="{{ path('profile_show', { 'id': member.id }) }}">{{ member.profile.nickname }}</a></h3>
-                <p>{{ member.profile.message }}</p>
-            </div>
+            <h3><a href="{{ path('profile_show', { 'id': member.id }) }}">{{ member.profile.nickname }}</a></h3>
+            {{ member.profile.message }}
         </div>
-
-    {% for item in profilemenu.items %}
-        {{ render(controller(item.controller, item.parameters|merge({ 'member': member }))) }}
-    {% endfor %}
-
-
     </div>
-    <div class="col-md-9">
+</div>
+
 {% block profile_body %}
     {% for item in profilepanel.items %}
         {{ render(controller(item.controller, item.parameters|merge({ 'member': member }))) }}
     {% endfor %}
 {% endblock %}
-    </div>
-</div>
+
 {% endblock %}

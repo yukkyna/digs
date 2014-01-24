@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class EntryRepository extends EntityRepository
 {
-	public function findOpenedDscQueryBuilder($tag)
+	public function findOpenedDscQueryBuilder($tag, $member)
 	{
 		$qb = $this
             ->createQueryBuilder('e')
@@ -28,6 +28,13 @@ class EntryRepository extends EntityRepository
 				->andWhere('t.name = :tag')
 				->setParameter('tag', $tag)
 			; 
+		}
+		if ($member != null)
+		{
+			$qb
+				->andWhere('m.id=:member')
+				->setParameter('member', $member)
+				;
 		}
 		return $qb;
 	}
@@ -48,8 +55,7 @@ class EntryRepository extends EntityRepository
 
 	public function findOpenedByMemberDsc($member, $num)
 	{
-        return $this->findOpenedDscQueryBuilder(null)
-			->andWhere('m.id=:memberId')->setParameter('memberId', $member->getId())
+        return $this->findOpenedDscQueryBuilder(null, $member->getId())
 			->setMaxResults($num)->getQuery()->getResult();
 	}
 

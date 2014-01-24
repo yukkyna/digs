@@ -3,8 +3,6 @@ parameters:
     digs_core.mymenu_manager.twig.extension.class: Digs\CoreBundle\Extension\Twig\MyMenuManagerTwigExtension
     digs_core.navigation_manager.class: Digs\CoreBundle\Services\NavigationMenuManager
     digs_core.navigation_manager.twig.extension.class: Digs\CoreBundle\Extension\Twig\NavigationMenuManagerTwigExtension
-    digs_core.profilemenu_manager.class: Digs\CoreBundle\Services\ProfileMenuManager
-    digs_core.profilemenu_manager.twig.extension.class: Digs\CoreBundle\Extension\Twig\ProfileMenuManagerTwigExtension
     digs_core.profilepanel_manager.class: Digs\CoreBundle\Services\ProfilePanelManager
     digs_core.profilepanel_manager.twig.extension.class: Digs\CoreBundle\Extension\Twig\ProfilePanelManagerTwigExtension
     digs_core.toppanel_manager.class: Digs\CoreBundle\Services\TopPanelManager
@@ -39,14 +37,6 @@ services:
     digs_core.profilepanel_manager.twig.extension:
         class: %digs_core.profilepanel_manager.twig.extension.class%
         arguments: [@digs_core.profilepanel_manager]
-        tags:
-            - { name: twig.extension }
-
-    digs_core.profilemenu_manager:
-        class: %digs_core.profilemenu_manager.class%
-    digs_core.profilemenu_manager.twig.extension:
-        class: %digs_core.profilemenu_manager.twig.extension.class%
-        arguments: [@digs_core.profilemenu_manager]
         tags:
             - { name: twig.extension }
 
@@ -93,4 +83,3 @@ services:
             - [{title: プロフィール, path: profile, weight: 300}]
         tags:
             - { name: digs.navigation.item }
-

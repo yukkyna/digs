@@ -1,0 +1,16 @@
+
+{% if entities|length > 0 %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">コメント</h2>
+    </div>
+    <ul class="list-group">
+    {% for entity in entities %}
+        <li class="list-group-item">
+            <a href="{{ path('entry_show', { 'id': entity.entry.id }) }}">{{ entity.entry.title }}</a>
+            <span>{{ entity.escapedMessage|truncate(40) }}</span> <small>{{ entity.createdAt|date('Y-m-d H:i:s')  }}</small>
+        </li>
+    {% endfor %}
+    </ul>
+</div>
+{% endif %}

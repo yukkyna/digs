@@ -10,6 +10,10 @@ Digs\EntryBundle\Entity\EntryComment:
                 strategy: AUTO
         message:
             type: text
+        escapedMessage:
+            type: text
+            column: escaped_message
+            nullable: true
         createdAt:
             type: utcdatetime
             column: created_at

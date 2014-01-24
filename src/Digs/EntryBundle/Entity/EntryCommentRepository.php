@@ -12,4 +12,18 @@ use Doctrine\ORM\EntityRepository;
  */
 class EntryCommentRepository extends EntityRepository
 {
+	public function findOpenedByMemberDsc($member, $limit)
+	{
+        return $this
+            ->createQueryBuilder('c')
+			->select('c, m, e')
+			->leftJoin('c.member', 'm')
+			->leftJoin('c.entry', 'e')
+            ->where('e.status = 1')
+			->andWhere('m.id=:member')
+			->setParameter('member', $member)
+			->orderBy('c.id', 'DESC')
+			->setMaxResults($limit)
+			->getQuery()->getResult();
+	}
 }

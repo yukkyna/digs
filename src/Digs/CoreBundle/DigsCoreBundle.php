@@ -5,7 +5,6 @@ namespace Digs\CoreBundle;
 use Digs\CoreBundle\DependencyInjection\Compiler\AlertCompilerPass;
 use Digs\CoreBundle\DependencyInjection\Compiler\MyMenuCompilerPass;
 use Digs\CoreBundle\DependencyInjection\Compiler\NavigationMenuCompilerPass;
-use Digs\CoreBundle\DependencyInjection\Compiler\ProfileMenuCompilerPass;
 use Digs\CoreBundle\DependencyInjection\Compiler\ProfilePanelCompilerPass;
 use Digs\CoreBundle\DependencyInjection\Compiler\TopPanelCompilerPass;
 use Digs\CoreBundle\DependencyInjection\Compiler\FooterPanelCompilerPass;
@@ -19,7 +18,6 @@ class DigsCoreBundle extends Bundle
 		parent::build($container);
 		$container->addCompilerPass(new MyMenuCompilerPass());
 		$container->addCompilerPass(new NavigationMenuCompilerPass());
-		$container->addCompilerPass(new ProfileMenuCompilerPass());
 		$container->addCompilerPass(new ProfilePanelCompilerPass());
 		$container->addCompilerPass(new AlertCompilerPass());
 		$container->addCompilerPass(new TopPanelCompilerPass());
