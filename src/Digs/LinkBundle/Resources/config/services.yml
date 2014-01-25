@@ -11,3 +11,9 @@ services:
             - [{controller: DigsLinkBundle:Link:footer, parameters: {}, weight: 1000}]
         tags:
             - { name: digs.footerpanel.item }
+    digs_link.mymenu.item:
+        class: Digs\CoreBundle\Services\MyMenuItem
+        arguments:
+            - [{section: admin, title: リンクの登録・編集, path: link, weight: 100, role: ROLE_ADMIN}]
+        tags:
+            - { name: digs.mymenu.item }

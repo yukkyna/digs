@@ -2,11 +2,12 @@
 
 namespace Digs\LinkBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use Digs\CoreBundle\Controller\AdminController;
 use Digs\LinkBundle\Entity\Link;
 use Digs\LinkBundle\Form\LinkType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Link controller.
@@ -74,7 +75,7 @@ class LinkController extends Controller
     *
     * @param Link $entity The entity
     *
-    * @return \Symfony\Component\Form\Form The form
+    * @return Form The form
     */
     private function createCreateForm(Link $entity)
     {
@@ -128,7 +129,7 @@ class LinkController extends Controller
      * Displays a form to edit an existing Link entity.
      *
      */
-    public function editAction($id)
+    public function editAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -139,12 +140,20 @@ class LinkController extends Controller
         }
 
         $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
+		
+		if ($request->isMethod('PUT'))
+		{
+			$editForm->handleRequest($request);
+			if ($editForm->isValid()) {
+				$em->flush();
+
+				return $this->redirect($this->generateUrl('link'));
+			}
+		}
 
         return $this->render('DigsLinkBundle:Link:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -153,7 +162,7 @@ class LinkController extends Controller
     *
     * @param Link $entity The entity
     *
-    * @return \Symfony\Component\Form\Form The form
+    * @return Form The form
     */
     private function createEditForm(Link $entity)
     {
@@ -166,37 +175,8 @@ class LinkController extends Controller
 
         return $form;
     }
-    /**
-     * Edits an existing Link entity.
-     *
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('DigsLinkBundle:Link')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Link entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isValid()) {
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('link_edit', array('id' => $id)));
-        }
-
-        return $this->render('DigsLinkBundle:Link:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-    /**
+	/**
      * Deletes a Link entity.
      *
      */
@@ -225,7 +205,7 @@ class LinkController extends Controller
      *
      * @param mixed $id The entity id
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form The form
      */
     private function createDeleteForm($id)
     {

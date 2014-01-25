@@ -16,8 +16,7 @@ class LinkType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('url')
-            ->add('description')
+            ->add('url', 'text')
         ;
     }
     

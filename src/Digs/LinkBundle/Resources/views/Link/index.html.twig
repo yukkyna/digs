@@ -1,45 +1,32 @@
-{% extends '::base.html.twig' %}
+{% extends "DigsCoreBundle::base.html.twig" %}
 
 {% block body -%}
     <h1>Link list</h1>
 
-    <table class="records_list">
+    <div class="text-right">
+        <a href="{{ path('link_new') }}">新しいリンクを追加</a>
+    </div>
+    <table class="table table-hover">
         <thead>
             <tr>
-                <th>Id</th>
+                <th><input type="checkbox" id="check-all" /></th>
                 <th>Name</th>
                 <th>Url</th>
-                <th>Description</th>
-                <th>Actions</th>
+                <th> </th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('link_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td><input type="checkbox" class="link-checkbox" value="{{ entity.id }}" /></td>
                 <td>{{ entity.name }}</td>
-                <td>{{ entity.url }}</td>
-                <td>{{ entity.description }}</td>
+                <td><a href="{{ entity.url }}">{{ entity.url }}</a></td>
                 <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('link_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('link_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                    <a href="{{ path('link_edit', { 'id': entity.id }) }}">編集</a>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('link_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
+    <a class="btn btn-danger" id="delete-checked">チェックしたリンクを削除</a>
     {% endblock %}

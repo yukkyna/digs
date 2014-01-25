@@ -13,7 +13,6 @@ class Link
      * @var integer
      */
     private $id;
-
     /**
      * @var string
      */
@@ -23,11 +22,6 @@ class Link
      * @var string
      */
     private $url;
-
-    /**
-     * @var string
-     */
-    private $description;
 
 
     /**
@@ -84,28 +78,5 @@ class Link
     public function getUrl()
     {
         return $this->url;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return Link
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string 
-     */
-    public function getDescription()
-    {
-        return $this->description;
     }
 }

@@ -13,9 +13,5 @@ Digs\LinkBundle\Entity\Link:
             type: string
             length: 255
         url:
-            type: string
-            length: 255
-        description:
-            type: string
-            length: 255
+            type: text
     lifecycleCallbacks: {  }
