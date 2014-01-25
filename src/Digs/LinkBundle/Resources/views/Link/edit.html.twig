@@ -1,10 +1,28 @@
 {% extends "DigsCoreBundle::base.html.twig" %}
 
 {% block body -%}
-    <h1>リンクの編集</h1>
+{% if newlink is defined %}
+<h2>リンクの作成</h2>
+{% else %}
+<h2>リンクの編集</h2>
+{% endif %}
 
-    {{ form(edit_form) }}
+{{ form_start(edit_form) }}
+{{ form_errors(edit_form) }}
+<div class="form-group">
+{{ form_label(edit_form.name, '名前') }}
+{{ form_errors(edit_form.name) }}
+{{ form_widget(edit_form.name, {'attr': {'class': 'form-control'}}) }}
+</div>
+<div class="form-group">
+{{ form_label(edit_form.url, 'URL') }}
+{{ form_errors(edit_form.url) }}
+{{ form_widget(edit_form.url, {'attr': {'class': 'form-control'}}) }}
+</div>
+<div class="form-group">
+    <button type="submit" class="btn btn-primary">保存</button>
+    <a class="btn btn-default" href="{{ path('link') }}">戻る</a>
+</div>
+{{ form_end(edit_form) }}
 
-    <a href="{{ path('link') }}">戻る</a>
-</ul>
 {% endblock %}

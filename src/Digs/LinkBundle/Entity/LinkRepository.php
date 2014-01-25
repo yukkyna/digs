@@ -12,4 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class LinkRepository extends EntityRepository
 {
+	public function findAllOrderById()
+	{
+        return $this
+            ->createQueryBuilder('e')
+			->orderBy('e.id', 'ASC')
+            ->getQuery()
+			->getResult()
+            ;
+	}
 }

@@ -1,32 +1,41 @@
 {% extends "DigsCoreBundle::base.html.twig" %}
+{% block javascripts %}
+<script type="text/javascript" src="{{ asset('bundles/digslink/js/link.js') }}"></script>
+{% endblock %}
 
 {% block body -%}
-    <h1>Link list</h1>
+<h2>リンク一覧</h2>
 
-    <div class="text-right">
-        <a href="{{ path('link_new') }}">新しいリンクを追加</a>
-    </div>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th><input type="checkbox" id="check-all" /></th>
-                <th>Name</th>
-                <th>Url</th>
-                <th> </th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><input type="checkbox" class="link-checkbox" value="{{ entity.id }}" /></td>
-                <td>{{ entity.name }}</td>
-                <td><a href="{{ entity.url }}">{{ entity.url }}</a></td>
-                <td>
-                    <a href="{{ path('link_edit', { 'id': entity.id }) }}">編集</a>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <a class="btn btn-danger" id="delete-checked">チェックしたリンクを削除</a>
-    {% endblock %}
+<p>
+    <a class="btn btn-default" href="{{ path('link_new') }}">新しいリンクを追加</a>
+</p>
+
+{% if entities|length == 0 %}
+<p>リンクはありません。</p>
+{% else %}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th><input type="checkbox" id="check-all" /></th>
+            <th>Name</th>
+            <th>Url</th>
+            <th> </th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><input type="checkbox" class="link-checkbox" value="{{ entity.id }}" /></td>
+            <td>{{ entity.name }}</td>
+            <td><a href="{{ entity.url }}">{{ entity.url }}</a></td>
+            <td>
+                <a class="btn btn-default btn-sm" href="{{ path('link_edit', { 'id': entity.id }) }}">編集</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<a class="btn btn-danger" id="delete-checked">チェックしたリンクを削除</a>
+{{ form(delete_form, {'attr': {'id': 'delete-checked-form'}}) }}
+{% endif %}
+{% endblock %}

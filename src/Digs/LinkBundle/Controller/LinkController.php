@@ -22,12 +22,18 @@ class LinkController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
+		if (false === $this->get('security.context')->isGranted('ROLE_ADMIN'))
+		{
+			throw new NotFoundHttpException();
+		}
 
-        $entities = $em->getRepository('DigsLinkBundle:Link')->findAll();
+		$em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('DigsLinkBundle:Link')->findAllOrderById();
 
         return $this->render('DigsLinkBundle:Link:index.html.twig', array(
             'entities' => $entities,
+			'delete_form' => $this->createDeleteForm()->createView()
         ));
     }
     
@@ -39,7 +45,7 @@ class LinkController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('DigsLinkBundle:Link')->findAll();
+        $entities = $em->getRepository('DigsLinkBundle:Link')->findAllOrderById();
 
         return $this->render('DigsLinkBundle:Link:footer.html.twig', array(
             'entities' => $entities,
@@ -47,30 +53,39 @@ class LinkController extends Controller
     }
 
     /**
-     * Creates a new Link entity.
+     * Displays a form to create a new Link entity.
      *
      */
-    public function createAction(Request $request)
+    public function newAction(Request $request)
     {
-        $entity = new Link();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
+		if (false === $this->get('security.context')->isGranted('ROLE_ADMIN'))
+		{
+			throw new NotFoundHttpException();
+		}
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+		$entity = new Link();
+        $form   = $this->createCreateForm($entity);
+		if ($request->isMethod('POST'))
+		{
+			$form->handleRequest($request);
 
-            return $this->redirect($this->generateUrl('link_show', array('id' => $entity->getId())));
-        }
+			if ($form->isValid()) {
+				$em = $this->getDoctrine()->getManager();
+				$em->persist($entity);
+				$em->flush();
 
-        return $this->render('DigsLinkBundle:Link:new.html.twig', array(
+				return $this->redirect($this->generateUrl('link'));
+			}
+		}
+
+        return $this->render('DigsLinkBundle:Link:edit.html.twig', array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'edit_form'   => $form->createView(),
+			'newlink' => true,
         ));
     }
 
-    /**
+	/**
     * Creates a form to create a Link entity.
     *
     * @param Link $entity The entity
@@ -80,58 +95,25 @@ class LinkController extends Controller
     private function createCreateForm(Link $entity)
     {
         $form = $this->createForm(new LinkType(), $entity, array(
-            'action' => $this->generateUrl('link_create'),
+            'action' => $this->generateUrl('link_new'),
             'method' => 'POST',
         ));
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
     }
 
-    /**
-     * Displays a form to create a new Link entity.
-     *
-     */
-    public function newAction()
-    {
-        $entity = new Link();
-        $form   = $this->createCreateForm($entity);
-
-        return $this->render('DigsLinkBundle:Link:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
-    }
-
-    /**
-     * Finds and displays a Link entity.
-     *
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('DigsLinkBundle:Link')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Link entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('DigsLinkBundle:Link:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        ));
-    }
-
-    /**
+	/**
      * Displays a form to edit an existing Link entity.
      *
      */
     public function editAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
+		if (false === $this->get('security.context')->isGranted('ROLE_ADMIN'))
+		{
+			throw new NotFoundHttpException();
+		}
+
+		$em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('DigsLinkBundle:Link')->find($id);
 
@@ -167,11 +149,9 @@ class LinkController extends Controller
     private function createEditForm(Link $entity)
     {
         $form = $this->createForm(new LinkType(), $entity, array(
-            'action' => $this->generateUrl('link_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('link_edit', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
-
-        $form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
     }
@@ -180,21 +160,29 @@ class LinkController extends Controller
      * Deletes a Link entity.
      *
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request)
     {
-        $form = $this->createDeleteForm($id);
+		if (false === $this->get('security.context')->isGranted('ROLE_ADMIN'))
+		{
+			throw new NotFoundHttpException();
+		}
+
+		$form = $this->createDeleteForm();
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('DigsLinkBundle:Link')->find($id);
+			$ids = explode(',', $form['ids']->getData());
+			foreach ($ids as $id)
+			{
+				$entity = $em->getRepository('DigsLinkBundle:Link')->find($id);
+				if (!$entity) {
+					throw $this->createNotFoundException('Unable to find Link entity.');
+				}
 
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Link entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
+				$em->remove($entity);
+			}
+			$em->flush();
         }
 
         return $this->redirect($this->generateUrl('link'));
@@ -207,13 +195,13 @@ class LinkController extends Controller
      *
      * @return Form The form
      */
-    private function createDeleteForm($id)
+    private function createDeleteForm()
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('link_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('link_delete'))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
+			->add('ids', 'hidden')
         ;
     }
 }
