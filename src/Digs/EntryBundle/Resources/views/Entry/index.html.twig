@@ -4,9 +4,9 @@
 
 {% if entities|length > 0 %}
 {{ include('DigsEntryBundle:Entry:toppanel.html.twig', { 'entities': entities }) }}
-<div class="row">
+
 {{ knp_pagination_render(entities) }}
-</div>
+
 {% else %}
 <div class="row">
     <p>エントリーはありません</p>
