@@ -180,6 +180,7 @@ class PhotoService
 	public function responseImage(Request $request, $lastModified, $path, $type = 'image/jpeg')
 	{
 		$response = new Response();
+
 		$response->setLastModified($lastModified);
 //		$response->setPublic();
 		if ($response->isNotModified($request))
@@ -191,7 +192,10 @@ class PhotoService
 			readfile($path);
 			$image = ob_get_contents();
 		ob_end_clean();
-		
+
+		$exp = new \DateTime();
+		$exp->modify('+10 year');
+		$response->setExpires($exp);
 		$response->headers->add(array(
 			'Content-Type'   => $type,
 			'Content-Length' => filesize($path),
