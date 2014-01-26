@@ -158,26 +158,11 @@ class PhotoService
         if (!$entity) {
             throw new NotFoundHttpException('Unable to find Photo entity.');
         }
-//
-//		$response = new Response();
-//		$response->setLastModified($entity->getCreatedAt());
-//		if ($response->isNotModified($request))
-//		{
-//			return $response;
-//		}
-
-		$path = $uploadDir . $prefix . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR . $entity->getFile() . '.jpg';
-		ob_start();
-			readfile($path);
-			$image = ob_get_contents();
-		ob_end_clean();
 		
-		$response = new Response($image, 200, array(
-			'Content-Type'   => 'image/jpeg',
-			'Content-Length' => filesize($path),
-		));
-		$response->setLastModified($entity->getCreatedAt());
-        return $response;
+		return $this->responseImage(
+			$request,
+			$entity->getCreatedAt(),
+			$uploadDir . $prefix . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR . $entity->getFile() . '.jpg');
     }
 
     public function showThumbnailAction(Request $request, $uploadDir, $prefix, $file)
@@ -186,25 +171,32 @@ class PhotoService
         if (!$entity) {
             throw new NotFoundHttpException('Unable to find Photo entity.');
         }
-//
-//		$response = new Response();
-//		$response->setLastModified($entity->getCreatedAt());
-//		if ($response->isNotModified($request))
-//		{
-//			return $response;
-//		}
+		return $this->responseImage(
+			$request,
+			$entity->getCreatedAt(),
+			$uploadDir . $prefix . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR . 't_' . $entity->getFile() . '.jpg');
+    }
+	
+	public function responseImage(Request $request, $lastModified, $path, $type = 'image/jpeg')
+	{
+		$response = new Response();
+		$response->setLastModified($lastModified);
+//		$response->setPublic();
+		if ($response->isNotModified($request))
+		{
+			return $response;
+		}
 
-		$path = $uploadDir . $prefix . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR . 't_' .$entity->getFile() . '.jpg';
 		ob_start();
 			readfile($path);
 			$image = ob_get_contents();
 		ob_end_clean();
-
-		$response = new Response($image, 200, array(
-			'Content-Type'   => 'image/jpeg',
+		
+		$response->headers->add(array(
+			'Content-Type'   => $type,
 			'Content-Length' => filesize($path),
 		));
-		$response->setLastModified($entity->getCreatedAt());
+		$response->setContent($image);
         return $response;
-    }
+	}
 }

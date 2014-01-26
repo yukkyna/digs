@@ -131,18 +131,12 @@ class ProfileController extends Controller
             throw $this->createNotFoundException('Unable to find Photo entity.');
         }
 
-		$path = $this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR . $entity->getId() . DIRECTORY_SEPARATOR . 'profile.png';
-		ob_start();
-			readfile($path);
-			$image = ob_get_contents();
-		ob_end_clean();
-
-		$response = new Response($image, 200, array(
-			'Content-Type'   => 'image/png',
-			'Content-Length' => filesize($path),
-		));
-		$response->setLastModified($entity->getProfile()->getUpdatedAt());
-        return $response;
+		return $this->get('digs_photo.controller')->responseImage(
+			$request,
+			$entity->getProfile()->getUpdatedAt(),
+			$this->container->getParameter('upload_dir') . DIRECTORY_SEPARATOR . $entity->getId() . DIRECTORY_SEPARATOR . 'profile.png',
+			'image/png'
+			);
     }
 
 	public function editPasswordAction(Request $request)
