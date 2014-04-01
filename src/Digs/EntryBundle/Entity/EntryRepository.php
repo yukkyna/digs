@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class EntryRepository extends EntityRepository
 {
-	public function findOpenedDscQueryBuilder($tag, $member)
+	public function findOpenedDscQueryBuilder($search, $tag, $member)
 	{
 		$qb = $this
             ->createQueryBuilder('e')
@@ -22,6 +22,28 @@ class EntryRepository extends EntityRepository
             ->where('e.status = 1')
 			->orderBy('e.id', 'DESC')
             ;
+		if ($search)
+		{
+            $list = \preg_split("/[\s　]+/u", $search, -1, PREG_SPLIT_NO_EMPTY);
+            $i = 0;
+            foreach ($list as $word)
+            {
+                // TODO 他に方法は?
+                $word = mb_ereg_replace('\\\\','\\\\',$word);
+                $word = mb_ereg_replace('%','\%',$word);
+                $word = mb_ereg_replace('_','\_',$word);
+//echo "[".$search.":".$list."-".$word."]"; die;
+				
+                $qb->andWhere(
+					$qb->expr()->orX(
+						$qb->expr()->like("e.title", ":title".$i),
+						$qb->expr()->like("e.escapedMessage", ":message".$i)
+						)
+					)->setParameter("title".$i, "%".$word."%")
+					->setParameter("message".$i, "%".$word."%");
+                $i ++;
+            }
+		}
 		if ($tag)
 		{
 			$qb->leftJoin('e.tags', 't')
@@ -55,7 +77,7 @@ class EntryRepository extends EntityRepository
 
 	public function findOpenedByMemberDsc($member, $num)
 	{
-        return $this->findOpenedDscQueryBuilder(null, $member->getId())
+        return $this->findOpenedDscQueryBuilder(null, null, $member->getId())
 			->setMaxResults($num)->getQuery()->getResult();
 	}
 

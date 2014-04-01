@@ -2,6 +2,13 @@
 
 {% block body %}
 
+{{ form_start(form) }}
+<div class="input-group search-panel">
+    {{ form_widget(form.search, {'attr': {'class': 'form-control', placeholder: 'エントリの検索'}}) }}
+    <span class="input-group-btn"><button type="submit" class="btn btn-default">検索</button></span>
+</div>
+{{ form_end(form) }}
+
 {% if entities|length > 0 %}
 {{ include('DigsEntryBundle:Entry:toppanel.html.twig', { 'entities': entities }) }}
 

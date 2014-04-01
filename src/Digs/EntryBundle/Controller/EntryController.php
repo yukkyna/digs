@@ -26,9 +26,12 @@ class EntryController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
+        $form = $this->createSearchForm();
+		$form->handleRequest($request);
+		
         $entities = $this->get('knp_paginator')->paginate(
 			$em->getRepository('DigsEntryBundle:Entry')->findOpenedDscQueryBuilder(
+					$form['search']->getData(),
 					$request->query->get('tag'),
 					$request->query->get('profile')
 				)->getQuery(),
@@ -38,6 +41,7 @@ class EntryController extends Controller
 
 		return $this->render('DigsEntryBundle:Entry:index.html.twig', array(
             'entities' => $entities,
+			'form' => $form->createView(),
         ));
     }
 
@@ -362,5 +366,18 @@ class EntryController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+    private function createSearchForm()
+    {
+        $form = $this->createFormBuilder(null, array('csrf_protection' => false))
+            ->setAction($this->generateUrl('entry'))
+            ->setMethod('GET')
+            ->getForm()
+			->add('search', 'text', array(
+			'required' => false,
+			))
+        ;
+		return $form;
     }
 }
