@@ -220,10 +220,7 @@ class EntryController extends Controller
             'method' => 'POST',
         ));
 
-		if ($entity->getMember()->getId() === $this->getUser()->getId())
-		{
-			$em->getRepository('DigsEntryBundle:EntryAlert')->deleteByMemberAndEntry($this->getUser()->getId(), $entity->getId());
-		}
+		$em->getRepository('DigsEntryBundle:EntryAlert')->deleteByMemberAndEntry($this->getUser()->getId(), $entity->getId());
 
 		if ($request->isMethod('POST'))
 		{
@@ -233,13 +230,29 @@ class EntryController extends Controller
 				$em->persist($comment);
 				$em->flush();
 
-				if ($entity->getMember()->getId() !== $this->getUser()->getId())
+				if ($entity->getMember()->getId() != $this->getUser()->getId())
 				{
 					$alert = new EntryAlert();
 					$alert->setEntry($entity);
 					$alert->setMember($entity->getMember());
 					$em->persist($alert);
 					$em->flush();
+				}
+				
+				$comments = $em->getRepository('DigsEntryBundle:EntryComment')->findEntryCommentMember($this->getUser(), $entity);
+				// TODO SQLで重複なくす
+				$dup = array();
+				foreach ($comments as $c) {
+					if (!isset($dup[$c->getMember()->getId()]))
+					{
+						$alert = new EntryAlert();
+						$alert->setEntry($entity);
+						$alert->setMember($c->getMember());
+						$em->persist($alert);
+						$em->flush();
+						
+						$dup[$c->getMember()->getId()] = 1;
+					}
 				}
 			}
             return $this->redirect($this->generateUrl('entry_show', array('id' => $entity->getId())));

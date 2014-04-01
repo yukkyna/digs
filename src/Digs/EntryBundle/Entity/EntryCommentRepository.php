@@ -12,6 +12,23 @@ use Doctrine\ORM\EntityRepository;
  */
 class EntryCommentRepository extends EntityRepository
 {
+	public function findEntryCommentMember($member, $entry)
+	{
+        return $this
+            ->createQueryBuilder('c')
+			->select('c, m')
+			->leftJoin('c.member', 'm')
+			->leftJoin('c.entry', 'e')
+            ->where('e.status = 1')
+			->andWhere('m.id!=:member')
+			->andWhere('m.id!=:owner')
+			->andWhere('e.id=:entry')
+			->setParameter('member', $member)
+			->setParameter('owner', $entry->getMember())
+			->setParameter('entry', $entry)
+			->getQuery()->getResult();
+	}
+	
 	public function findOpenedByMemberDsc($member, $limit)
 	{
         return $this
