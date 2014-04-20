@@ -1,41 +1,27 @@
-{% extends '::base.html.twig' %}
+{% extends "DigsCoreBundle::base.html.twig" %}
+{% block javascripts %}
+<script type="text/javascript" src="{{ asset('bundles/digscore/js/member.js') }}"></script>
+{% endblock %}
 
 {% block body -%}
-    <h1>MemberGroup list</h1>
-
-    <table class="records_list">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('membergroup_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.name }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('membergroup_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('membergroup_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('membergroup_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
-    {% endblock %}
+    <p><a class="btn btn-success" href="{{ path('membergroup_new') }}">新しいグループを追加</a></p>
+    <div class="panel panel-default">
+        <div class="panel-heading">グループ一覧</div>
+        {% if entities|length == 0 %}
+            <p>ユーザが見つかりません</p>
+        {% else %}
+            <table class="table table-hover">
+                <thead>
+                    <tr><th>グループ名</th></tr>
+                </thead>
+                <tbody>
+                    {% for entity in entities %}
+                        <tr>
+                            <td>{{ entity.name }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}
