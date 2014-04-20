@@ -1,0 +1,43 @@
+{% extends "DigsCoreBundle::base.html.twig" %}
+{% block javascripts %}
+<script type="text/javascript" src="{{ asset('bundles/digscore/js/member.js') }}"></script>
+{% endblock %}
+
+{% block body -%}
+    <h1 class="page-header">ユーザー一覧</h1>
+    <p><a class="btn btn-success" href="{{ path('invite_new') }}">新しいユーザを追加</a></p>
+
+{% if entities|length == 0 %}
+<p>ユーザが見つかりません</p>
+{% else %}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>メールアドレス</th>
+            <th>ハンドル</th>
+            <th>氏</th>
+            <th>名</th>
+            <th>状態</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td>{{ entity.email }}</td>
+            <td>{{ entity.profile.nickname }}</td>
+            <td>{{ entity.lastName }}</td>
+            <td>{{ entity.firstName }}</td>
+            <td>
+                {% if entity.active %}
+                    <a class="btn btn-default btn-sm change-activity-false" href="#" mid="{{ entity.id }}">無効にする</a>
+                {% else %}
+                    <a class="btn btn-default btn-sm change-activity-true" href="#" mid="{{ entity.id }}">有効にする</a>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{{ form(activity_form, {'attr': {'id': 'delete-checked-form'}}) }}
+{% endblock %}

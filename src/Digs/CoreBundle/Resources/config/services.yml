@@ -74,7 +74,11 @@ services:
     digs_core.mymenu.item:
         class: Digs\CoreBundle\Services\MyMenuItem
         arguments:
-            - [{ section: private, title: プロフィールの変更, path: profile_edit, weight: 100 }, { section: private, title: パスワードの変更, path: profile_password_edit, weight: 9999 }, { section: admin, title: ユーザー登録, path: invite_new, weight: 9999, role: ROLE_ADMIN }]
+            -
+                - { section: private, title: プロフィールの変更, path: profile_edit, weight: 100 }
+                - { section: private, title: パスワードの変更, path: profile_password_edit, weight: 9999 }
+                - { section: admin, title: ユーザー登録, path: invite_new, weight: 9999, role: ROLE_ADMIN }
+                - { section: admin, title: ユーザー管理, path: member, weight: 9999, role: ROLE_ADMIN }
         tags:
             - { name: digs.mymenu.item }
     digs_core.navigation.item:

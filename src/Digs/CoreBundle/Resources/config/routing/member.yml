@@ -1,0 +1,30 @@
+member:
+    pattern:  /
+    defaults: { _controller: "DigsCoreBundle:Member:index" }
+
+member_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "DigsCoreBundle:Member:show" }
+
+member_new:
+    pattern:  /new
+    defaults: { _controller: "DigsCoreBundle:Member:new" }
+
+member_create:
+    pattern:  /create
+    defaults: { _controller: "DigsCoreBundle:Member:create" }
+    requirements: { _method: post }
+
+member_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "DigsCoreBundle:Member:edit" }
+
+member_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "DigsCoreBundle:Member:update" }
+    requirements: { _method: post|put }
+
+member_activity:
+    pattern:  /activity
+    defaults: { _controller: "DigsCoreBundle:Member:activity" }
+    requirements: { _method: post|put }
