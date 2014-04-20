@@ -1,0 +1,30 @@
+membergroup:
+    pattern:  /
+    defaults: { _controller: "DigsCoreBundle:MemberGroup:index" }
+
+membergroup_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "DigsCoreBundle:MemberGroup:show" }
+
+membergroup_new:
+    pattern:  /new
+    defaults: { _controller: "DigsCoreBundle:MemberGroup:new" }
+
+membergroup_create:
+    pattern:  /create
+    defaults: { _controller: "DigsCoreBundle:MemberGroup:create" }
+    requirements: { _method: post }
+
+membergroup_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "DigsCoreBundle:MemberGroup:edit" }
+
+membergroup_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "DigsCoreBundle:MemberGroup:update" }
+    requirements: { _method: post|put }
+
+membergroup_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "DigsCoreBundle:MemberGroup:delete" }
+    requirements: { _method: post|delete }

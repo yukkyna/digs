@@ -29,4 +29,8 @@ DigsCoreBundle_regist:
 DigsCoreBundle_member:
     resource: "@DigsCoreBundle/Resources/config/routing/member.yml"
     prefix:   /member
+
+DigsCoreBundle_membergroup:
+    resource: "@DigsCoreBundle/Resources/config/routing/membergroup.yml"
+    prefix:   /membergroup
     
