@@ -33,18 +33,21 @@ class MemberGroupController extends Controller implements AdminController
      * Creates a new MemberGroup entity.
      *
      */
-    public function createAction(Request $request)
+    public function newAction(Request $request)
     {
         $entity = new MemberGroup();
         $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($entity);
+                $em->flush();
 
-            return $this->redirect($this->generateUrl('membergroup_show', array('id' => $entity->getId())));
+                return $this->redirect($this->generateUrl('membergroup'));
+            }
+            
         }
 
         return $this->render('DigsCoreBundle:MemberGroup:new.html.twig', array(
@@ -63,28 +66,11 @@ class MemberGroupController extends Controller implements AdminController
     private function createCreateForm(MemberGroup $entity)
     {
         $form = $this->createForm(new MemberGroupType(), $entity, array(
-            'action' => $this->generateUrl('membergroup_create'),
+            'action' => $this->generateUrl('membergroup_new'),
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
         return $form;
-    }
-
-    /**
-     * Displays a form to create a new MemberGroup entity.
-     *
-     */
-    public function newAction()
-    {
-        $entity = new MemberGroup();
-        $form   = $this->createCreateForm($entity);
-
-        return $this->render('DigsCoreBundle:MemberGroup:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
     }
 
     /**

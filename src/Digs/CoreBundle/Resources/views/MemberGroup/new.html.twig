@@ -1,15 +1,20 @@
-{% extends '::base.html.twig' %}
+{% extends "DigsCoreBundle::base.html.twig" %}
 
 {% block body -%}
-    <h1>MemberGroup creation</h1>
+    <div class="panel panel-default">
+        <div class="panel-heading">グループの作成</div>
+        <div class="panel-body">
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
 
-    {{ form(form) }}
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('membergroup') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+<div class="form-group">
+{{ form_label(form.name, 'グループ名') }}
+{{ form_errors(form.name) }}
+{{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+</div>
+    <input type="submit" class="btn btn-primary" value="作成" />
+    {{ form_end(form) }}
+        </div>
+    </div>
+    <a class="btn btn-default" href="{{ path('membergroup') }}">戻る</a>
 {% endblock %}

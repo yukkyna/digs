@@ -10,11 +10,6 @@ membergroup_new:
     pattern:  /new
     defaults: { _controller: "DigsCoreBundle:MemberGroup:new" }
 
-membergroup_create:
-    pattern:  /create
-    defaults: { _controller: "DigsCoreBundle:MemberGroup:create" }
-    requirements: { _method: post }
-
 membergroup_edit:
     pattern:  /{id}/edit
     defaults: { _controller: "DigsCoreBundle:MemberGroup:edit" }

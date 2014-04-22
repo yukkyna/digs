@@ -16,7 +16,6 @@ class MemberGroupType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('members')
         ;
     }
     
