@@ -23,7 +23,7 @@ class MemberGroupController extends Controller implements AdminController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('DigsCoreBundle:MemberGroup')->findAll();
+        $entities = $em->getRepository('DigsCoreBundle:MemberGroup')->findAllJoinMembers();
 
         return $this->render('DigsCoreBundle:MemberGroup:index.html.twig', array(
             'entities' => $entities,
@@ -95,30 +95,6 @@ class MemberGroupController extends Controller implements AdminController
     }
 
     /**
-     * Displays a form to edit an existing MemberGroup entity.
-     *
-     */
-    public function editAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('DigsCoreBundle:MemberGroup')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find MemberGroup entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('DigsCoreBundle:MemberGroup:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
     * Creates a form to edit a MemberGroup entity.
     *
     * @param MemberGroup $entity The entity
@@ -128,11 +104,9 @@ class MemberGroupController extends Controller implements AdminController
     private function createEditForm(MemberGroup $entity)
     {
         $form = $this->createForm(new MemberGroupType(), $entity, array(
-            'action' => $this->generateUrl('membergroup_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('membergroup_edit', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
-
-        $form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
     }
@@ -140,7 +114,7 @@ class MemberGroupController extends Controller implements AdminController
      * Edits an existing MemberGroup entity.
      *
      */
-    public function updateAction(Request $request, $id)
+    public function editAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -152,12 +126,15 @@ class MemberGroupController extends Controller implements AdminController
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
+        if ($request->isMethod('PUT'))
+        {
+            $editForm->handleRequest($request);
 
-        if ($editForm->isValid()) {
-            $em->flush();
+            if ($editForm->isValid()) {
+                $em->flush();
 
-            return $this->redirect($this->generateUrl('membergroup_edit', array('id' => $id)));
+                return $this->redirect($this->generateUrl('membergroup', array('id' => $id)));
+            }
         }
 
         return $this->render('DigsCoreBundle:MemberGroup:edit.html.twig', array(
@@ -202,7 +179,6 @@ class MemberGroupController extends Controller implements AdminController
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('membergroup_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
     }

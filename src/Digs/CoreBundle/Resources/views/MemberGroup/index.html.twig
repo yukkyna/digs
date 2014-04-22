@@ -12,12 +12,16 @@
         {% else %}
             <table class="table table-hover">
                 <thead>
-                    <tr><th>グループ名</th></tr>
+                    <tr>
+                        <th>グループ名</th>
+                        <th>メンバー数</th>
+                    </tr>
                 </thead>
                 <tbody>
                     {% for entity in entities %}
                         <tr>
-                            <td>{{ entity.name }}</td>
+                            <td><a href="{{ path('membergroup_edit', {'id': entity.id}) }}">{{ entity.name }}</a></td>
+                            <td>{{ entity.members|length }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

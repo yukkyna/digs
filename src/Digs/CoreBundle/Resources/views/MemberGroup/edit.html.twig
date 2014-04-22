@@ -1,16 +1,26 @@
-{% extends '::base.html.twig' %}
+{% extends "DigsCoreBundle::base.html.twig" %}
+{% block javascripts %}
+<script type="text/javascript" src="{{ asset('bundles/digscore/js/membergroup.js') }}"></script>
+{% endblock %}
 
 {% block body -%}
-    <h1>MemberGroup edit</h1>
-
-    {{ form(edit_form) }}
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('membergroup') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    <div class="panel panel-default">
+        <div class="panel-heading">グループの編集</div>
+        <div class="panel-body">
+            {{ form_start(edit_form) }}
+            {{ form_errors(edit_form) }}
+            <div class="form-group">
+                {{ form_label(edit_form.name, 'グループ名') }}
+                {{ form_errors(edit_form.name) }}
+                {{ form_widget(edit_form.name, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="clearfix">
+                <button type="submit" class="btn btn-primary">編集</button>
+                <button type="button" id="submit-delete" class="btn btn-danger pull-right">削除</button>
+            </div>
+            {{ form_end(edit_form) }}
+        </div>
+    </div>
+    <a class="btn btn-default" href="{{ path('membergroup') }}">戻る</a>
+{{ form(delete_form, {'attr': {'id': 'delete-form'}}) }}
 {% endblock %}

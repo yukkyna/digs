@@ -20,4 +20,12 @@ class MemberGroupRepository extends EntityRepository
             ->getQuery()
 			->getResult();
 	}
+    public function findAllJoinMembers()
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u, m')
+            ->leftJoin('u.members', 'm')
+            ->getQuery()
+			->getResult();
+    }
 }
