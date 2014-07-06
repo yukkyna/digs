@@ -28,4 +28,17 @@ class MemberGroupRepository extends EntityRepository
             ->getQuery()
 			->getResult();
     }
+    public function findJoinMembers($id)
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u, m, p')
+            ->leftJoin('u.members', 'm')
+            ->leftJoin('m.profile', 'p')
+            ->where('u.id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('m.id', 'ASC')
+            ->getQuery()
+			->getSingleResult()
+            ;
+    }
 }

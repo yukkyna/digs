@@ -81,8 +81,7 @@ class MemberGroupController extends Controller implements AdminController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('DigsCoreBundle:MemberGroup')->find($id);
-
+        $entity = $em->getRepository('DigsCoreBundle:MemberGroup')->findJoinMembers($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find MemberGroup entity.');
         }

@@ -4,40 +4,62 @@
 {% endblock %}
 
 {% block body -%}
-    <h1 class="page-header">ユーザー一覧</h1>
     <p><a class="btn btn-success" href="{{ path('invite_new') }}">新しいユーザを追加</a></p>
-
-{% if entities|length == 0 %}
-<p>ユーザが見つかりません</p>
-{% else %}
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>メールアドレス</th>
-            <th>ハンドル</th>
-            <th>氏</th>
-            <th>名</th>
-            <th>状態</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr>
-            <td>{{ entity.email }}</td>
-            <td>{{ entity.profile.nickname }}</td>
-            <td>{{ entity.lastName }}</td>
-            <td>{{ entity.firstName }}</td>
-            <td>
-                {% if entity.active %}
-                    <a class="btn btn-default btn-sm change-activity-false" href="#" mid="{{ entity.id }}">無効にする</a>
-                {% else %}
-                    <a class="btn btn-default btn-sm change-activity-true" href="#" mid="{{ entity.id }}">有効にする</a>
-                {% endif %}
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-{% endif %}
-{{ form(activity_form, {'attr': {'id': 'delete-checked-form'}}) }}
+    <div class="panel panel-default">
+        <div class="panel-heading">ユーザー一覧</div>
+        <div class="panel-body">
+            {% if entities|length == 0 %}
+                <p>ユーザが見つかりません</p>
+            {% else %}
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>ハンドル</th>
+                            <th>メールアドレス</th>
+                            <th>氏</th>
+                            <th>名</th>
+                            <th>グループ</th>
+                            <th><a class="btn btn-default btn-sm"><span class="glyphicon glyphicon-edit"></span></a></th>
+                            <th colspan="2">権限</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entity in entities %}
+                            <tr>
+                                <td>
+                                    {% if entity.active %}
+                                        <a class="btn btn-primary btn-sm change-activity-false" href="#" mid="{{ entity.id }}"><span class="glyphicon glyphicon-ok-circle"</span></a>
+                                    {% else %}
+                                        <a class="btn btn-danger btn-sm change-activity-true" href="#" mid="{{ entity.id }}"><span class="glyphicon glyphicon-ban-circle"</span></a>
+                                    {% endif %}
+                                </td>
+                                <td>{{ entity.profile.nickname }}</td>
+                                <td>{{ entity.email }}</td>
+                                <td>{{ entity.lastName }}</td>
+                                <td>{{ entity.firstName }}</td>
+                                <td>
+                                    {% for group in entity.groups %}
+                                        {{ group.name }}
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    <a class="btn btn-default btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
+                                </td>
+                                <td>
+                                    {% for role in entity.roles %}
+                                        {{ role.name }}
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    <a class="btn btn-default btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+    </div>
+    {{ form(activity_form, {'attr': {'id': 'delete-checked-form'}}) }}
 {% endblock %}

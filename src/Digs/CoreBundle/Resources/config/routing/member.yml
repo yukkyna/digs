@@ -6,3 +6,7 @@ member_activity:
     pattern:  /activity
     defaults: { _controller: "DigsCoreBundle:Member:activity" }
     requirements: { _method: post|put }
+
+member_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "DigsCoreBundle:Member:show" }

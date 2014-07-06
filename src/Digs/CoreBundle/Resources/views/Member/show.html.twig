@@ -1,0 +1,31 @@
+{% extends "DigsCoreBundle::base.html.twig" %}
+
+{% block body -%}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        {{ entity.profile.nickname }}
+    </div>
+    <div class="panel-body">
+        <table class="table table-hover">
+            <thead>
+                <tr><th>グループ</th></tr>
+            </thead>
+            <tbody>
+                {% for group in entity.groups %}
+                    <tr><td>{{ group.name }}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <table class="table table-hover">
+            <thead>
+                <tr><th>権限</th></tr>
+            </thead>
+            <tbody>
+                {% for group in entity.roles %}
+                    <tr><td>{{ group.name }}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -23,7 +23,7 @@ class MemberController extends Controller implements AdminController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('DigsCoreBundle:Member')->findAllJoinProfile();
+        $entities = $em->getRepository('DigsCoreBundle:Member')->findJoinGroupAndRole();
 
         $form = $this->createActivityForm();
 
@@ -83,5 +83,17 @@ class MemberController extends Controller implements AdminController
             ->add('mid', 'hidden')
             ->add('status', 'hidden')
         ;
+    }
+    
+    public function showAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('DigsCoreBundle:Member')->findJoinGroupAndRole($id);
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Member entity.');
+        }
+        return $this->render('DigsCoreBundle:Member:show.html.twig', array(
+            'entity' => $entity,
+        ));
     }
 }

@@ -14,11 +14,6 @@ membergroup_edit:
     pattern:  /{id}/edit
     defaults: { _controller: "DigsCoreBundle:MemberGroup:edit" }
 
-membergroup_update:
-    pattern:  /{id}/update
-    defaults: { _controller: "DigsCoreBundle:MemberGroup:update" }
-    requirements: { _method: post|put }
-
 membergroup_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "DigsCoreBundle:MemberGroup:delete" }
