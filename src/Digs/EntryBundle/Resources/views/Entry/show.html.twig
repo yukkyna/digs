@@ -16,7 +16,7 @@
         }
     };
     $(document).ready(function(){
-        RichTextEditor.init("{{ asset('lib/bootstrap/bootstrap.css') }},{{ asset('bundles/digsentry/css/richtexteditor.css') }}",
+        RichTextEditor.init("{{ asset('lib/bootstrap/css/bootstrap.min.css') }},{{ asset('bundles/digsentry/css/richtexteditor.css') }}",
             "{{ path('profile_photo') }}", "{{ path('profile_file') }}");
         EntryShowPage.init();
     });

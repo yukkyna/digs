@@ -14,6 +14,22 @@
     "test",
     "tests"
   ],
+  "exportsOverride": {
+      "jquery": {
+          "": "dist/*.min.*"
+      },
+      "bootstrap": {
+          "js":    "dist/js/bootstrap.min.js",
+          "css":   ["dist/css/*.min.*", "dist/css/*.map"],
+          "fonts": "dist/fonts/*"
+      },
+      "tinymce": {
+          "":        "*.min.*",
+          "plugins": "plugins",
+          "themes":  "themes",
+          "skins":   "skins"
+      }
+  },
   "dependencies": {
     "jquery": "~2.1.1",
     "normalize.css": "~3.0.1",
