@@ -4,9 +4,9 @@
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
 {#
-        <link rel="stylesheet" href="{{ asset('bundles/digscore/css/normalize.css') }}" type="text/css" media="all" />
+        <link rel="stylesheet" href="{{ asset('lib/normalize.css/normalize.css') }}" type="text/css" media="all" />
 #}
-        <link rel="stylesheet" href="{{ asset('bundles/digscore/bootstrap/css/bootstrap.min.css') }}" type="text/css" media="all" />
+        <link rel="stylesheet" href="{{ asset('lib/bootstrap/bootstrap.css') }}" type="text/css" media="all" />
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
@@ -14,8 +14,8 @@
         <div class="container">
 {% block body %}{% endblock %}
         </div>
-        <script type="text/javascript" src="{{ asset('bundles/digscore/js/jquery-2.0.3.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('bundles/digscore/bootstrap/js/bootstrap.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('lib/jquery/jquery.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('lib/bootstrap/bootstrap.js') }}"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>

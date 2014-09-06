@@ -3,7 +3,7 @@
 {% form_theme edit_form 'DigsCoreBundle:Form:form_bootstrap_layout_expanded_checkbox.html.twig' %}
 
 {% block javascripts %}
-<script type="text/javascript" src="{{ asset('bundles/digscore/js/tinymce/tinymce.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('lib/tinymce/tinymce.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/digsentry/js/richtexteditor.js') }}"></script>
 <script type="text/javascript">
     var EntryEditPage = {
@@ -19,7 +19,7 @@
         }
     };
     $(document).ready(function(){
-        RichTextEditor.init("{{ asset('bundles/digscore/bootstrap/css/bootstrap.min.css') }},{{ asset('bundles/digsentry/css/richtexteditor.css') }}",
+        RichTextEditor.init("{{ asset('lib/bootstrap/bootstrap.css') }},{{ asset('bundles/digsentry/css/richtexteditor.css') }}",
             "{{ path('information_photo') }}", "{{ path('information_file') }}", true);
         EntryEditPage.init();
     });

@@ -16,3 +16,6 @@ bin/doctrine*
 nbproject
 *php~
 src/Digs/ImageConverterBundle/Resources/config/service_parameters.yml
+bower_components
+node_modules
+web/lib
