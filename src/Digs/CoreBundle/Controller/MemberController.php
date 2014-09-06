@@ -96,4 +96,68 @@ class MemberController extends Controller implements AdminController
             'entity' => $entity,
         ));
     }
+
+    /**
+     * グループへの追加・削除
+     * @param type $id Member ID
+     * @return type
+     * @throws type
+     */
+    public function groupAction(Request $request, $id) {
+        $em = $this->getDoctrine()->getManager();
+        $groups = $em->getRepository('DigsCoreBundle:MemberGroup')->findAll();
+        if (!$groups) {
+            throw $this->createNotFoundException('Unable to find Group entity.');
+        }
+        
+        $member = $em->getRepository('DigsCoreBundle:Member')->findJoinGroups($id);
+        if (!$member) {
+            throw $this->createNotFoundException('Unable to find Member entity.');
+        }
+        
+        $form = $this->createFormBuilder()
+            ->setAction($this->generateUrl('member_group', array('id' => $id)))
+            ->setMethod('PUT')
+            ->getForm()
+        ;
+
+		$form->add('groups', 'entity', array(
+				'class'    => 'DigsCoreBundle:MemberGroup',
+				'property' => 'name',
+				'multiple' => true,
+				'expanded' => true,
+				'mapped'   => false,
+//                'data'     => $member->getGroups()
+			));
+
+		if ($request->isMethod('PUT'))
+		{
+			$form->handleRequest($request);
+			if ($form->isValid()) {
+                $oldGroups = $member->getGroups();
+                foreach ($oldGroups as $og) {
+                    $member->removeGroup($og);
+                }
+                $newGroups = $form['groups']->getData();
+//                echo count($newGroups);
+                foreach ($newGroups as $ng) {
+
+                    echo $ng->getId() . ' ';
+                    
+                    $member->addGroup($ng);
+                }
+//                die;
+				$em->persist($member);
+				$em->flush();
+				return $this->redirect($this->generateUrl('member'));
+			}
+		} else {
+            $form['groups']->setData($member->getGroups());
+        }
+        
+        return $this->render('DigsCoreBundle:Member:group.html.twig', array(
+            'entity' => $member,
+            'form'   => $form->createView()
+        ));
+    }
 }

@@ -35,6 +35,22 @@ class MemberRepository extends EntityRepository implements UserProviderInterface
         return $query->getQuery()->getResult();
     }
     
+    /**
+     * MemberGroupと一緒に取得する
+     * @param type $id
+     */
+    public function findJoinGroups($id) {
+        return $this
+            ->createQueryBuilder('u')
+			->select('u, p, g')
+            ->leftJoin('u.profile', 'p')
+			->leftJoin('u.groups', 'g')
+            ->andWhere('u.id=:id')
+            ->setParameter('id', $id)
+            ->getQuery()
+			->getSingleResult();
+    }
+    
 	public function findActiveByGroup($groups)
 	{
         return $this

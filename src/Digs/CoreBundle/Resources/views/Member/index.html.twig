@@ -40,11 +40,13 @@
                                 <td>{{ entity.firstName }}</td>
                                 <td>
                                     {% for group in entity.groups %}
-                                        {{ group.name }}
+                                        <div>{{ group.name }}</div>
                                     {% endfor %}
                                 </td>
                                 <td>
-                                    <a class="btn btn-default btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
+                                    <a class="btn btn-default btn-sm" href="{{ path('member_group', {'id': entity.id}) }}">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </a>
                                 </td>
                                 <td>
                                     {% for role in entity.roles %}

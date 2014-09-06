@@ -1,0 +1,22 @@
+{% extends "DigsCoreBundle::base.html.twig" %}
+
+{% form_theme form 'DigsCoreBundle:Form:form_bootstrap_layout_expanded_checkbox.html.twig' %}
+
+{% block body -%}
+    {{ form_start(form) }}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            {{ entity.profile.nickname }} さんのグループの編集
+        </div>
+        <div class="panel-body">
+            {{ form_errors(form) }}
+            <div class="form-group">
+                {{ form_errors(form.groups) }}
+                {{ form_widget(form.groups, {'attr': {'class': 'checkbox'}}) }}
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">保存</button>
+    <a href="{{ path('member') }}" class="btn btn-default">戻る</a>
+    {{ form_end(form) }}
+{% endblock %}
