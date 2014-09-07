@@ -19,8 +19,7 @@
                             <th>メールアドレス</th>
                             <th>氏</th>
                             <th>名</th>
-                            <th>グループ</th>
-                            <th><a class="btn btn-default btn-sm"><span class="glyphicon glyphicon-edit"></span></a></th>
+                            <th colspan="2">グループ</th>
                             <th colspan="2">権限</th>
                         </tr>
                     </thead>
@@ -50,11 +49,11 @@
                                 </td>
                                 <td>
                                     {% for role in entity.roles %}
-                                        {{ role.name }}
+                                        <div>{{ role.name }}</div>
                                     {% endfor %}
                                 </td>
                                 <td>
-                                    <a class="btn btn-default btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
+                                    <a class="btn btn-default btn-sm" href="{{ path('member_role', {'id': entity.id}) }}"><span class="glyphicon glyphicon-edit"></span></a>
                                 </td>
                             </tr>
                         {% endfor %}

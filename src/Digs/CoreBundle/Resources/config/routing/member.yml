@@ -11,6 +11,10 @@ member_group:
     pattern:  /{id}/group/edit
     defaults: { _controller: "DigsCoreBundle:Member:group" }
 
+member_role:
+    pattern:  /{id}/role/edit
+    defaults: { _controller: "DigsCoreBundle:Member:role" }
+
 member_show:
     pattern:  /{id}/show
     defaults: { _controller: "DigsCoreBundle:Member:show" }

@@ -139,14 +139,9 @@ class MemberController extends Controller implements AdminController
                     $member->removeGroup($og);
                 }
                 $newGroups = $form['groups']->getData();
-//                echo count($newGroups);
                 foreach ($newGroups as $ng) {
-
-                    echo $ng->getId() . ' ';
-                    
                     $member->addGroup($ng);
                 }
-//                die;
 				$em->persist($member);
 				$em->flush();
 				return $this->redirect($this->generateUrl('member'));
@@ -160,4 +155,66 @@ class MemberController extends Controller implements AdminController
             'form'   => $form->createView()
         ));
     }
-}
+
+    
+    /**
+     * ロールへの追加・削除
+     * @param type $id Member ID
+     * @return type
+     * @throws type
+     */
+    public function roleAction(Request $request, $id) {
+        $em = $this->getDoctrine()->getManager();
+        $roles = $em->getRepository('DigsCoreBundle:Role')->findAll();
+        if (!$roles) {
+            throw $this->createNotFoundException('Unable to find Role entity.');
+        }
+
+        $member = $em->getRepository('DigsCoreBundle:Member')->findJoinGroups($id);
+        if (!$member) {
+            throw $this->createNotFoundException('Unable to find Member entity.');
+        }
+        
+        $form = $this->createFormBuilder()
+            ->setAction($this->generateUrl('member_role', array('id' => $id)))
+            ->setMethod('PUT')
+            ->getForm()
+        ;
+
+		$form->add('roles', 'entity', array(
+				'class'    => 'DigsCoreBundle:Role',
+				'property' => 'name',
+				'multiple' => true,
+				'expanded' => true,
+				'mapped'   => false,
+//                'data'     => $member->getGroups()
+			));
+
+		if ($request->isMethod('PUT'))
+		{
+			$form->handleRequest($request);
+			if ($form->isValid()) {
+                $oldRoles = $member->getRoles();
+                foreach ($oldRoles as $or) {
+                    $member->removeRole($or);
+                }
+                $newRoles = $form['roles']->getData();
+                foreach ($newRoles as $nr) {
+                    $member->addRole($nr);
+                }
+				$em->persist($member);
+				$em->flush();
+				return $this->redirect($this->generateUrl('member'));
+			}
+		} else {
+            $form['roles']->setData($member->getRoles());
+        }
+        
+        return $this->render('DigsCoreBundle:Member:role.html.twig', array(
+            'entity' => $member,
+            'form'   => $form->createView()
+        ));
+    }
+    
+    
+        }
