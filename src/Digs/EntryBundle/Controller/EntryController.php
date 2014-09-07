@@ -10,6 +10,7 @@ use Digs\EntryBundle\Form\EntryCommentType;
 use Digs\EntryBundle\Form\EntryType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -190,7 +191,7 @@ class EntryController extends Controller
             'action' => $this->generateUrl('entry_new'),
             'method' => 'POST',
         ));
-		$form->add('taglist', 'text', array(
+		$form->add('taglist', 'hidden', array(
 			'mapped' => false,
 			'required' => false,
 		));
@@ -319,7 +320,7 @@ class EntryController extends Controller
             'action' => $this->generateUrl('entry_edit', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
-		$form->add('taglist', 'text', array(
+		$form->add('taglist', 'hidden', array(
 			'mapped' => false,
 			'required' => false,
 		));
@@ -392,5 +393,25 @@ class EntryController extends Controller
 			))
         ;
 		return $form;
+    }
+    
+    /**
+     * タグの取得
+     */
+    public function tagsAction(Request $request) {
+        $q = $request->query->get('q');
+        $entities = array();
+        if ($q) {
+            $em = $this->getDoctrine()->getManager();
+            $entities = $em->getRepository('DigsEntryBundle:EntryTag')->findAllContainWord($q);
+        }
+//        return $this->render('DigsCoreBundle::plane.html.twig');
+        
+        $tags = array();
+        foreach ($entities as $e) {
+            $tags[] = $e->getName();
+        }
+        
+        return new JsonResponse($tags);
     }
 }

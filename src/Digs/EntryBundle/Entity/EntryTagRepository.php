@@ -43,4 +43,23 @@ class EntryTagRepository extends EntityRepository
 		}
 		return null;
 	}
+    
+    /**
+     * $wordを含むタグを取得する
+     * @param type $word
+     */
+    public function findAllContainWord($word) {
+        // TODO 他に方法は?
+        $word = mb_ereg_replace('\\\\','\\\\',$word);
+        $word = mb_ereg_replace('%','\%',$word);
+        $word = mb_ereg_replace('_','\_',$word);
+
+        $qb = $this
+            ->createQueryBuilder('e')
+			->orderBy('e.name', 'ASC');
+        return $qb->where($qb->expr()->like("e.name", ":name"))
+            ->setParameter("name", "%".$word."%")
+            ->getQuery()
+			->getResult();
+    }
 }

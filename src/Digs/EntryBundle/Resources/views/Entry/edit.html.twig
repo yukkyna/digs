@@ -1,67 +1,135 @@
 {% extends "DigsCoreBundle::base.html.twig" %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('lib/select2/select2.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('lib/select2-bootstrap3-css/select2-bootstrap.css') }}" type="text/css" media="all" />
+{% endblock %}
+
 {% block javascripts %}
-<script type="text/javascript" src="{{ asset('lib/tinymce/tinymce.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/digsentry/js/richtexteditor.js') }}"></script>
-<script type="text/javascript">
-    var EntryEditPage = {
-        init: function() {
-            
-            $('#submit-delete').click(function(e) {
-                
-                if (confirm('削除します。よろしいですか。'))
-                {
-                    $('#delete-form').submit();
+    <script type="text/javascript" src="{{ asset('lib/tinymce/tinymce.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('lib/select2/select2.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/digsentry/js/richtexteditor.js') }}"></script>
+    <script type="text/javascript">
+        var EntryEditPage = {
+            init: function() {
+                $('#submit-delete').click(function(e) {
+                    if (confirm('削除します。よろしいですか。')) {
+                        $('#delete-form').submit();
+                    }
+                });
+            }
+        };
+        $(document).ready(function() {
+            RichTextEditor.init("{{ asset('lib/bootstrap/css/bootstrap.min.css') }},{{ asset('bundles/digsentry/css/richtexteditor.css') }}",
+            "{{ path('profile_photo') }}", "{{ path('profile_file') }}", true);
+            EntryEditPage.init();
+
+{#            var values = $('#digs_entrybundle_entry_taglist').val();
+            var tags = [];
+            if (values !== '') {
+                var tag = values.split(',');
+                for (var i = 0; i < tag.length; i ++) {
+                    tags.push($.trim(tag[i]));
+                }
+            }
+            console.log(tags);
+#}
+            $('#digs_entrybundle_entry_taglist').select2({
+                tags: true,
+                minimumInputLength: 1,
+                multiple: true,
+                tokenSeparators: [','],
+                ajax: {
+                    url: "{{ path('entry_tags') }}",
+                    dataType: 'json',
+                    quietMillis: 500,
+                    data: function(term, page) {
+                        return {
+                            q: term
+                        };
+                    },
+                    results: function(data, page) {
+                        var results = [];
+                        for (var i = 0; i < data.length; i ++) {
+                            results.push({
+                                id:   data[i],
+                                text: data[i]
+                            });
+                        }
+                        return {
+                            results: results
+                        };
+                    }
+                },
+                createSearchChoice: function(term, data) {
+                    console.log(data);
+                    if ($(data).filter(function() {
+                        return this.text.localeCompare(term) === 0;
+                    }).length === 0) {
+                        return {
+                            id: term,
+                            text: term
+                        };
+                    }
+                },
+                initSelection: function(element, callback) {
+                    var id = $(element).val();
+                    if (id !== '') {
+                        var ids = id.split(',');
+                        var data = [];
+                        for (var i = 0; i < ids.length; i ++) {
+                            data.push({
+                                id:   $.trim(ids[i]),
+                                text: $.trim(ids[i])
+                            });
+                        }
+                        console.log(data);
+                        callback(data);
+                    }
                 }
             });
-        }
-    };
-    $(document).ready(function(){
-        RichTextEditor.init("{{ asset('lib/bootstrap/css/bootstrap.min.css') }},{{ asset('bundles/digsentry/css/richtexteditor.css') }}",
-            "{{ path('profile_photo') }}", "{{ path('profile_file') }}", true);
-        EntryEditPage.init();
-    });
-</script>
+        });
+    </script>
 {% endblock %}
 
 {% block body -%}
-<div class="row">
-{% if delete_form is defined %}
-    <h2>エントリの編集</h2>
-{% else %}
-    <h2>エントリの作成</h2>
-{% endif %}
-</div>
-<div class="row">
-{{ form_start(edit_form) }}
-{{ form_errors(edit_form) }}
-    <div class="form-group">
-{{ form_label(edit_form.title, 'タイトル') }}
-{{ form_errors(edit_form.title) }}
-{{ form_widget(edit_form.title, {'attr': {'class': 'form-control'}}) }}
+    <div class="row">
+        {% if delete_form is defined %}
+            <h2>エントリの編集</h2>
+        {% else %}
+            <h2>エントリの作成</h2>
+        {% endif %}
     </div>
-    <div class="form-group">
-{{ form_label(edit_form.taglist, 'タグ') }}
-{{ form_errors(edit_form.taglist) }}
-{{ form_widget(edit_form.taglist, {'attr': {'class': 'form-control'}}) }}
-<p class="help-block">カンマ区切りで複数設定できます</p>
+    <div class="row">
+        {{ form_start(edit_form) }}
+        {{ form_errors(edit_form) }}
+        <div class="form-group">
+            {{ form_label(edit_form.title, 'タイトル') }}
+            {{ form_errors(edit_form.title) }}
+            {{ form_widget(edit_form.title, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(edit_form.taglist, 'タグ') }}
+            {{ form_errors(edit_form.taglist) }}
+            {{ form_widget(edit_form.taglist, {'attr': {'class': 'form-control'}}) }}
+            <p class="help-block">複数設定できます</p>
+        </div>
+        <div class="form-group">
+            {{ form_label(edit_form.message, 'メッセージ') }}
+            {{ form_errors(edit_form.message) }}
+            {{ form_widget(edit_form.message, {'attr': {'class': 'form-control', 'rows': 20}}) }}
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">保存</button>
+            {% if delete_form is defined %}
+                <button id="submit-delete" type="button" class="pull-right btn btn-danger">削除</button>
+            {% endif %}
+        </div>
+        {{ form_end(edit_form) }}
     </div>
-    <div class="form-group">
-{{ form_label(edit_form.message, 'メッセージ') }}
-{{ form_errors(edit_form.message) }}
-{{ form_widget(edit_form.message, {'attr': {'class': 'form-control', 'rows': 20}}) }}
-    </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">保存</button>
-{% if delete_form is defined %}
-        <button id="submit-delete" type="button" class="pull-right btn btn-danger">削除</button>
-{% endif %}
-    </div>
+    {% if delete_form is defined %}
+        {{ form_start(delete_form, {'attr': {'id': 'delete-form'}}) }}
+        {{ form_end(delete_form) }}
+    {% endif %}
 
-{{ form_end(edit_form) }}
-</div>
-{% if delete_form is defined %}
-{{ form_start(delete_form, {'attr': {'id': 'delete-form'}}) }}
-{{ form_end(delete_form) }}
-{% endif %}
 {% endblock %}
